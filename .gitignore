@@ -1,5 +1,5 @@
-# create by https://github.com/iamcco/coc-gitignore (Fri Jan 01 2021 14:20:19 GMT+0000 (Greenwich Mean Time))
-# Python.gitignore:
+# create by https://github.com/iamcco/coc-gitignore 
+# # Python.gitignore:
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
