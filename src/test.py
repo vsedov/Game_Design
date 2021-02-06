@@ -33,7 +33,8 @@ class Test(Control):
 
         self.message = None
 
-    def update_self(self):
+    @staticmethod
+    def update_self():
         ...
 
     def draw_self(self, canvas):
