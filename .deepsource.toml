@@ -1,0 +1,27 @@
+
+version = 1
+
+test_patterns = [
+    "test/** ",
+    "tests/text_*py",
+    "**/*_test.go"
+]
+
+[[analyzers]]
+name = "python"
+enabled = true
+
+  [analyzers.meta]
+  runtime_version = "3.x.x"
+
+[[transformers]]
+name = "black"
+enabled = true
+
+[[transformers]]
+name = "isort"
+enabled = true
+
+[[transformers]]
+name = "prettier"
+enabled = true
