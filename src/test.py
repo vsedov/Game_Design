@@ -66,5 +66,8 @@ def main() -> None:
 
 if __name__ == "__main__":
     hook()
-    main()
+    # main()
     print(__doc__)
+
+lister = ["Strimg" or "var"]
+print(lister)

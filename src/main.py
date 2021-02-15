@@ -2,10 +2,10 @@
 # -- coding: utf-8 --
 # vim:fenc=utf-8
 
+import random
 from dataclasses import dataclass
 from typing import List
 
-import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
 from frosch import hook
 
 from system_components.control import Control
@@ -20,6 +20,7 @@ class GameState:
     FINISHED: bool = False
     POINTS: int = 0
     SPEED: int = 100
+    GRID: int = 10
 
 
 @dataclass
@@ -41,6 +42,17 @@ class SnakeMain(Control, GameState):
         position=Vector(1, 0),
         velocity=Vector(1, 0),
     ):
+        """Initialiser
+        Linked with Abc class Push Forward
+        Vector and Positional Vecot
+
+        Args:
+            frame_width: Frame Width imported from local
+            frame_height: Frame height imported from local
+            position: positional Vector , start location Should be array
+            velocity: Velocity of what changes should occour
+        """
+
         super(SnakeMain, self).__init__(
             width=frame_width,
             height=frame_height,
@@ -48,45 +60,79 @@ class SnakeMain(Control, GameState):
             y=position.y,
             debug=False,
         )
-        # Start in the middle
-        self.start_position = Vector(self.width / 2, self.height / 2)
+        # If we Decide to do , you start with one blob, - we could make this an
+        # option, within the menu ie - "How many start blocks would you like or something
+
+        self.direction = [Vector(self.width // self.GRID, self.height // self.GRID)]
+        self.velocity = Vector(1, 0)
+
         self.eat = False
 
-        self.velocity = velocity
-        self.position = position
-
     # Velocity Change
-    def __movement_change(self, x, y):
+    def _movement_change(self, x, y):
+        """Movement_change
+        Change Velocity Depending on Vector
+        Args:
+            x: X Direction
+            y: Y Direction
+        """
         self.velocity.x, self.velocity.y = x, y
 
     def position_direction(self, direction):
-        if direction == "right":
-            self.movement_change(1, 0)
-        elif direction == "left":
-            self.movement_change(-1, 0)
-        elif direction == "up":
-            self.movement_change(0, -1)
-        elif direction == "down":
-            self.movement_change(0, 1)
-        else:
-            print("You have pressed the wrong key")
+        """Position_direction
+        Adjusting vector cords for given
+        position
 
+        Args:
+            direction: input mapper
+        """
+        if direction == "right":
+            self._movement_change(1, 0)
+        elif direction == "left":
+            self._movement_change(-1, 0)
+        elif direction == "up":
+            self._movement_change(0, -1)
+        elif direction == "down":
+            self._movement_change(0, 1)
+
+    def movement(self):
+        # Im not sure what i should put here
+
+        pass
+
+    def game_logic(self):
+        pass
+
+    # This is required due to the abstract class
     def update_self(self):
         pass
 
-    def draw_self(self, canvas):
-        self.update_self()
-
-        canvas.draw_line((0, 19), (19, 20), 1, "red")
+    def draw_self(self):
+        pass
 
 
-# So you want draw handler that would change the grid
-# You want another draw handler that yould hightlight those squares
+class PositionalIncrease(SnakeMain):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.random_increaser = Vector(
+            random.randrange(1, self.frame_width // self.GRID),
+            random.randrange(1, self.frame_height // self.GRID),
+        )
+
+    def segmentation(self):
+
+        pass
+
+    # No Clue what to do , probs will figure it out later
 
 
 def main() -> None:
 
     main_snake = SnakeMain()
+
+    # Testing something out
+    print(main_snake.direction[-1].x)
 
     frame = simplegui.create_frame("Snake Game", frame_width, frame_height)
     frame.set_draw_handler(main_snake.draw_self)
@@ -97,3 +143,4 @@ def main() -> None:
 if __name__ == "__main__":
     hook()
     main()
+    print(__doc__)
