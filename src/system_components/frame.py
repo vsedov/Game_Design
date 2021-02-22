@@ -2,5 +2,5 @@
 # -- coding: utf-8 --
 # vim:fenc=utf-8
 
-frame_height = 600
-frame_width = 1200
+frame_height = 1024
+frame_width = 1024

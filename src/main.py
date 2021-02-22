@@ -2,10 +2,9 @@
 # -- coding: utf-8 --
 # vim:fenc=utf-8
 
-import random
 from dataclasses import dataclass
-from typing import List
 
+import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
 from frosch import hook
 
 from system_components.control import Control
@@ -27,11 +26,6 @@ class GameState:
 class Colors:
     BACKGROUND_COLOR: str = "black"
     SNAKE_COLOR: str = "red"
-
-
-@dataclass
-class DataContainer:
-    segmentation = List[int]
 
 
 class SnakeMain(Control, GameState):
@@ -63,10 +57,18 @@ class SnakeMain(Control, GameState):
         # If we Decide to do , you start with one blob, - we could make this an
         # option, within the menu ie - "How many start blocks would you like or something
 
-        self.direction = [Vector(self.width // self.GRID, self.height // self.GRID)]
+        self.segmentation = []
+
+        # Change name of this , and make
+        self.snake = [
+            Vector(self.width // self.GRID, self.height // self.GRID) for _ in range(2)
+        ]
+
         self.velocity = Vector(1, 0)
+        self.mover = Vector(0, 0)
 
         self.eat = False
+        self.RUNNING = True
 
     # Velocity Change
     def _movement_change(self, x, y):
@@ -77,6 +79,13 @@ class SnakeMain(Control, GameState):
             y: Y Direction
         """
         self.velocity.x, self.velocity.y = x, y
+
+        self.velocity.add(0, 0)
+
+    # You would want to call this statement before teh update it self
+    def eaten(self):
+        if self.eat is True:
+            self.velocity + 1
 
     def position_direction(self, direction):
         """Position_direction
@@ -97,7 +106,6 @@ class SnakeMain(Control, GameState):
 
     def movement(self):
         # Im not sure what i should put here
-
         pass
 
     def game_logic(self):
@@ -107,24 +115,10 @@ class SnakeMain(Control, GameState):
     def update_self(self):
         pass
 
-    def draw_self(self):
-        pass
-
-
-class PositionalIncrease(SnakeMain):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-        self.random_increaser = Vector(
-            random.randrange(1, self.frame_width // self.GRID),
-            random.randrange(1, self.frame_height // self.GRID),
-        )
-
-    def segmentation(self):
-
-        pass
-
-    # No Clue what to do , probs will figure it out later
+    @classmethod
+    def draw_self(cls, canvas):
+        # I am testing somethings out
+        canvas.draw_polygon([(10, 20), (20, 30), (30, 10)], 12, "Green")
 
 
 def main() -> None:
@@ -132,15 +126,16 @@ def main() -> None:
     main_snake = SnakeMain()
 
     # Testing something out
-    print(main_snake.direction[-1].x)
+    print(main_snake.snake[-1].x)
 
     frame = simplegui.create_frame("Snake Game", frame_width, frame_height)
     frame.set_draw_handler(main_snake.draw_self)
+    frame.set_canvas_background("red")
 
     frame.start()
 
 
 if __name__ == "__main__":
     hook()
-    main()
+    # main()
     print(__doc__)
