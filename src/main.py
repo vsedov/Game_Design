@@ -7,19 +7,10 @@ from dataclasses import dataclass
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
 from frosch import hook
 
+from status import GameState
 from system_components.control import Control
 from system_components.frame import frame_height, frame_width
 from system_components.Vector import Vector
-
-
-@dataclass
-class GameState:
-    GAME_STATE: bool = False
-    RUNNING: bool = False
-    FINISHED: bool = False
-    POINTS: int = 0
-    SPEED: int = 100
-    GRID: int = 10
 
 
 @dataclass

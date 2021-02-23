@@ -10,21 +10,21 @@ from main import SnakeMain
 
 class Interface(SnakeMain):
     def __init__(self):
-        super(Interface, self).__init__()
+        super().__init__()
 
     def key_down(self, key_item):
-        if key_item == simplegui.KEY_MAP[x:=("right")] and self.velocity.x == 0:
+        if key_item == simplegui.KEY_MAP[(x := ("right"))] and self.velocity.x == 0:
             self.position_direction(x)
 
-        elif key_item == simplegui.KEY_MAP[x:=("left")] and self.velocity.x == 0:
+        elif key_item == simplegui.KEY_MAP[(x := ("left"))] and self.velocity.x == 0:
             self.position_direction(x)
 
-        elif key_item == simplegui.KEY_MAP[x:=("up")] and self.velocity.y == 0 :
+        elif key_item == simplegui.KEY_MAP[(x := ("up"))] and self.velocity.y == 0:
             self.position_direction("up")
 
-        elif key_item == simplegui.KEY_MAP[x:=("down")] and self.velocity == 0:
+        elif key_item == simplegui.KEY_MAP[(x := ("down"))] and self.velocity == 0:
             self.position_direction("down")
-        
+
 
 def main() -> None:
     pointer = Interface()
