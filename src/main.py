@@ -31,13 +31,13 @@ class SnakeMain(Control, GameState):
         Linked with Abc class Push Forward
         Vector and Positional Vecot
 
+
         Args:
             frame_width: Frame Width imported from local
             frame_height: Frame height imported from local
             position: positional Vector , start location Should be array
             velocity: Velocity of what changes should occour
         """
-
         super(SnakeMain, self).__init__(
             width=frame_width,
             height=frame_height,
@@ -106,18 +106,14 @@ class SnakeMain(Control, GameState):
     def update_self(self):
         pass
 
-    @classmethod
-    def draw_self(cls, canvas):
-        # I am testing somethings out
+    def draw_self(self, canvas):
+
         canvas.draw_polygon([(10, 20), (20, 30), (30, 10)], 12, "Green")
 
 
 def main() -> None:
 
     main_snake = SnakeMain()
-
-    # Testing something out
-    print(main_snake.snake[-1].x)
 
     frame = simplegui.create_frame("Snake Game", frame_width, frame_height)
     frame.set_draw_handler(main_snake.draw_self)
@@ -128,5 +124,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     hook()
-    # main()
+    main()
     print(__doc__)
