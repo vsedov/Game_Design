@@ -1,7 +1,3 @@
-#! /usr/bin/env python3
-# -- coding: utf-8 --
-# vim:fenc=utf-8
-
 import math
 
 
@@ -37,7 +33,6 @@ class Vector:
     def add(self, other):
         self.x += other.x
         self.y += other.y
-
         return self
 
     def __add__(self, other):
@@ -61,7 +56,6 @@ class Vector:
     def multiply(self, k):
         self.x *= k
         self.y *= k
-
         return self
 
     def __mul__(self, k):
@@ -102,7 +96,6 @@ class Vector:
         n = normal.copy()
         n.multiply(2 * self.dot(normal))
         self.subtract(n)
-
         return self
 
     # Returns the angle between this vector and another one
@@ -112,7 +105,6 @@ class Vector:
     # Rotates the vector 90 degrees anticlockwise
     def rotate_anti(self):
         self.x, self.y = -self.y, self.x
-
         return self
 
     # Rotates the vector according to an angle theta given in radians
@@ -120,17 +112,14 @@ class Vector:
         rx = self.x * math.cos(theta) - self.y * math.sin(theta)
         ry = self.x * math.sin(theta) + self.y * math.cos(theta)
         self.x, self.y = rx, ry
-
         return self
 
     # Rotates the vector according to an angle theta given in degrees
     def rotate(self, theta):
         theta_rad = theta / 180 * math.pi
-
         return self.rotate_rad(theta_rad)
 
     # project the vector onto a given vector
     def get_proj(self, vec):
         unit = vec.get_normalized()
-
         return unit.multiply(self.dot(unit))

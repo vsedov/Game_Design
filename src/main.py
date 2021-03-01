@@ -2,14 +2,16 @@
 # -- coding: utf-8 --
 # vim:fenc=utf-8
 
+__author__ = ["Vivian", "Ahmed"]
+__status__ = "development"
+
 from dataclasses import dataclass
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
-from frosch import hook
 
-from status import GameState
 from system_components.control import Control
 from system_components.frame import frame_height, frame_width
+from system_components.status import GameState
 from system_components.Vector import Vector
 
 
@@ -19,110 +21,176 @@ class Colors:
     SNAKE_COLOR: str = "red"
 
 
-class SnakeMain(Control, GameState):
+class Snake_Main(Control, GameState):
     def __init__(
-        self,
-        frame_width=frame_width,
-        frame_height=frame_height,
-        position=Vector(1, 0),
-        velocity=Vector(1, 0),
+        self, *, x_pos=1, y_pos=0, width=frame_width, height=frame_height, length=5
     ):
-        """Initialiser
-        Linked with Abc class Push Forward
-        Vector and Positional Vecot
+        """Init : Local Var
 
+        Main Control of games , assertion of any data will be advised here for debugging
 
         Args:
-            frame_width: Frame Width imported from local
-            frame_height: Frame height imported from local
-            position: positional Vector , start location Should be array
-            velocity: Velocity of what changes should occour
+            x_pos,y_pos: used for debugging , activate debug = True
+
+            colors: All colors of teh given map , images will be added to this class
+
+            grid: the way the snake will move is via a grid method of 10
+
+            position: start amount of blocks - this can be anything
+
+            eat_control: If eaten speed and increase snake size by one.
+
+            segment_list: control of how many segments there are and controls the class
+            such that it does not keep on growing Look at Game_Control for further info
+
+            snake_amount: start and pointer to increase how many snake blocks you want
         """
-        super(SnakeMain, self).__init__(
+        super(Snake_Main, self).__init__(
             width=frame_width,
             height=frame_height,
-            x=position.x,
-            y=position.y,
+            x=x_pos,
+            y=y_pos,
             debug=False,
         )
-        # If we Decide to do , you start with one blob, - we could make this an
-        # option, within the menu ie - "How many start blocks would you like or something
+        self.color = Colors()
 
-        self.segmentation = []
+        self.segment_list = []
+        self.width = width
+        self.height = height
+        self.grid = 10
+        self.GAME_STATE = True  # We will have to localise this for now i want it here .
+        self.snake_amount = length
 
-        # Change name of this , and make
-        self.snake = [
-            Vector(self.width // self.GRID, self.height // self.GRID) for _ in range(2)
+        self.position = [
+            Vector(self.width // self.internal_grid, self.height // self.internal_grid)
+            for _ in range(self.snake_amount)
         ]
 
-        self.velocity = Vector(1, 0)
-        self.mover = Vector(0, 0)
+        isinstance(x_pos, int)
+        isinstance(y_pos, int)
 
-        self.eat = False
-        self.RUNNING = True
+        self.dir = Vector(x_pos, y_pos)
+        self.eat_control = False
+        self.segment_list = []
 
-    # Velocity Change
-    def _movement_change(self, x, y):
-        """Movement_change
-        Change Velocity Depending on Vector
-        Args:
-            x: X Direction
-            y: Y Direction
-        """
-        self.velocity.x, self.velocity.y = x, y
+    def changer(self, x: int, y: int):
+        self.x, self.y = self.dir.x, self.dir.y = x, y
 
-        self.velocity.add(0, 0)
-
-    # You would want to call this statement before teh update it self
-    def eaten(self):
-        if self.eat is True:
-            self.velocity + 1
-
-    def position_direction(self, direction):
-        """Position_direction
-        Adjusting vector cords for given
-        position
-
-        Args:
-            direction: input mapper
-        """
+    def change_dir(self, direction):
         if direction == "right":
-            self._movement_change(1, 0)
+            self.changer(1, 0)
         elif direction == "left":
-            self._movement_change(-1, 0)
+            self.changer(-1, 0)
         elif direction == "up":
-            self._movement_change(0, -1)
+            self.changer(0, -1)
         elif direction == "down":
-            self._movement_change(0, 1)
+            self.changer(0, 1)
 
-    def movement(self):
-        # Im not sure what i should put here
-        pass
+    def __position_compare_x(self):
+        return self.position[-1].x + self.dir.x
 
-    def game_logic(self):
-        pass
+    def __position_compare_y(self):
+        return self.position[-1].y + self.dir.y
 
-    # This is required due to the abstract class
+    def _control(self):
+        """Control / Wrap
+
+        This code allows wrapping of each edge , such that, the snake
+        will wrap around teh borders of the grid
+        """
+        if self.__position_compare_x() > self.width // self.grid:
+            self.position.append(Vector(1, self.__position_compare_y()))
+
+        elif self.__position_compare_x() < 1:
+            self.position.append(Vector(60, self.__position_compare_x()))
+
+        elif self.__position_compare_y() > self.height // self.grid:
+            self.position.append(Vector(self.__position_compare_x(), 1))
+
+        elif self.__position_compare_y() < 1:
+            self.position.append(Vector(self.__position_compare_x(), 60))
+
+        else:
+            self.position.append(
+                Vector(self.__position_compare_x(), self.__position_compare_y())
+            )
+
+    def debuger(self):
+        if self.debug is True:
+            __import__("ipdb").set_trace()  # Can be changed to pdb if you want
+            # breakpoint()
+            # Use breakpoint() if you do not have ipdb
+
+    def key_down(self, key):
+        if key == simplegui.KEY_MAP["right"] and self.dir.x == 0:
+            self.change_dir("right")
+        elif key == simplegui.KEY_MAP["left"] and self.dir.x == 0:
+            self.change_dir("left")
+        elif key == simplegui.KEY_MAP["up"] and self.dir.y == 0:
+            self.change_dir("up")
+        elif key == simplegui.KEY_MAP["down"] and self.dir.y == 0:
+            self.change_dir("down")
+
     def update_self(self):
-        pass
+        self.segment_list = []
+        for pos in self.position:
+            segment = [
+                Vector(pos.x * self.grid - self.grid, pos.y * self.grid),
+                Vector(pos.x * self.grid, pos.y * self.grid),
+                Vector(pos.x * self.grid, pos.y * self.grid - self.grid),
+                Vector(pos.x * self.grid - self.grid, pos.y * self.grid - self.grid),
+            ]
+            self.segment_list.append(segment)
+
+        self.debuger()
 
     def draw_self(self, canvas):
+        for k in self.segment_list:
+            x = [i.get_p() for i in k]
+            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, self.color.SNAKE_COLOR)
+        self.update_self()
 
-        canvas.draw_polygon([(10, 20), (20, 30), (30, 10)], 12, "Green")
+
+class Game_Control(Snake_Main):
+    def __init__(self, amount=10):
+        super().__init__(
+            x_pos=1, y_pos=0, width=frame_width, height=frame_height, length=amount
+        )
+
+    def timer_handler(self):
+        self._control()
+        if not self.eat_control:
+            self.position.pop(0)
+            # Each move , removes it , such that it does not keep on going
+        self.eat_control = False
+
+        # For debugging
+        # print(self.x, "with ", self.y)
+
+    # Another button ?
+    def pause(self):
+        pass
+
+    # Thsi can be button
+    def leave(self):
+        pass
 
 
 def main() -> None:
+    snake = Game_Control()
 
-    main_snake = SnakeMain()
+    frame = simplegui.create_frame("Snake", frame_width, frame_height)
+    frame.set_keydown_handler(snake.key_down)
+    frame.set_draw_handler(snake.draw_self)
+    frame.set_canvas_background(Colors.BACKGROUND_COLOR)
 
-    frame = simplegui.create_frame("Snake Game", frame_width, frame_height)
-    frame.set_draw_handler(main_snake.draw_self)
-    frame.set_canvas_background("red")
+    timer = simplegui.create_timer(100, snake.timer_handler)
+    timer.start()
 
     frame.start()
 
 
 if __name__ == "__main__":
-    hook()
     main()
-    print(__doc__)
+    print("Authors ", __author__)
+    print("Status ", __status__)
