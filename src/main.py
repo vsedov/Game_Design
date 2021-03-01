@@ -102,15 +102,17 @@ class Snake_Main(Control, GameState):
             self.position.append(Vector(1, self.__position_compare_y()))
 
         elif self.__position_compare_x() < 1:
-            self.position.append(Vector(60, self.__position_compare_x()))
+            self.position.append(Vector(self.width / 10, self.__position_compare_x()))
 
         elif self.__position_compare_y() > self.height // self.grid:
             self.position.append(Vector(self.__position_compare_x(), 1))
 
         elif self.__position_compare_y() < 1:
-            self.position.append(Vector(self.__position_compare_x(), 60))
+            self.position.append(Vector(self.__position_compare_x(), self.height / 10))
 
         else:
+            print("Active")
+
             self.position.append(
                 Vector(self.__position_compare_x(), self.__position_compare_y())
             )
