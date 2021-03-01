@@ -2,12 +2,8 @@
 # -- coding: utf-8 --
 # vim:fenc=utf-8
 
-<<<<<<< HEAD
-import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
-from frosch import hook
-=======
 __author__ = ["Vivian", "Ahmed"]
-__status__ = "development"
+__status__ = "Development"
 
 from dataclasses import dataclass
 
@@ -180,23 +176,10 @@ class Game_Control(Snake_Main):
     # Thsi can be button
     def leave(self):
         pass
->>>>>>> Conditional
-
-from system_components.control import Control
-from system_components.frame import frame_height, frame_width
-from system_components.Vector import Vector
-
-
-class SnakeMain(Control):
-    def _init__(self, var=Vector(0, 0)):
-        pass
 
 
 def main() -> None:
-<<<<<<< HEAD
-    frame = simplegui.create_frame("Snake Game", frame_width, frame_height)
-    frame.set_draw_handler(...)
-=======
+
     snake = Game_Control()
 
     frame = simplegui.create_frame("Snake", frame_width, frame_height)
@@ -206,7 +189,6 @@ def main() -> None:
 
     timer = simplegui.create_timer(100, snake.timer_handler)
     timer.start()
->>>>>>> Conditional
 
     frame.start()
 
