@@ -102,7 +102,6 @@ class Snake_Main(Control, GameState):
             self.position.append(Vector(1, self.__position_compare_y()))
 
         elif self.__position_compare_x() < 1:
-            print("This was ?")
             self.position.append(Vector(1024 / 10, self.__position_compare_y()))
 
         elif self.__position_compare_y() > self.height // self.grid:
