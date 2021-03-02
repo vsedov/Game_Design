@@ -57,7 +57,7 @@ class Snake_Main(Control, GameState):
         self.segment_list = []
         self.width = width
         self.height = height
-        self.grid = 10
+        self.grid = 10  # Add this to game state class
         self.GAME_STATE = True  # We will have to localise this for now i want it here .
         self.snake_amount = length
         self.snake_block = Vector(
@@ -107,7 +107,7 @@ class Snake_Main(Control, GameState):
             self.position.append(Vector(1, self.__position_compare_y()))
 
         elif self.__position_compare_x() < 1:
-            self.position.append(Vector(1024 / 10, self.__position_compare_y()))
+            self.position.append(Vector(self.width / 10, self.__position_compare_y()))
 
         elif self.__position_compare_y() > self.height // self.grid:
             self.position.append(Vector(self.__position_compare_x(), 1))
@@ -136,9 +136,13 @@ class Snake_Main(Control, GameState):
             self.change_dir("up")
         elif key == simplegui.KEY_MAP["down"] and self.dir.y == 0:
             self.change_dir("down")
+
+            # This was for test purposes , i wanted to see if it would work , the legnth
+            # growing
             self.eat_control = True
 
     def update_self(self):
+        # Reset the list  otherwise it will keep on adding blocks
         self.segment_list = []
         for pos in self.position:
             segment = [
@@ -159,48 +163,9 @@ class Snake_Main(Control, GameState):
 
         self.update_self()
 
-
-class Game_Control(Snake_Main):
-    def __init__(self, amount=10):
-        super().__init__(
-            x_pos=1, y_pos=0, width=frame_width, height=frame_height, length=amount
-        )
-
-    def timer_handler(self):
-        self._control()
-        if not self.eat_control:
-            self.position.pop(0)
-            # Each move , removes it , such that it does not keep on going
-        self.eat_control = False
-
-        # For debugging
-        # print(self.x, "with ", self.y)
-
-    # Another button ?
-    def pause(self):
-        pass
-
-    # Thsi can be button
-    def leave(self):
-        pass
-
-
-def main() -> None:
-
-    snake = Game_Control()
-
-    frame = simplegui.create_frame("Snake", frame_width, frame_height)
-    frame.set_keydown_handler(snake.key_down)
-    frame.set_draw_handler(snake.draw_self)
-    frame.set_canvas_background(Colors.BACKGROUND_COLOR)
-
-    timer = simplegui.create_timer(100, snake.timer_handler)
-    timer.start()
-
-    frame.start()
+        # self.draw_apple(canvas)
 
 
 if __name__ == "__main__":
-    main()
     print("Authors ", __author__)
     print("Status ", __status__)
