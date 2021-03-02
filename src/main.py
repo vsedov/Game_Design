@@ -57,7 +57,7 @@ class Snake_Main(Control, GameState):
         self.segment_list = []
         self.width = width
         self.height = height
-        self.grid = 10
+        self.grid = 10  # Add this to game state class
         self.GAME_STATE = True  # We will have to localise this for now i want it here .
         self.snake_amount = length
         self.snake_block = Vector(
@@ -107,7 +107,7 @@ class Snake_Main(Control, GameState):
             self.position.append(Vector(1, self.__position_compare_y()))
 
         elif self.__position_compare_x() < 1:
-            self.position.append(Vector(1024 / 10, self.__position_compare_y()))
+            self.position.append(Vector(self.width / 10, self.__position_compare_y()))
 
         elif self.__position_compare_y() > self.height // self.grid:
             self.position.append(Vector(self.__position_compare_x(), 1))
@@ -136,9 +136,13 @@ class Snake_Main(Control, GameState):
             self.change_dir("up")
         elif key == simplegui.KEY_MAP["down"] and self.dir.y == 0:
             self.change_dir("down")
+
+            # This was for test purposes , i wanted to see if it would work , the legnth
+            # growing
             self.eat_control = True
 
     def update_self(self):
+        # Reset the list  otherwise it will keep on adding blocks
         self.segment_list = []
         for pos in self.position:
             segment = [
@@ -159,7 +163,11 @@ class Snake_Main(Control, GameState):
 
         self.update_self()
 
+        # self.draw_apple(canvas)
 
+
+# This willl go to another file as well, main function will be moved to another fiel as
+# well , allowing the code to be more modular
 class Game_Control(Snake_Main):
     def __init__(self, amount=10):
         super().__init__(
@@ -185,6 +193,7 @@ class Game_Control(Snake_Main):
         pass
 
 
+# TODO: Move function to another file -> Allow instances using kwargs
 def main() -> None:
 
     snake = Game_Control()

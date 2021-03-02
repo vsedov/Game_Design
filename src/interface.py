@@ -15,9 +15,10 @@ from system_components.frame import frame_height, frame_width
 
 def push_to_class(**kwargs):
     legnth = kwargs.get("legnth")
-    # Here you can add any other thing you want for now , if you want to use cli -< Very much expandable
-    print(legnth)
+    # Here you can add any other thing you want for now ,
+    # if you want to use cli -< Very much expandable
 
+    # Call gamestartup file - that has optinal parameters  .
     snake = Game_Control(legnth)
 
     frame = simplegui.create_frame("Snake", frame_width, frame_height)
