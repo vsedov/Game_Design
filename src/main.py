@@ -166,50 +166,6 @@ class Snake_Main(Control, GameState):
         # self.draw_apple(canvas)
 
 
-# This willl go to another file as well, main function will be moved to another fiel as
-# well , allowing the code to be more modular
-class Game_Control(Snake_Main):
-    def __init__(self, amount=10):
-        super().__init__(
-            x_pos=1, y_pos=0, width=frame_width, height=frame_height, length=amount
-        )
-
-    def timer_handler(self):
-        self._control()
-        if not self.eat_control:
-            self.position.pop(0)
-            # Each move , removes it , such that it does not keep on going
-        self.eat_control = False
-
-        # For debugging
-        # print(self.x, "with ", self.y)
-
-    # Another button ?
-    def pause(self):
-        pass
-
-    # Thsi can be button
-    def leave(self):
-        pass
-
-
-# TODO: Move function to another file -> Allow instances using kwargs
-def main() -> None:
-
-    snake = Game_Control()
-
-    frame = simplegui.create_frame("Snake", frame_width, frame_height)
-    frame.set_keydown_handler(snake.key_down)
-    frame.set_draw_handler(snake.draw_self)
-    frame.set_canvas_background(Colors.BACKGROUND_COLOR)
-
-    timer = simplegui.create_timer(100, snake.timer_handler)
-    timer.start()
-
-    frame.start()
-
-
 if __name__ == "__main__":
-    main()
     print("Authors ", __author__)
     print("Status ", __status__)
