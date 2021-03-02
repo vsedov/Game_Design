@@ -60,11 +60,11 @@ class Snake_Main(Control, GameState):
         self.grid = 10
         self.GAME_STATE = True  # We will have to localise this for now i want it here .
         self.snake_amount = length
+        self.snake_block = Vector(
+            self.width // self.internal_grid, self.height // self.internal_grid
+        )
 
-        self.position = [
-            Vector(self.width // self.internal_grid, self.height // self.internal_grid)
-            for _ in range(self.snake_amount)
-        ]
+        self.position = [self.snake_block for _ in range(self.snake_amount)]
 
         isinstance(x_pos, int)
         isinstance(y_pos, int)
@@ -72,6 +72,11 @@ class Snake_Main(Control, GameState):
         self.dir = Vector(x_pos, y_pos)
         self.eat_control = False
         self.segment_list = []
+
+    def eaten(self):
+        if self.eat_control is True:
+            self.position.append(self.snake_block)
+            self.eat_control = False
 
     def changer(self, x: int, y: int):
         self.x, self.y = self.dir.x, self.dir.y = x, y
@@ -131,6 +136,7 @@ class Snake_Main(Control, GameState):
             self.change_dir("up")
         elif key == simplegui.KEY_MAP["down"] and self.dir.y == 0:
             self.change_dir("down")
+            self.eat_control = True
 
     def update_self(self):
         self.segment_list = []
@@ -148,7 +154,9 @@ class Snake_Main(Control, GameState):
     def draw_self(self, canvas):
         for k in self.segment_list:
             x = [i.get_p() for i in k]
+
             canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, self.color.SNAKE_COLOR)
+
         self.update_self()
 
 
