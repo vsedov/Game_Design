@@ -79,7 +79,7 @@ class Snake_Main(Control, GameState):
             self.eat_control = False
 
     def changer(self, x: int, y: int):
-        self.x, self.y = self.dir.x, self.dir.y = x, y
+        Control.x, Control.y = self.dir.x, self.dir.y = x, y
 
     def change_dir(self, direction):
         if direction == "right":
@@ -152,8 +152,6 @@ class Snake_Main(Control, GameState):
                 Vector(pos.x * self.grid - self.grid, pos.y * self.grid - self.grid),
             ]
             self.segment_list.append(segment)
-
-        self.debuger()
 
     def draw_self(self, canvas):
         for k in self.segment_list:
