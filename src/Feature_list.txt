@@ -1,0 +1,26 @@
+List of Features for the game~
+
+	Menu System Mandatory:
+		-Start game
+		-Exit game
+		-Select mode (1 player or 2 player)
+		-Highscore tab
+	
+	Menu System Extras:
+		-Snake colour select (canvas after gamemode selected)
+		-Clear highscore list
+		-Select Difficulty (increase velocity snake moves at)
+
+	Game Engine Mandatory:
+		-Snake that is controlled with WASD / ↑↓←→
+		-Apples that spawn randomly that when consumed, extend the snake by 1 unit
+		-Different coloured snakes when in 2 player mode
+		-Life Counter
+		-Canvas change when a death occurs / life is lost
+
+	Game Engine Extras:
+		-Maybe change grid colour / map colour
+		-Maybe add feature to name snake so the highscore can be assigned to name
+		
+		
+		
