@@ -11,7 +11,7 @@ from Game_Start import GameStart
 
 
 def push_to_class(**kwargs):
-    GameStart(length=kwargs.get("legnth"))
+    GameStart(length=kwargs.get("length"))
 
 
 def main() -> None:
@@ -19,13 +19,13 @@ def main() -> None:
 
     parser.add_argument(
         "--x",
-        metavar="legnth",
+        metavar="length",
         type=int,
         default=1.0,
-        help="Enter number for snake legnth?",
+        help="Enter number for snake length?",
     )
     args = parser.parse_args()
-    push_to_class(legnth=args.x)
+    push_to_class(length=args.x)
 
 
 if __name__ == "__main__":
