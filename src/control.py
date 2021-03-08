@@ -68,11 +68,13 @@ class Game_Control(Snake_Main):
     def _app_eaten(self):
 
         for i in self.position:
-            print(len(self.position))
+
+            # __import__('ipdb').set_trace()
 
             # This tends to fail
             if i.get_p() == self.app_pos:
                 self.eat_control = True
+                # Redifine the given apple
                 self.app_pos, self.app_seg = self.app()
 
     def timer_handler(self):
@@ -87,13 +89,10 @@ class Game_Control(Snake_Main):
         self._app_eaten()
 
         if not self.eat_control:
+            # adds new item when there True
             self.position.pop(0)
 
-            # Each move , removes it , such that it does not keep on going
         self.eat_control = False
-
-        # For debugging
-        # print(self.x, "with ", self.y)
 
     def app(self):
         """app
