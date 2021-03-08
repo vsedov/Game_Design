@@ -12,6 +12,17 @@ from system_components.Vector import Vector
 
 class Control(metaclass=abc.ABCMeta):
     def __init__(self, **kwargs):
+        """Control class
+        ABC class , control class , and pointer to define certain fixed values ,
+        throughout the given class
+
+        Args:
+            x: x axis
+            y: y axis
+            debug: debugger
+            width:frame width
+            height: frame height
+        """
         self.x = kwargs.get("x", Vector(0, 0))
         self.y = kwargs.get("y", Vector(0, 0))
         self.debug = kwargs.get("debug", False)

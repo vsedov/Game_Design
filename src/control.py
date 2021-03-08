@@ -66,6 +66,15 @@ class Game_Control(Snake_Main):
         canvas.draw_polygon(self.app_seg, 1, "Red", "blue")
 
     def _app_eaten(self):
+        """apple eaten
+
+        if the apple is eaten , from the position list, self.eat_control is active and
+        redifines it self:
+
+        Args:
+            self.app_pos: this is the location of the current apple gets redifined when
+            eaten
+        """
 
         for i in self.position:
 
