@@ -59,11 +59,11 @@ class Game_Control(Snake_Main):
         for k in self.segment_list:
             x = [i.get_p() for i in k]
 
-            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, self.color.SNAKE_COLOR)
+            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, "Black")
 
         self.update_self(canvas)
 
-        canvas.draw_polygon(self.app_seg, 1, "Red", "Red")
+        canvas.draw_polygon(self.app_seg, 1, "Red", "blue")
 
     def _app_eaten(self):
 
@@ -72,7 +72,7 @@ class Game_Control(Snake_Main):
 
             # This tends to fail
             if i.get_p() == self.app_pos:
-                Snake_Main.eat_control = True
+                self.eat_control = True
                 self.app_pos, self.app_seg = self.app()
 
     def timer_handler(self):
@@ -86,10 +86,11 @@ class Game_Control(Snake_Main):
         self._self_collision()
         self._app_eaten()
 
-        if not Snake_Main.eat_control:
+        if not self.eat_control:
             self.position.pop(0)
 
-        Snake_Main.eat_control = False
+            # Each move , removes it , such that it does not keep on going
+        self.eat_control = False
 
         # For debugging
         # print(self.x, "with ", self.y)
@@ -105,7 +106,6 @@ class Game_Control(Snake_Main):
         # This can be changed to what ever - so long as the cords are the same .
         # You can change those values.
 
-        # Square block
         segements = [
             (app[0] * self.grid - self.grid, app[1] * self.grid),
             (app[0] * self.grid, app[1] * self.grid),

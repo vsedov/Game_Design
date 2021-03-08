@@ -23,7 +23,7 @@ class Colors:
 
 class Snake_Main(Control, GameState):
     def __init__(
-        self, *, x_pos=1, y_pos=0, width=frame_width, height=frame_height, length=5
+        self, *, x_pos=1, y_pos=0, width=frame_width, height=frame_height, length=2
     ):
         """Init : Local Var
 
@@ -82,7 +82,9 @@ class Snake_Main(Control, GameState):
             self.position: list of blocks -> list
 
         """
-        # if self.eat_control is True:
+        if self.eat_control is True:
+            self.position.append(self.snake_block)
+            self.eat_control = False
 
     def changer(self, x: int, y: int):
         """Changer
@@ -175,7 +177,10 @@ class Snake_Main(Control, GameState):
         """
         for pointer in self.position[:-1]:
             if pointer.get_p() == self.position[-1].get_p():
-                return [self.position.pop(0) for _ in range(2)]
+
+                # self.position.append(self.snake_block)
+
+                pass
 
 
 if __name__ == "__main__":
