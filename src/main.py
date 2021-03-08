@@ -74,11 +74,26 @@ class Snake_Main(Control, GameState):
         self.segment_list = []
 
     def eaten(self):
-        if self.eat_control is True:
-            self.position.append(self.snake_block)
-            self.eat_control = False
+        """Eaten
+            If self eat control is true
+            appends another block to teh position increasing its length
+        Args:
+            self.eat_control: Boolean Value -> bool
+            self.position: list of blocks -> list
+
+        """
+        # if self.eat_control is True:
 
     def changer(self, x: int, y: int):
+        """Changer
+            Control.x and Control.y there for debugging purposes
+            but replaces teh direction of both values while updating the
+            debugging value
+
+        Args:
+            x: updated direction of x
+            y: updated direction of y
+        """
         Control.x, Control.y = self.dir.x, self.dir.y = x, y
 
     def change_dir(self, direction):
@@ -92,9 +107,17 @@ class Snake_Main(Control, GameState):
             self.changer(0, 1)
 
     def __position_compare_x(self):
+        """position x wrapper
+
+        wraps around x axis for snake
+        """
         return self.position[-1].x + self.dir.x
 
     def __position_compare_y(self):
+        """position compare y
+
+        wraps around y axis for snake
+        """
         return self.position[-1].y + self.dir.y
 
     def _control(self):
@@ -128,6 +151,14 @@ class Snake_Main(Control, GameState):
             # Use breakpoint() if you do not have ipdb
 
     def key_down(self, key):
+        """key_down
+
+        this can be for the first user , key down will take
+        Fkey + [i in ["i","j","k","l"]] will update movement
+
+        Args:
+            key: SimpleGUICS2Pygame command
+        """
         if key == simplegui.KEY_MAP["right"] and self.dir.x == 0:
             self.change_dir("right")
         elif key == simplegui.KEY_MAP["left"] and self.dir.x == 0:
@@ -137,22 +168,6 @@ class Snake_Main(Control, GameState):
         elif key == simplegui.KEY_MAP["down"] and self.dir.y == 0:
             self.change_dir("down")
 
-            # This was for test purposes , i wanted to see if it would work , the legnth
-            # growing
-            # this infomation will get changed later
-            self.eat_control = True
-
-    def update_self(self):
-        self.segment_list = []
-        for pos in self.position:
-            segment = [
-                Vector(pos.x * self.grid - self.grid, pos.y * self.grid),
-                Vector(pos.x * self.grid, pos.y * self.grid),
-                Vector(pos.x * self.grid, pos.y * self.grid - self.grid),
-                Vector(pos.x * self.grid - self.grid, pos.y * self.grid - self.grid),
-            ]
-            self.segment_list.append(segment)
-
     def _self_collision(self):
         """Collision Checker with self values
 
@@ -160,30 +175,7 @@ class Snake_Main(Control, GameState):
         """
         for pointer in self.position[:-1]:
             if pointer.get_p() == self.position[-1].get_p():
-                # This works, now i have to figure out a way that ends the given game
-
-                # Points and live system , what exactly are we doing , and whos going
-                # to be coding this up ?
-
-                # exit , and say game over , or do you want some life meter ?
-                pass
-
-    def _apple_eaten(self):
-        # Either have it the same as the segment list that i had before, or you could
-        # just use a circle for now .
-
-        pass
-
-    def draw_self(self, canvas):
-
-        for k in self.segment_list:
-            x = [i.get_p() for i in k]
-
-            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, self.color.SNAKE_COLOR)
-
-        self.update_self()
-
-        # self.draw_apple(canvas)
+                return [self.position.pop(0) for _ in range(2)]
 
 
 if __name__ == "__main__":

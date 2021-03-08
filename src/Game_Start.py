@@ -29,6 +29,7 @@ class GameStart:
         timer.start()
 
         frame.start()
+
         return super().__new__(cls)
 
 
