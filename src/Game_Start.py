@@ -34,4 +34,10 @@ class GameStart:
 
 
 # get rid of this when you are done with this
-GameStart()
+# Use this when you are working
+"""
+Steps : 
+ if you want to test a change have this file open and uncomment this , once you are 
+ finished , uncomment this again . 
+"""
+# GameStart()
