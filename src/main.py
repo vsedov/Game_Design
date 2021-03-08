@@ -2,7 +2,7 @@
 # -- coding: utf-8 --
 # vim:fenc=utf-8
 
-__author__ = ["Vivian", "Ahmed"]
+__author__ = ["Vivian"]
 __status__ = "Development"
 
 from dataclasses import dataclass
@@ -139,10 +139,10 @@ class Snake_Main(Control, GameState):
 
             # This was for test purposes , i wanted to see if it would work , the legnth
             # growing
+            # this infomation will get changed later
             self.eat_control = True
 
     def update_self(self):
-        # Reset the list  otherwise it will keep on adding blocks
         self.segment_list = []
         for pos in self.position:
             segment = [
@@ -153,7 +153,29 @@ class Snake_Main(Control, GameState):
             ]
             self.segment_list.append(segment)
 
+    def _self_collision(self):
+        """Collision Checker with self values
+
+        Uses slicing to check the previous position if collision , some given timer ends
+        """
+        for pointer in self.position[:-1]:
+            if pointer.get_p() == self.position[-1].get_p():
+                # This works, now i have to figure out a way that ends the given game
+
+                # Points and live system , what exactly are we doing , and whos going
+                # to be coding this up ?
+
+                # exit , and say game over , or do you want some life meter ?
+                pass
+
+    def _apple_eaten(self):
+        # Either have it the same as the segment list that i had before, or you could
+        # just use a circle for now .
+
+        pass
+
     def draw_self(self, canvas):
+
         for k in self.segment_list:
             x = [i.get_p() for i in k]
 

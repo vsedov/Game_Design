@@ -7,8 +7,6 @@ __author__ = ["Vivian"]
 
 import random
 
-from frosch import hook
-
 from system_components.frame import frame_height, frame_width
 from system_components.status import GameState
 
@@ -28,6 +26,3 @@ class Apple(GameState):
                 random.randrange(5, self.height // self.grid),
             )
         )
-
-
-hook()

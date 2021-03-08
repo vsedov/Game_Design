@@ -30,3 +30,6 @@ class GameStart:
 
         frame.start()
         return super().__new__(cls)
+
+
+GameStart()

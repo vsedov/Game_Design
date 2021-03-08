@@ -17,6 +17,9 @@ class Game_Control(Snake_Main):
 
     def timer_handler(self):
         self._control()
+        self._self_collision()
+        self._apple_eaten()
+
         if not self.eat_control:
             self.position.pop(0)
             # Each move , removes it , such that it does not keep on going
