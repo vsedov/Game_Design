@@ -2,7 +2,7 @@
 # -- coding: utf-8 --
 # vim:fenc=utf-8
 
-__author__ = ["Vivian", "Ahmed"]
+__author__ = ["Vivian"]
 __status__ = "Development"
 
 from dataclasses import dataclass
@@ -23,7 +23,7 @@ class Colors:
 
 class Snake_Main(Control, GameState):
     def __init__(
-        self, *, x_pos=1, y_pos=0, width=frame_width, height=frame_height, length=5
+        self, *, x_pos=1, y_pos=0, width=frame_width, height=frame_height, length=2
     ):
         """Init : Local Var
 
@@ -74,11 +74,28 @@ class Snake_Main(Control, GameState):
         self.segment_list = []
 
     def eaten(self):
+        """Eaten
+            If self eat control is true
+            appends another block to teh position increasing its length
+        Args:
+            self.eat_control: Boolean Value -> bool
+            self.position: list of blocks -> list
+
+        """
         if self.eat_control is True:
             self.position.append(self.snake_block)
             self.eat_control = False
 
     def changer(self, x: int, y: int):
+        """Changer
+            Control.x and Control.y there for debugging purposes
+            but replaces teh direction of both values while updating the
+            debugging value
+
+        Args:
+            x: updated direction of x
+            y: updated direction of y
+        """
         Control.x, Control.y = self.dir.x, self.dir.y = x, y
 
     def change_dir(self, direction):
@@ -92,9 +109,17 @@ class Snake_Main(Control, GameState):
             self.changer(0, 1)
 
     def __position_compare_x(self):
+        """position x wrapper
+
+        wraps around x axis for snake
+        """
         return self.position[-1].x + self.dir.x
 
     def __position_compare_y(self):
+        """position compare y
+
+        wraps around y axis for snake
+        """
         return self.position[-1].y + self.dir.y
 
     def _control(self):
@@ -121,13 +146,15 @@ class Snake_Main(Control, GameState):
                 Vector(self.__position_compare_x(), self.__position_compare_y())
             )
 
-    def debuger(self):
-        if self.debug is True:
-            __import__("ipdb").set_trace()  # Can be changed to pdb if you want
-            # breakpoint()
-            # Use breakpoint() if you do not have ipdb
-
     def key_down(self, key):
+        """key_down
+
+        this can be for the first user , key down will take
+        Fkey + [i in ["i","j","k","l"]] will update movement
+
+        Args:
+            key: SimpleGUICS2Pygame command
+        """
         if key == simplegui.KEY_MAP["right"] and self.dir.x == 0:
             self.change_dir("right")
         elif key == simplegui.KEY_MAP["left"] and self.dir.x == 0:
@@ -137,31 +164,17 @@ class Snake_Main(Control, GameState):
         elif key == simplegui.KEY_MAP["down"] and self.dir.y == 0:
             self.change_dir("down")
 
-            # This was for test purposes , i wanted to see if it would work , the legnth
-            # growing
-            self.eat_control = True
+    def _self_collision(self):
+        """Collision Checker with self values
 
-    def update_self(self):
-        # Reset the list  otherwise it will keep on adding blocks
-        self.segment_list = []
-        for pos in self.position:
-            segment = [
-                Vector(pos.x * self.grid - self.grid, pos.y * self.grid),
-                Vector(pos.x * self.grid, pos.y * self.grid),
-                Vector(pos.x * self.grid, pos.y * self.grid - self.grid),
-                Vector(pos.x * self.grid - self.grid, pos.y * self.grid - self.grid),
-            ]
-            self.segment_list.append(segment)
+        Uses slicing to check the previous position if collision , some given timer ends
+        """
+        for pointer in self.position[:-1]:
+            if pointer.get_p() == self.position[-1].get_p():
 
-    def draw_self(self, canvas):
-        for k in self.segment_list:
-            x = [i.get_p() for i in k]
+                # self.position.append(self.snake_block)
 
-            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, self.color.SNAKE_COLOR)
-
-        self.update_self()
-
-        # self.draw_apple(canvas)
+                pass
 
 
 if __name__ == "__main__":

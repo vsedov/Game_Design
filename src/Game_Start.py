@@ -18,7 +18,7 @@ class GameStart:
     def __new__(cls, **kwargs):
 
         # This would allow for this to be expanded
-        snake = Game_Control(kwargs.get("length", 10))
+        snake = Game_Control(kwargs.get("length", 2))
 
         frame = simplegui.create_frame("Snake", frame_width, frame_height)
         frame.set_keydown_handler(snake.key_down)
@@ -29,4 +29,9 @@ class GameStart:
         timer.start()
 
         frame.start()
+
         return super().__new__(cls)
+
+
+# get rid of this when you are done with this
+GameStart()

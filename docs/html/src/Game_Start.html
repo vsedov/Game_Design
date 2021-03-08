@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.2" />
-<title>src API documentation</title>
+<title>src.Game_Start API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,49 +19,92 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Package <code>src</code></h1>
+<h1 class="title">Module <code>src.Game_Start</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import os
-import sys
+<pre><code class="python">#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+# vim:fenc=utf-8
+#
+# File Name: Game_Start
 
-sys.path.append(os.path.dirname(os.path.realpath(__file__)))</code></pre>
+import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
+
+from control import Game_Control
+from main import Colors
+from system_components.frame import frame_height, frame_width
+
+__author__ = &#34;Viv Sedov&#34;
+
+
+class GameStart:
+    # Can be omitted, Python will give a default implementation
+    def __new__(cls, **kwargs):
+
+        # This would allow for this to be expanded
+        snake = Game_Control(kwargs.get(&#34;length&#34;, 2))
+
+        frame = simplegui.create_frame(&#34;Snake&#34;, frame_width, frame_height)
+        frame.set_keydown_handler(snake.key_down)
+        frame.set_draw_handler(snake.draw_self)
+        frame.set_canvas_background(Colors.BACKGROUND_COLOR)
+
+        timer = simplegui.create_timer(100, snake.timer_handler)
+        timer.start()
+
+        frame.start()
+
+        return super().__new__(cls)
+
+
+# get rid of this when you are done with this
+GameStart()</code></pre>
 </details>
 </section>
 <section>
-<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt><code class="name"><a title="src.Game_Start" href="Game_Start.html">src.Game_Start</a></code></dt>
+<dt id="src.Game_Start.GameStart"><code class="flex name class">
+<span>class <span class="ident">GameStart</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
 <dd>
 <div class="desc"></div>
-</dd>
-<dt><code class="name"><a title="src.control" href="control.html">src.control</a></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt><code class="name"><a title="src.interface" href="interface.html">src.interface</a></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt><code class="name"><a title="src.main" href="main.html">src.main</a></code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt><code class="name"><a title="src.system_components" href="system_components/index.html">src.system_components</a></code></dt>
-<dd>
-<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GameStart:
+    # Can be omitted, Python will give a default implementation
+    def __new__(cls, **kwargs):
+
+        # This would allow for this to be expanded
+        snake = Game_Control(kwargs.get(&#34;length&#34;, 2))
+
+        frame = simplegui.create_frame(&#34;Snake&#34;, frame_width, frame_height)
+        frame.set_keydown_handler(snake.key_down)
+        frame.set_draw_handler(snake.draw_self)
+        frame.set_canvas_background(Colors.BACKGROUND_COLOR)
+
+        timer = simplegui.create_timer(100, snake.timer_handler)
+        timer.start()
+
+        frame.start()
+
+        return super().__new__(cls)</code></pre>
+</details>
 </dd>
 </dl>
-</section>
-<section>
-</section>
-<section>
-</section>
-<section>
 </section>
 </article>
 <nav id="sidebar">
@@ -70,13 +113,16 @@ sys.path.append(os.path.dirname(os.path.realpath(__file__)))</code></pre>
 <ul></ul>
 </div>
 <ul id="index">
-<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<li><h3>Super-module</h3>
 <ul>
-<li><code><a title="src.Game_Start" href="Game_Start.html">src.Game_Start</a></code></li>
-<li><code><a title="src.control" href="control.html">src.control</a></code></li>
-<li><code><a title="src.interface" href="interface.html">src.interface</a></code></li>
-<li><code><a title="src.main" href="main.html">src.main</a></code></li>
-<li><code><a title="src.system_components" href="system_components/index.html">src.system_components</a></code></li>
+<li><code><a title="src" href="index.html">src</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="src.Game_Start.GameStart" href="#src.Game_Start.GameStart">GameStart</a></code></h4>
+</li>
 </ul>
 </li>
 </ul>

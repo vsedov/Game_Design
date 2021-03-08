@@ -1,446 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, minimum-scale=1"
-    />
-    <meta name="generator" content="pdoc 0.9.2" />
-    <title>src.system_components.Vector API documentation</title>
-    <meta name="description" content="" />
-    <link
-      rel="preload stylesheet"
-      as="style"
-      href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css"
-      integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs="
-      crossorigin
-    />
-    <link
-      rel="preload stylesheet"
-      as="style"
-      href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css"
-      integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg="
-      crossorigin
-    />
-    <link
-      rel="stylesheet preload"
-      as="style"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css"
-      crossorigin
-    />
-    <style>
-      :root {
-        --highlight-color: #fe9;
-      }
-      .flex {
-        display: flex !important;
-      }
-      body {
-        line-height: 1.5em;
-      }
-      #content {
-        padding: 20px;
-      }
-      #sidebar {
-        padding: 30px;
-        overflow: hidden;
-      }
-      #sidebar > *:last-child {
-        margin-bottom: 2cm;
-      }
-      .http-server-breadcrumbs {
-        font-size: 130%;
-        margin: 0 0 15px 0;
-      }
-      #footer {
-        font-size: 0.75em;
-        padding: 5px 30px;
-        border-top: 1px solid #ddd;
-        text-align: right;
-      }
-      #footer p {
-        margin: 0 0 0 1em;
-        display: inline-block;
-      }
-      #footer p:last-child {
-        margin-right: 30px;
-      }
-      h1,
-      h2,
-      h3,
-      h4,
-      h5 {
-        font-weight: 300;
-      }
-      h1 {
-        font-size: 2.5em;
-        line-height: 1.1em;
-      }
-      h2 {
-        font-size: 1.75em;
-        margin: 1em 0 0.5em 0;
-      }
-      h3 {
-        font-size: 1.4em;
-        margin: 25px 0 10px 0;
-      }
-      h4 {
-        margin: 0;
-        font-size: 105%;
-      }
-      h1:target,
-      h2:target,
-      h3:target,
-      h4:target,
-      h5:target,
-      h6:target {
-        background: var(--highlight-color);
-        padding: 0.2em 0;
-      }
-      a {
-        color: #058;
-        text-decoration: none;
-        transition: color 0.3s ease-in-out;
-      }
-      a:hover {
-        color: #e82;
-      }
-      .title code {
-        font-weight: bold;
-      }
-      h2[id^="header-"] {
-        margin-top: 2em;
-      }
-      .ident {
-        color: #900;
-      }
-      pre code {
-        background: #f8f8f8;
-        font-size: 0.8em;
-        line-height: 1.4em;
-      }
-      code {
-        background: #f2f2f1;
-        padding: 1px 4px;
-        overflow-wrap: break-word;
-      }
-      h1 code {
-        background: transparent;
-      }
-      pre {
-        background: #f8f8f8;
-        border: 0;
-        border-top: 1px solid #ccc;
-        border-bottom: 1px solid #ccc;
-        margin: 1em 0;
-        padding: 1ex;
-      }
-      #http-server-module-list {
-        display: flex;
-        flex-flow: column;
-      }
-      #http-server-module-list div {
-        display: flex;
-      }
-      #http-server-module-list dt {
-        min-width: 10%;
-      }
-      #http-server-module-list p {
-        margin-top: 0;
-      }
-      .toc ul,
-      #index {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-      }
-      #index code {
-        background: transparent;
-      }
-      #index h3 {
-        border-bottom: 1px solid #ddd;
-      }
-      #index ul {
-        padding: 0;
-      }
-      #index h4 {
-        margin-top: 0.6em;
-        font-weight: bold;
-      }
-      @media (min-width: 200ex) {
-        #index .two-column {
-          column-count: 2;
-        }
-      }
-      @media (min-width: 300ex) {
-        #index .two-column {
-          column-count: 3;
-        }
-      }
-      dl {
-        margin-bottom: 2em;
-      }
-      dl dl:last-child {
-        margin-bottom: 4em;
-      }
-      dd {
-        margin: 0 0 1em 3em;
-      }
-      #header-classes + dl > dd {
-        margin-bottom: 3em;
-      }
-      dd dd {
-        margin-left: 2em;
-      }
-      dd p {
-        margin: 10px 0;
-      }
-      .name {
-        background: #eee;
-        font-weight: bold;
-        font-size: 0.85em;
-        padding: 5px 10px;
-        display: inline-block;
-        min-width: 40%;
-      }
-      .name:hover {
-        background: #e0e0e0;
-      }
-      dt:target .name {
-        background: var(--highlight-color);
-      }
-      .name > span:first-child {
-        white-space: nowrap;
-      }
-      .name.class > span:nth-child(2) {
-        margin-left: 0.4em;
-      }
-      .inherited {
-        color: #999;
-        border-left: 5px solid #eee;
-        padding-left: 1em;
-      }
-      .inheritance em {
-        font-style: normal;
-        font-weight: bold;
-      }
-      .desc h2 {
-        font-weight: 400;
-        font-size: 1.25em;
-      }
-      .desc h3 {
-        font-size: 1em;
-      }
-      .desc dt code {
-        background: inherit;
-      }
-      .source summary,
-      .git-link-div {
-        color: #666;
-        text-align: right;
-        font-weight: 400;
-        font-size: 0.8em;
-        text-transform: uppercase;
-      }
-      .source summary > * {
-        white-space: nowrap;
-        cursor: pointer;
-      }
-      .git-link {
-        color: inherit;
-        margin-left: 1em;
-      }
-      .source pre {
-        max-height: 500px;
-        overflow: auto;
-        margin: 0;
-      }
-      .source pre code {
-        font-size: 12px;
-        overflow: visible;
-      }
-      .hlist {
-        list-style: none;
-      }
-      .hlist li {
-        display: inline;
-      }
-      .hlist li:after {
-        content: ",\2002";
-      }
-      .hlist li:last-child:after {
-        content: none;
-      }
-      .hlist .hlist {
-        display: inline;
-        padding-left: 1em;
-      }
-      img {
-        max-width: 100%;
-      }
-      td {
-        padding: 0 0.5em;
-      }
-      .admonition {
-        padding: 0.1em 0.5em;
-        margin-bottom: 1em;
-      }
-      .admonition-title {
-        font-weight: bold;
-      }
-      .admonition.note,
-      .admonition.info,
-      .admonition.important {
-        background: #aef;
-      }
-      .admonition.todo,
-      .admonition.versionadded,
-      .admonition.tip,
-      .admonition.hint {
-        background: #dfd;
-      }
-      .admonition.warning,
-      .admonition.versionchanged,
-      .admonition.deprecated {
-        background: #fd4;
-      }
-      .admonition.error,
-      .admonition.danger,
-      .admonition.caution {
-        background: lightpink;
-      }
-    </style>
-    <style media="screen and (min-width: 700px)">
-      @media screen and (min-width: 700px) {
-        #sidebar {
-          width: 30%;
-          height: 100vh;
-          overflow: auto;
-          position: sticky;
-          top: 0;
-        }
-        #content {
-          width: 70%;
-          max-width: 100ch;
-          padding: 3em 4em;
-          border-left: 1px solid #ddd;
-        }
-        pre code {
-          font-size: 1em;
-        }
-        .item .name {
-          font-size: 1em;
-        }
-        main {
-          display: flex;
-          flex-direction: row-reverse;
-          justify-content: flex-end;
-        }
-        .toc ul ul,
-        #index ul {
-          padding-left: 1.5em;
-        }
-        .toc > ul > li {
-          margin-top: 0.5em;
-        }
-      }
-    </style>
-    <style media="print">
-      @media print {
-        #sidebar h1 {
-          page-break-before: always;
-        }
-        .source {
-          display: none;
-        }
-      }
-      @media print {
-        * {
-          background: transparent !important;
-          color: #000 !important;
-          box-shadow: none !important;
-          text-shadow: none !important;
-        }
-        a[href]:after {
-          content: " (" attr(href) ")";
-          font-size: 90%;
-        }
-        a[href][title]:after {
-          content: none;
-        }
-        abbr[title]:after {
-          content: " (" attr(title) ")";
-        }
-        .ir a:after,
-        a[href^="javascript:"]:after,
-        a[href^="#"]:after {
-          content: "";
-        }
-        pre,
-        blockquote {
-          border: 1px solid #999;
-          page-break-inside: avoid;
-        }
-        thead {
-          display: table-header-group;
-        }
-        tr,
-        img {
-          page-break-inside: avoid;
-        }
-        img {
-          max-width: 100% !important;
-        }
-        @page {
-          margin: 0.5cm;
-        }
-        p,
-        h2,
-        h3 {
-          orphans: 3;
-          widows: 3;
-        }
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-          page-break-after: avoid;
-        }
-      }
-    </style>
-    <script
-      defer
-      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"
-      integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8="
-      crossorigin
-    ></script>
-    <script>
-      window.addEventListener("DOMContentLoaded", () =>
-        hljs.initHighlighting()
-      );
-    </script>
-  </head>
-  <body>
-    <main>
-      <article id="content">
-        <header>
-          <h1 class="title">
-            Module <code>src.system_components.Vector</code>
-          </h1>
-        </header>
-        <section id="section-intro">
-          <details class="source">
-            <summary>
-              <span>Expand source code</span>
-            </summary>
-            <pre><code class="python">#! /usr/bin/env python3
-# -- coding: utf-8 --
-# vim:fenc=utf-8
-
-import math
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>src.system_components.Vector API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.system_components.Vector</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import math
 
 
 # The Vector class
@@ -475,7 +61,6 @@ class Vector:
     def add(self, other):
         self.x += other.x
         self.y += other.y
-
         return self
 
     def __add__(self, other):
@@ -499,7 +84,6 @@ class Vector:
     def multiply(self, k):
         self.x *= k
         self.y *= k
-
         return self
 
     def __mul__(self, k):
@@ -540,7 +124,6 @@ class Vector:
         n = normal.copy()
         n.multiply(2 * self.dot(normal))
         self.subtract(n)
-
         return self
 
     # Returns the angle between this vector and another one
@@ -550,7 +133,6 @@ class Vector:
     # Rotates the vector 90 degrees anticlockwise
     def rotate_anti(self):
         self.x, self.y = -self.y, self.x
-
         return self
 
     # Rotates the vector according to an angle theta given in radians
@@ -558,41 +140,39 @@ class Vector:
         rx = self.x * math.cos(theta) - self.y * math.sin(theta)
         ry = self.x * math.sin(theta) + self.y * math.cos(theta)
         self.x, self.y = rx, ry
-
         return self
 
     # Rotates the vector according to an angle theta given in degrees
     def rotate(self, theta):
         theta_rad = theta / 180 * math.pi
-
         return self.rotate_rad(theta_rad)
 
     # project the vector onto a given vector
     def get_proj(self, vec):
         unit = vec.get_normalized()
-
         return unit.multiply(self.dot(unit))</code></pre>
-          </details>
-        </section>
-        <section></section>
-        <section></section>
-        <section></section>
-        <section>
-          <h2 class="section-title" id="header-classes">Classes</h2>
-          <dl>
-            <dt id="src.system_components.Vector.Vector">
-              <code class="flex name class">
-                <span>class <span class="ident">Vector</span></span>
-                <span>(</span><span>x=0, y=0)</span>
-              </code>
-            </dt>
-            <dd>
-              <div class="desc"></div>
-              <details class="source">
-                <summary>
-                  <span>Expand source code</span>
-                </summary>
-                <pre><code class="python">class Vector:
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="src.system_components.Vector.Vector"><code class="flex name class">
+<span>class <span class="ident">Vector</span></span>
+<span>(</span><span>x=0, y=0)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Vector:
 
     # Initialiser
     def __init__(self, x=0, y=0):
@@ -623,7 +203,6 @@ class Vector:
     def add(self, other):
         self.x += other.x
         self.y += other.y
-
         return self
 
     def __add__(self, other):
@@ -647,7 +226,6 @@ class Vector:
     def multiply(self, k):
         self.x *= k
         self.y *= k
-
         return self
 
     def __mul__(self, k):
@@ -688,7 +266,6 @@ class Vector:
         n = normal.copy()
         n.multiply(2 * self.dot(normal))
         self.subtract(n)
-
         return self
 
     # Returns the angle between this vector and another one
@@ -698,7 +275,6 @@ class Vector:
     # Rotates the vector 90 degrees anticlockwise
     def rotate_anti(self):
         self.x, self.y = -self.y, self.x
-
         return self
 
     # Rotates the vector according to an angle theta given in radians
@@ -706,542 +282,315 @@ class Vector:
         rx = self.x * math.cos(theta) - self.y * math.sin(theta)
         ry = self.x * math.sin(theta) + self.y * math.cos(theta)
         self.x, self.y = rx, ry
-
         return self
 
     # Rotates the vector according to an angle theta given in degrees
     def rotate(self, theta):
         theta_rad = theta / 180 * math.pi
-
         return self.rotate_rad(theta_rad)
 
     # project the vector onto a given vector
     def get_proj(self, vec):
         unit = vec.get_normalized()
-
         return unit.multiply(self.dot(unit))</code></pre>
-              </details>
-              <h3>Methods</h3>
-              <dl>
-                <dt id="src.system_components.Vector.Vector.add">
-                  <code class="name flex">
-                    <span>def <span class="ident">add</span></span
-                    >(<span>self, other)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def add(self, other):
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="src.system_components.Vector.Vector.add"><code class="name flex">
+<span>def <span class="ident">add</span></span>(<span>self, other)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add(self, other):
     self.x += other.x
     self.y += other.y
-
     return self</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.angle">
-                  <code class="name flex">
-                    <span>def <span class="ident">angle</span></span
-                    >(<span>self, other)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def angle(self, other):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.angle"><code class="name flex">
+<span>def <span class="ident">angle</span></span>(<span>self, other)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def angle(self, other):
     return math.acos(self.dot(other) / (self.length() * other.length()))</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.copy">
-                  <code class="name flex">
-                    <span>def <span class="ident">copy</span></span
-                    >(<span>self)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def copy(self):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.copy"><code class="name flex">
+<span>def <span class="ident">copy</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def copy(self):
     return Vector(self.x, self.y)</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.divide">
-                  <code class="name flex">
-                    <span>def <span class="ident">divide</span></span
-                    >(<span>self, k)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def divide(self, k):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.divide"><code class="name flex">
+<span>def <span class="ident">divide</span></span>(<span>self, k)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def divide(self, k):
     return self.multiply(1 / k)</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.dot">
-                  <code class="name flex">
-                    <span>def <span class="ident">dot</span></span
-                    >(<span>self, other)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def dot(self, other):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.dot"><code class="name flex">
+<span>def <span class="ident">dot</span></span>(<span>self, other)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dot(self, other):
     return self.x * other.x + self.y * other.y</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.get_normalized">
-                  <code class="name flex">
-                    <span>def <span class="ident">get_normalized</span></span
-                    >(<span>self)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def get_normalized(self):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.get_normalized"><code class="name flex">
+<span>def <span class="ident">get_normalized</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_normalized(self):
     return self.copy().normalize()</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.get_p">
-                  <code class="name flex">
-                    <span>def <span class="ident">get_p</span></span
-                    >(<span>self)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def get_p(self):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.get_p"><code class="name flex">
+<span>def <span class="ident">get_p</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_p(self):
     return (self.x, self.y)</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.get_proj">
-                  <code class="name flex">
-                    <span>def <span class="ident">get_proj</span></span
-                    >(<span>self, vec)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def get_proj(self, vec):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.get_proj"><code class="name flex">
+<span>def <span class="ident">get_proj</span></span>(<span>self, vec)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_proj(self, vec):
     unit = vec.get_normalized()
-
     return unit.multiply(self.dot(unit))</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.length">
-                  <code class="name flex">
-                    <span>def <span class="ident">length</span></span
-                    >(<span>self)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def length(self):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.length"><code class="name flex">
+<span>def <span class="ident">length</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def length(self):
     return math.sqrt(self.x ** 2 + self.y ** 2)</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.length_squared">
-                  <code class="name flex">
-                    <span>def <span class="ident">length_squared</span></span
-                    >(<span>self)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def length_squared(self):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.length_squared"><code class="name flex">
+<span>def <span class="ident">length_squared</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def length_squared(self):
     return self.x ** 2 + self.y ** 2</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.multiply">
-                  <code class="name flex">
-                    <span>def <span class="ident">multiply</span></span
-                    >(<span>self, k)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def multiply(self, k):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.multiply"><code class="name flex">
+<span>def <span class="ident">multiply</span></span>(<span>self, k)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def multiply(self, k):
     self.x *= k
     self.y *= k
-
     return self</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.negate">
-                  <code class="name flex">
-                    <span>def <span class="ident">negate</span></span
-                    >(<span>self)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def negate(self):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.negate"><code class="name flex">
+<span>def <span class="ident">negate</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def negate(self):
     return self.multiply(-1)</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.normalize">
-                  <code class="name flex">
-                    <span>def <span class="ident">normalize</span></span
-                    >(<span>self)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def normalize(self):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.normalize"><code class="name flex">
+<span>def <span class="ident">normalize</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def normalize(self):
     return self.divide(self.length())</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.reflect">
-                  <code class="name flex">
-                    <span>def <span class="ident">reflect</span></span
-                    >(<span>self, normal)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def reflect(self, normal):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.reflect"><code class="name flex">
+<span>def <span class="ident">reflect</span></span>(<span>self, normal)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reflect(self, normal):
     n = normal.copy()
     n.multiply(2 * self.dot(normal))
     self.subtract(n)
-
     return self</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.rotate">
-                  <code class="name flex">
-                    <span>def <span class="ident">rotate</span></span
-                    >(<span>self, theta)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def rotate(self, theta):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.rotate"><code class="name flex">
+<span>def <span class="ident">rotate</span></span>(<span>self, theta)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rotate(self, theta):
     theta_rad = theta / 180 * math.pi
-
     return self.rotate_rad(theta_rad)</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.rotate_anti">
-                  <code class="name flex">
-                    <span>def <span class="ident">rotate_anti</span></span
-                    >(<span>self)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def rotate_anti(self):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.rotate_anti"><code class="name flex">
+<span>def <span class="ident">rotate_anti</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rotate_anti(self):
     self.x, self.y = -self.y, self.x
-
     return self</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.rotate_rad">
-                  <code class="name flex">
-                    <span>def <span class="ident">rotate_rad</span></span
-                    >(<span>self, theta)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def rotate_rad(self, theta):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.rotate_rad"><code class="name flex">
+<span>def <span class="ident">rotate_rad</span></span>(<span>self, theta)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rotate_rad(self, theta):
     rx = self.x * math.cos(theta) - self.y * math.sin(theta)
     ry = self.x * math.sin(theta) + self.y * math.cos(theta)
     self.x, self.y = rx, ry
-
     return self</code></pre>
-                  </details>
-                </dd>
-                <dt id="src.system_components.Vector.Vector.subtract">
-                  <code class="name flex">
-                    <span>def <span class="ident">subtract</span></span
-                    >(<span>self, other)</span>
-                  </code>
-                </dt>
-                <dd>
-                  <div class="desc"></div>
-                  <details class="source">
-                    <summary>
-                      <span>Expand source code</span>
-                    </summary>
-                    <pre><code class="python">def subtract(self, other):
+</details>
+</dd>
+<dt id="src.system_components.Vector.Vector.subtract"><code class="name flex">
+<span>def <span class="ident">subtract</span></span>(<span>self, other)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def subtract(self, other):
     return self.add(-other)</code></pre>
-                  </details>
-                </dd>
-              </dl>
-            </dd>
-          </dl>
-        </section>
-      </article>
-      <nav id="sidebar">
-        <h1>Index</h1>
-        <div class="toc">
-          <ul></ul>
-        </div>
-        <ul id="index">
-          <li>
-            <h3>Super-module</h3>
-            <ul>
-              <li>
-                <code
-                  ><a title="src.system_components" href="index.html"
-                    >src.system_components</a
-                  ></code
-                >
-              </li>
-            </ul>
-          </li>
-          <li>
-            <h3><a href="#header-classes">Classes</a></h3>
-            <ul>
-              <li>
-                <h4>
-                  <code
-                    ><a
-                      title="src.system_components.Vector.Vector"
-                      href="#src.system_components.Vector.Vector"
-                      >Vector</a
-                    ></code
-                  >
-                </h4>
-                <ul class="two-column">
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.add"
-                        href="#src.system_components.Vector.Vector.add"
-                        >add</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.angle"
-                        href="#src.system_components.Vector.Vector.angle"
-                        >angle</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.copy"
-                        href="#src.system_components.Vector.Vector.copy"
-                        >copy</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.divide"
-                        href="#src.system_components.Vector.Vector.divide"
-                        >divide</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.dot"
-                        href="#src.system_components.Vector.Vector.dot"
-                        >dot</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.get_normalized"
-                        href="#src.system_components.Vector.Vector.get_normalized"
-                        >get_normalized</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.get_p"
-                        href="#src.system_components.Vector.Vector.get_p"
-                        >get_p</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.get_proj"
-                        href="#src.system_components.Vector.Vector.get_proj"
-                        >get_proj</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.length"
-                        href="#src.system_components.Vector.Vector.length"
-                        >length</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.length_squared"
-                        href="#src.system_components.Vector.Vector.length_squared"
-                        >length_squared</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.multiply"
-                        href="#src.system_components.Vector.Vector.multiply"
-                        >multiply</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.negate"
-                        href="#src.system_components.Vector.Vector.negate"
-                        >negate</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.normalize"
-                        href="#src.system_components.Vector.Vector.normalize"
-                        >normalize</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.reflect"
-                        href="#src.system_components.Vector.Vector.reflect"
-                        >reflect</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.rotate"
-                        href="#src.system_components.Vector.Vector.rotate"
-                        >rotate</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.rotate_anti"
-                        href="#src.system_components.Vector.Vector.rotate_anti"
-                        >rotate_anti</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.rotate_rad"
-                        href="#src.system_components.Vector.Vector.rotate_rad"
-                        >rotate_rad</a
-                      ></code
-                    >
-                  </li>
-                  <li>
-                    <code
-                      ><a
-                        title="src.system_components.Vector.Vector.subtract"
-                        href="#src.system_components.Vector.Vector.subtract"
-                        >subtract</a
-                      ></code
-                    >
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-    </main>
-    <footer id="footer">
-      <p>
-        Generated by
-        <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.
-      </p>
-    </footer>
-  </body>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src.system_components" href="index.html">src.system_components</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="src.system_components.Vector.Vector" href="#src.system_components.Vector.Vector">Vector</a></code></h4>
+<ul class="two-column">
+<li><code><a title="src.system_components.Vector.Vector.add" href="#src.system_components.Vector.Vector.add">add</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.angle" href="#src.system_components.Vector.Vector.angle">angle</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.copy" href="#src.system_components.Vector.Vector.copy">copy</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.divide" href="#src.system_components.Vector.Vector.divide">divide</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.dot" href="#src.system_components.Vector.Vector.dot">dot</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.get_normalized" href="#src.system_components.Vector.Vector.get_normalized">get_normalized</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.get_p" href="#src.system_components.Vector.Vector.get_p">get_p</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.get_proj" href="#src.system_components.Vector.Vector.get_proj">get_proj</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.length" href="#src.system_components.Vector.Vector.length">length</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.length_squared" href="#src.system_components.Vector.Vector.length_squared">length_squared</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.multiply" href="#src.system_components.Vector.Vector.multiply">multiply</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.negate" href="#src.system_components.Vector.Vector.negate">negate</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.normalize" href="#src.system_components.Vector.Vector.normalize">normalize</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.reflect" href="#src.system_components.Vector.Vector.reflect">reflect</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.rotate" href="#src.system_components.Vector.Vector.rotate">rotate</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.rotate_anti" href="#src.system_components.Vector.Vector.rotate_anti">rotate_anti</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.rotate_rad" href="#src.system_components.Vector.Vector.rotate_rad">rotate_rad</a></code></li>
+<li><code><a title="src.system_components.Vector.Vector.subtract" href="#src.system_components.Vector.Vector.subtract">subtract</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
 </html>
