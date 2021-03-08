@@ -72,15 +72,8 @@ class Game_Control(Snake_Main):
 
             # This tends to fail
             if i.get_p() == self.app_pos:
-                self.eat_control = True
+                Snake_Main.eat_control = True
                 self.app_pos, self.app_seg = self.app()
-                breakpoint()
-                self.position.append(
-                    Vector(
-                        self.position[-1:].x // self.internal_grid,
-                        self.position[-1:].y // self.internal_grid,
-                    )
-                )
 
     def timer_handler(self):
         """time_handler
@@ -93,11 +86,10 @@ class Game_Control(Snake_Main):
         self._self_collision()
         self._app_eaten()
 
-        if not self.eat_control:
-            breakpoint()
+        if not Snake_Main.eat_control:
             self.position.pop(0)
 
-        self.eat_control = False
+        Snake_Main.eat_control = False
 
         # For debugging
         # print(self.x, "with ", self.y)
