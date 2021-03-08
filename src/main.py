@@ -146,12 +146,6 @@ class Snake_Main(Control, GameState):
                 Vector(self.__position_compare_x(), self.__position_compare_y())
             )
 
-    def debuger(self):
-        if self.debug is True:
-            __import__("ipdb").set_trace()  # Can be changed to pdb if you want
-            # breakpoint()
-            # Use breakpoint() if you do not have ipdb
-
     def key_down(self, key):
         """key_down
 
