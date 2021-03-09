@@ -53,7 +53,7 @@ class Snake_Main(Control, GameState):
             debug=False,
         )
         self.color = Colors()
-
+        self.life = 3
         self.segment_list = []
         self.width = width
         self.height = height
@@ -171,6 +171,11 @@ class Snake_Main(Control, GameState):
         """
         for pointer in self.position[:-1]:
             if pointer.get_p() == self.position[-1].get_p():
+                if self.life == 0:
+                    # We need to exit the user back to the menu here
+                    print("Lives expired")
+                else:
+                    self.life -= 1
 
                 # self.position.append(self.snake_block)
 
