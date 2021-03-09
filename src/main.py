@@ -164,6 +164,19 @@ class Snake_Main(Control, GameState):
         elif key == simplegui.KEY_MAP["down"] and self.dir.y == 0:
             self.change_dir("down")
 
+    def __life_change(self):
+        if self.life == 0:
+            print("life change ococurs")
+        else:
+            self.life -= 1
+
+    def __snake_reducer(self):
+        if len(self.position) > 2:
+            self.position.pop()
+        else:
+            print("position is too small for me to remove anything")
+            print("END OF GAME")
+
     def _self_collision(self):
         """Collision Checker with self values
 
@@ -171,15 +184,8 @@ class Snake_Main(Control, GameState):
         """
         for pointer in self.position[:-1]:
             if pointer.get_p() == self.position[-1].get_p():
-                if self.life == 0:
-                    # We need to exit the user back to the menu here
-                    print("Lives expired")
-                else:
-                    self.life -= 1
-
-                # self.position.append(self.snake_block)
-
-                pass
+                self.__life_change()
+                self.__snake_reducer()
 
 
 if __name__ == "__main__":
