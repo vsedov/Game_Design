@@ -1,7 +1,7 @@
-Updated. Elapsed time: 0.972967 sec.
+#! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 # vim:fenc=utf-8
-#Done!
+#
 # File Name: control
 
 import random
@@ -36,6 +36,7 @@ class Game_Control(Snake_Main):
         """
 
         self.segment_list = []
+        # print(self.eat_control)
         for pos in self.position:
             segment = [
                 Vector(pos.x * self.grid - self.grid, pos.y * self.grid),
