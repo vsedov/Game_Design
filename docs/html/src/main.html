@@ -81,7 +81,7 @@ class Snake_Main(Control, GameState):
             debug=False,
         )
         self.color = Colors()
-
+        self.life = 3
         self.segment_list = []
         self.width = width
         self.height = height
@@ -192,6 +192,19 @@ class Snake_Main(Control, GameState):
         elif key == simplegui.KEY_MAP[&#34;down&#34;] and self.dir.y == 0:
             self.change_dir(&#34;down&#34;)
 
+    def __life_change(self):
+        if self.life == 0:
+            print(&#34;life change ococurs&#34;)
+        else:
+            self.life -= 1
+
+    def __snake_reducer(self):
+        if len(self.position) &gt; 2:
+            self.position.pop()
+        else:
+            print(&#34;position is too small for me to remove anything&#34;)
+            print(&#34;END OF GAME&#34;)
+
     def _self_collision(self):
         &#34;&#34;&#34;Collision Checker with self values
 
@@ -199,10 +212,8 @@ class Snake_Main(Control, GameState):
         &#34;&#34;&#34;
         for pointer in self.position[:-1]:
             if pointer.get_p() == self.position[-1].get_p():
-
-                # self.position.append(self.snake_block)
-
-                pass
+                self.__life_change()
+                self.__snake_reducer()
 
 
 if __name__ == &#34;__main__&#34;:
@@ -308,7 +319,7 @@ if __name__ == &#34;__main__&#34;:
             debug=False,
         )
         self.color = Colors()
-
+        self.life = 3
         self.segment_list = []
         self.width = width
         self.height = height
@@ -419,6 +430,19 @@ if __name__ == &#34;__main__&#34;:
         elif key == simplegui.KEY_MAP[&#34;down&#34;] and self.dir.y == 0:
             self.change_dir(&#34;down&#34;)
 
+    def __life_change(self):
+        if self.life == 0:
+            print(&#34;life change ococurs&#34;)
+        else:
+            self.life -= 1
+
+    def __snake_reducer(self):
+        if len(self.position) &gt; 2:
+            self.position.pop()
+        else:
+            print(&#34;position is too small for me to remove anything&#34;)
+            print(&#34;END OF GAME&#34;)
+
     def _self_collision(self):
         &#34;&#34;&#34;Collision Checker with self values
 
@@ -426,10 +450,8 @@ if __name__ == &#34;__main__&#34;:
         &#34;&#34;&#34;
         for pointer in self.position[:-1]:
             if pointer.get_p() == self.position[-1].get_p():
-
-                # self.position.append(self.snake_block)
-
-                pass</code></pre>
+                self.__life_change()
+                self.__snake_reducer()</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
