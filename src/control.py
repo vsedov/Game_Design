@@ -21,7 +21,7 @@ class Game_Control(Snake_Main):
         self.width = frame_width
         self.height = frame_height
         self.app_pos, self.app_seg = self.app()
-        self.image = simplegui.load_image('https://svgshare.com/i/Urn.svg')
+        self.image = simplegui.load_image("https://svgshare.com/i/Urn.svg")
 
     def update_self(self, canvas):
         """update_self
@@ -61,8 +61,14 @@ class Game_Control(Snake_Main):
 
         for k in self.segment_list:
             x = [i.get_p() for i in k]
-            
-            canvas.draw_image(self.image, (self.width // 10, self.height // 10), (self.width, self.height), (5, 5), (10, 10))
+
+            canvas.draw_image(
+                self.image,
+                (self.width // 10, self.height // 10),
+                (self.width, self.height),
+                (5, 5),
+                (10, 10),
+            )
             canvas.draw_polygon(x, 1, "Purple", "Black")
 
         self.update_self(canvas)
