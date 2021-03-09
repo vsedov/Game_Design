@@ -17,6 +17,7 @@ List of Features for the game~
 		-Different coloured snakes when in 2 player mode
 		-Life Counter
 		-Canvas change when a death occurs / life is lost
+		-SVG Images to render the snake
 
 	Game Engine Extras:
 		-Maybe change grid colour / map colour

@@ -18,7 +18,10 @@ class Game_Control(Snake_Main):
         super().__init__(
             x_pos=1, y_pos=0, width=frame_width, height=frame_height, length=amount
         )
+        self.width = frame_width
+        self.height = frame_height
         self.app_pos, self.app_seg = self.app()
+        self.image = simplegui.load_image("https://svgshare.com/i/Urn.svg")
 
     def update_self(self, canvas):
         """update_self
@@ -59,7 +62,14 @@ class Game_Control(Snake_Main):
         for k in self.segment_list:
             x = [i.get_p() for i in k]
 
-            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, "Black")
+            # canvas.draw_image(
+            #     self.image,
+            #     (self.width // 10, self.height // 10),
+            #     (self.width, self.height),
+            #     (5, 5),
+            #     (10, 10),
+            # )
+            canvas.draw_polygon(x, 1, "Purple", "Black")
 
         self.update_self(canvas)
 
@@ -90,8 +100,8 @@ class Game_Control(Snake_Main):
         """time_handler
 
         all main functinos like control , wraping , apple beeing eaten ,
-        collisions must all be parsed via the timer , hence why its wise to do so this way
-        wrapper has been included to adjust for errors {@ .... }
+        collisions must all be parsed via the timer , hence why its wise to do so this
+        way wrapper has been included to adjust for errors {@ .... }
         """
         self._control()
         self._self_collision()
