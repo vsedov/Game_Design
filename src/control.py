@@ -96,6 +96,18 @@ class Game_Control(Snake_Main):
                 # Redifine the given apple
                 self.app_pos, self.app_seg = self.app()
 
+    def _grower_eaten(self):
+        """grower_eaten
+
+        Given Function states if the eat_control from main is true , such that value is
+        poped
+
+        Funciton ever grows , we pop at certain moments given teh defined legnth . this
+        allows it to grow
+        """
+        if not self.eat_control:
+            self.position.pop(0)
+
     def timer_handler(self):
         """time_handler
 
@@ -106,10 +118,7 @@ class Game_Control(Snake_Main):
         self._control()
         self._self_collision()
         self._app_eaten()
-
-        if not self.eat_control:
-            # adds new item when there True
-            self.position.pop(0)
+        self._grower_eaten()
 
         self.eat_control = False
 
