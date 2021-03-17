@@ -3,7 +3,6 @@ List of Features for the game~
 	Menu System Mandatory:
 		-Start game
 		-Exit game
-		-Select mode (1 player or 2 player)
 		-Highscore tab
 	
 	Menu System Extras:
@@ -20,8 +19,8 @@ List of Features for the game~
 		-SVG Images to render the snake
 
 	Game Engine Extras:
-		-Maybe change grid colour / map colour
-		-Maybe add feature to name snake so the highscore can be assigned to name
+		-Maybe  map colour || background 
+		-Maybe add feature to name snake so the highscore - global
 		
 		
 		
