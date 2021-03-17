@@ -19,8 +19,7 @@ class GameStart:
         # This would allow for this to be expanded
         snake = Game_Control(kwargs.get("length", 5))
 
-        # If nothing is entered it will return to teh defualt colour in Game_control
-        snake.color.SNAKE_COLOR = kwargs.get("colours")
+        snake.color.SNAKE_COLOR = kwargs.get("colours", "purple")
 
         frame = simplegui.create_frame("Snake", frame_width, frame_height)
         frame.set_keydown_handler(snake.key_down)
