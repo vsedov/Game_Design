@@ -1,11 +1,8 @@
-try:
-    import simplegui
-except ImportError:
-    import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
-
 import sys
 ##import codeskulptor
 from time import sleep
+
+import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
 
 IMG = simplegui.load_image("http://personal.rhul.ac.uk/zjac/281/snake.png")
 # IMG_CENTRE = (200, 200)
