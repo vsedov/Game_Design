@@ -20,8 +20,7 @@ class Game_Control(Snake_Main):
         )
         self.width = frame_width
         self.height = frame_height
-        self.app_pos, self.app_seg = self.app()
-        self.image = simplegui.load_image("https://svgshare.com/i/Urn.svg")
+        self.app_pos, self.app_seg = self._app()
 
     def update_self(self, canvas):
         """update_self
@@ -69,7 +68,7 @@ class Game_Control(Snake_Main):
             #     (5, 5),
             #     (10, 10),
             # )
-            canvas.draw_polygon(x, 1, "Purple", "Black")
+            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, "Black")
 
         self.update_self(canvas)
 
@@ -88,13 +87,11 @@ class Game_Control(Snake_Main):
 
         for i in self.position:
 
-            # __import__('ipdb').set_trace()
-
             # This tends to fail
             if i.get_p() == self.app_pos:
                 self.eat_control = True
                 # Redifine the given apple
-                self.app_pos, self.app_seg = self.app()
+                self.app_pos, self.app_seg = self._app()
 
     def _grower_eaten(self):
         """grower_eaten
@@ -122,7 +119,7 @@ class Game_Control(Snake_Main):
 
         self.eat_control = False
 
-    def app(self):
+    def _app(self):
         """app
 
         Apple segments , to create blocks , this CAN be Changed , though you need to

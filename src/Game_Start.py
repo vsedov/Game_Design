@@ -7,7 +7,6 @@
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
 
 from control import Game_Control
-from main import Colors
 from system_components.frame import frame_height, frame_width
 
 __author__ = "Viv Sedov"
@@ -18,12 +17,17 @@ class GameStart:
     def __new__(cls, **kwargs):
 
         # This would allow for this to be expanded
-        snake = Game_Control(kwargs.get("length", 2))
+        snake = Game_Control(kwargs.get("length", 5))
+
+        # If nothing is entered it will return to teh defualt colour in Game_control
+        snake.color.SNAKE_COLOR = kwargs.get("colours")
 
         frame = simplegui.create_frame("Snake", frame_width, frame_height)
         frame.set_keydown_handler(snake.key_down)
         frame.set_draw_handler(snake.draw_self)
-        frame.set_canvas_background(Colors.BACKGROUND_COLOR)
+
+        # We do not change the background colour
+        frame.set_canvas_background(snake.color.BACKGROUND_COLOR)
 
         timer = simplegui.create_timer(100, snake.timer_handler)
         timer.start()
@@ -40,4 +44,5 @@ Steps :
  if you want to test a change have this file open and uncomment this , once you are 
  finished , uncomment this again . 
 """
+
 # GameStart()
