@@ -21,7 +21,6 @@ class Game_Control(Snake_Main):
         self.width = frame_width
         self.height = frame_height
         self.app_pos, self.app_seg = self._app()
-
         self.speed = 100
         self.max_speed = 10
 
@@ -66,6 +65,7 @@ class Game_Control(Snake_Main):
             canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, "Black")
 
         self.update_self(canvas)
+        self.timer_handler(canvas)
 
         canvas.draw_polygon(self.app_seg, 1, "Red", "Red")
 
@@ -109,7 +109,7 @@ class Game_Control(Snake_Main):
         if not self.eat_control:
             self.position.pop(0)
 
-    def timer_handler(self):
+    def timer_handler(self, canvas):
         """time_handler
 
         all main functinos like control , wraping , apple beeing eaten ,
@@ -117,7 +117,7 @@ class Game_Control(Snake_Main):
         way wrapper has been included to adjust for errors {@ .... }
         """
         self._control()
-        self._self_collision()
+        self._self_collision(canvas)
         self._app_eaten()
         self._grower_eaten()
 

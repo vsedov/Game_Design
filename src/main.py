@@ -186,10 +186,10 @@ class Snake_Main(Control, GameState):
         elif key == simplegui.KEY_MAP["down"] and self.dir.y == 0:
             self.change_dir("down")
 
-    def __life_change(self):
+    def __life_change(self, canvas):
         ic("Your lives are ", self.life)
         if self.life == 0:
-            print("life change ococurs")
+            canvas.draw_text("GAME OVER", (0, 0), 30, "Red")
 
         else:
             self.life_counter += 1
@@ -202,14 +202,14 @@ class Snake_Main(Control, GameState):
             print("position is too small for me to remove anything")
             print("END OF GAME")
 
-    def _self_collision(self):
+    def _self_collision(self, canvas):
         """Collision Checker with self values
 
         Uses slicing to check the previous position if collision , some given timer ends
         """
         for pointer in self.position[:-1]:
             if pointer.get_p() == self.position[-1].get_p():
-                self.__life_change()
+                self.__life_change(canvas)
                 self.__snake_reducer()
 
 
