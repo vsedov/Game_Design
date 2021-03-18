@@ -11,7 +11,7 @@ from Game_Start import GameStart
 
 
 def push_to_class(**kwargs):
-    GameStart(length=kwargs.get("length"))
+    GameStart(length=kwargs.get("length"), colours=kwargs.get("colours"))
 
 
 def main() -> None:
@@ -24,8 +24,15 @@ def main() -> None:
         default=1.0,
         help="Enter number for snake length?",
     )
+    parser.add_argument(
+        "--y",
+        metavar="",
+        type=str,
+        default="red",
+        help="Enter number for snake Colour?",
+    )
     args = parser.parse_args()
-    push_to_class(length=args.x)
+    push_to_class(length=args.x, colours=args.y)
 
 
 if __name__ == "__main__":

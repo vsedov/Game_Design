@@ -18,7 +18,7 @@ from system_components.Vector import Vector
 @dataclass
 class Colors:
     BACKGROUND_COLOR: str = "black"
-    SNAKE_COLOR: str = "red"
+    SNAKE_COLOR: str = "purple"
 
 
 class Snake_Main(Control, GameState):
@@ -53,6 +53,7 @@ class Snake_Main(Control, GameState):
             debug=False,
         )
         self.color = Colors()
+        self.speed = 100
         self.life = 3
         self.segment_list = []
         self.width = width
@@ -72,19 +73,6 @@ class Snake_Main(Control, GameState):
         self.dir = Vector(x_pos, y_pos)
         self.eat_control = False
         self.segment_list = []
-
-    def eaten(self):
-        """Eaten
-            If self eat control is true
-            appends another block to teh position increasing its length
-        Args:
-            self.eat_control: Boolean Value -> bool
-            self.position: list of blocks -> list
-
-        """
-        if self.eat_control is True:
-            self.position.append(self.snake_block)
-            self.eat_control = False
 
     def changer(self, x: int, y: int):
         """Changer

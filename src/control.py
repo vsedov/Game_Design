@@ -20,8 +20,10 @@ class Game_Control(Snake_Main):
         )
         self.width = frame_width
         self.height = frame_height
-        self.app_pos, self.app_seg = self.app()
-        self.image = simplegui.load_image("https://svgshare.com/i/Urn.svg")
+        self.app_pos, self.app_seg = self._app()
+
+        self.speed = 100
+        self.max_speed = 10
 
     def update_self(self, canvas):
         """update_self
@@ -61,19 +63,19 @@ class Game_Control(Snake_Main):
 
         for k in self.segment_list:
             x = [i.get_p() for i in k]
-
-            # canvas.draw_image(
-            #     self.image,
-            #     (self.width // 10, self.height // 10),
-            #     (self.width, self.height),
-            #     (5, 5),
-            #     (10, 10),
-            # )
-            canvas.draw_polygon(x, 1, "Purple", "Black")
+            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, "Black")
 
         self.update_self(canvas)
 
         canvas.draw_polygon(self.app_seg, 1, "Red", "blue")
+
+    def __speed_increase(self):
+        if self.speed < self.max_speed:
+
+            self.speed = self.max_speed
+
+        else:
+            self.speed -= 1
 
     def _app_eaten(self):
         """apple eaten
@@ -88,13 +90,12 @@ class Game_Control(Snake_Main):
 
         for i in self.position:
 
-            # __import__('ipdb').set_trace()
-
             # This tends to fail
             if i.get_p() == self.app_pos:
                 self.eat_control = True
                 # Redifine the given apple
-                self.app_pos, self.app_seg = self.app()
+                self.app_pos, self.app_seg = self._app()
+                self.__speed_increase()
 
     def _grower_eaten(self):
         """grower_eaten
@@ -122,7 +123,7 @@ class Game_Control(Snake_Main):
 
         self.eat_control = False
 
-    def app(self):
+    def _app(self):
         """app
 
         Apple segments , to create blocks , this CAN be Changed , though you need to
