@@ -4,6 +4,8 @@ from time import sleep  # import codeskulptor
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
 from icecream import ic
 
+from Game_Start import GameStart
+
 
 class Menu:
     def __init__(self):
@@ -18,7 +20,7 @@ class Menu:
     # This is active before eveyrthing else woudl starrt
     def __start_game(self, main_length: int, speed: int):
         if self.option is True:
-            # pointer = GameStart(length=main_length)
+            GameStart(length=main_length)
             print(pointer)
 
     def click(self, pos):
@@ -26,8 +28,8 @@ class Menu:
             if pos[1] >= 0 and pos[1] <= 64:
                 ic("Easy")
                 self.sound.play()
-                # GameStart(120)
-                # self.__start_game(main_length=5, speed=100)
+                self.option = True
+                self.__start_game(main_length=5, speed=100)
 
             elif pos[1] >= 128 and pos[1] <= 192:
                 self.option = True
