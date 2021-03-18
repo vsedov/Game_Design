@@ -8,6 +8,7 @@ __status__ = "Development"
 from dataclasses import dataclass
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
+from icecream import ic
 
 from system_components.control import Control
 from system_components.frame import frame_height, frame_width
@@ -53,15 +54,16 @@ class Snake_Main(Control, GameState):
             debug=False,
         )
         self.color = Colors()
-        self.speed = 100
-        self.life = 3
-        self.segment_list = []
-        self.width = width
-        self.height = height
-        self.grid = 10  # Add this to game state class
-        self.GAME_STATE = True  # We will have to localise this for now i want it here .
-        self.snake_amount = length
-        self.snake_block = Vector(
+        self.speed: int = 100
+        self.life: int = 3
+        self.width: int = width
+        self.height: int = height
+        self.grid: int = 10  # Add this to game state class
+        self.GAME_STATE: bool = (
+            True  # We will have to localise this for now i want it here .
+        )
+        self.snake_amount: int = length
+        self.snake_block: Vector = Vector(
             self.width // self.internal_grid, self.height // self.internal_grid
         )
 
@@ -70,9 +72,11 @@ class Snake_Main(Control, GameState):
         isinstance(x_pos, int)
         isinstance(y_pos, int)
 
-        self.dir = Vector(x_pos, y_pos)
-        self.eat_control = False
+        self.dir: Vector = Vector(x_pos, y_pos)
+        self.eat_control: bool = False
         self.segment_list = []
+
+        self.life_counter: int = 0
 
     def changer(self, x: int, y: int, debug_direction: str):
         """Changer
@@ -181,9 +185,11 @@ class Snake_Main(Control, GameState):
             self.change_dir("down")
 
     def __life_change(self):
+        ic("Your lives are ", self.life)
         if self.life == 0:
             print("life change ococurs")
         else:
+            self.life_counter += 1
             self.life -= 1
 
     def __snake_reducer(self):
