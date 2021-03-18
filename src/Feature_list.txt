@@ -23,4 +23,4 @@ List of Features for the game~
 		-Maybe add feature to name snake so the highscore - global
 		
 		
-		
+
