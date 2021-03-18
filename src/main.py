@@ -78,6 +78,8 @@ class Snake_Main(Control, GameState):
 
         self.life_counter: int = 0
 
+        self.timer = None
+
     def changer(self, x: int, y: int, debug_direction: str):
         """Changer
             Control.x and Control.y there for debugging purposes
@@ -188,6 +190,7 @@ class Snake_Main(Control, GameState):
         ic("Your lives are ", self.life)
         if self.life == 0:
             print("life change ococurs")
+
         else:
             self.life_counter += 1
             self.life -= 1
