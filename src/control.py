@@ -67,7 +67,7 @@ class Game_Control(Snake_Main):
 
         self.update_self(canvas)
 
-        canvas.draw_polygon(self.app_seg, 1, "Red", "blue")
+        canvas.draw_polygon(self.app_seg, 1, "Red", "Red")
 
     def __speed_increase(self):
         if self.speed < self.max_speed:
