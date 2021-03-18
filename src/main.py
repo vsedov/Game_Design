@@ -8,6 +8,7 @@ __status__ = "Development"
 from dataclasses import dataclass
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
+from icecream import ic
 
 from system_components.control import Control
 from system_components.frame import frame_height, frame_width
@@ -84,10 +85,38 @@ class Snake_Main(Control, GameState):
             x: updated direction of x
             y: updated direction of y
         """
+
+        self.same_axis(x, y)
         Control.x, Control.y = self.dir.x, self.dir.y = x, y
+
+    def same_axis(self, to_check_x: int, to_check_y: int):
+        """
+        Same axis , check if user doesnt go in the same axis twice
+
+        Currently , error prone code , debugger icecream being used
+
+        Parameters
+        ----------
+        to_check_x : int
+            value of the direction of x
+        to_check_y : int
+            value of the directino of y
+        """
+        if self.dir.x != to_check_x:
+            ic("self.dir.x = ", self.dir.x)
+
+            ic("direction = ", to_check_x)
+            print("\n")
+
+        if self.dir.y != to_check_y:
+            ic("self.dir.y = ", self.dir.y)
+
+            ic("direction = ", to_check_y)
+            print("\n")
 
     def change_dir(self, direction):
         if direction == "right":
+
             self.changer(1, 0)
         elif direction == "left":
             self.changer(-1, 0)
