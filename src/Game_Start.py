@@ -15,8 +15,10 @@ __author__ = "Viv Sedov"
 def game_restart():
     ...
 
+
 def colour_button_handler(snake, colour):
     snake.color.SNAKE_COLOR = colour
+
 
 class GameStart:
     # Can be omitted, Python will give a default implementation
@@ -26,18 +28,25 @@ class GameStart:
         snake = Game_Control(kwargs.get("length", 5))
 
         snake.color.SNAKE_COLOR = kwargs.get("colours", "purple")
+
         def red_button_handler():
             snake.color.SNAKE_COLOR = "Red"
+
         def orange_button_handler():
             snake.color.SNAKE_COLOR = "Orange"
+
         def yellow_button_handler():
             snake.color.SNAKE_COLOR = "Yellow"
+
         def green_button_handler():
             snake.color.SNAKE_COLOR = "Green"
+
         def blue_button_handler():
             snake.color.SNAKE_COLOR = "Blue"
+
         def purple_button_handler():
             snake.color.SNAKE_COLOR = "Purple"
+
         def pink_button_handler():
             snake.color.SNAKE_COLOR = "Pink"
 
