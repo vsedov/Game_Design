@@ -8,8 +8,6 @@ from dataclasses import dataclass
 @dataclass
 class GameState:
     GAME_STATE: bool = False
-    RUNNING: bool = False
-    FINISHED: bool = False
     POINTS: int = 0
     SPEED: int = 100
     internal_grid = 20

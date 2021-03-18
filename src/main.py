@@ -8,6 +8,7 @@ __status__ = "Development"
 from dataclasses import dataclass
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
+from icecream import ic
 
 from system_components.control import Control
 from system_components.frame import frame_height, frame_width
@@ -45,7 +46,7 @@ class Snake_Main(Control, GameState):
 
             snake_amount: start and pointer to increase how many snake blocks you want
         """
-        super(Snake_Main, self).__init__(
+        super().__init__(
             width=frame_width,
             height=frame_height,
             x=x_pos,
@@ -53,15 +54,17 @@ class Snake_Main(Control, GameState):
             debug=False,
         )
         self.color = Colors()
-        self.speed = 100
-        self.life = 3
-        self.segment_list = []
-        self.width = width
-        self.height = height
-        self.grid = 10  # Add this to game state class
-        self.GAME_STATE = True  # We will have to localise this for now i want it here .
-        self.snake_amount = length
-        self.snake_block = Vector(
+        self.speed: int = 100
+        self.life: int = 3
+        self.width: int = width
+        self.height: int = height
+        self.grid: int = 10  # Add this to game state class
+        self.GAME_STATE: bool = (
+            True  # We will have to localise this for now i want it here .
+        )
+        self.points = self.POINTS
+        self.snake_amount: int = length
+        self.snake_block: Vector = Vector(
             self.width // self.internal_grid, self.height // self.internal_grid
         )
 
@@ -70,11 +73,15 @@ class Snake_Main(Control, GameState):
         isinstance(x_pos, int)
         isinstance(y_pos, int)
 
-        self.dir = Vector(x_pos, y_pos)
-        self.eat_control = False
+        self.dir: Vector = Vector(x_pos, y_pos)
+        self.eat_control: bool = False
         self.segment_list = []
 
-    def changer(self, x: int, y: int):
+        self.life_counter: int = 0
+
+        self.timer = None
+
+    def changer(self, x: int, y: int, debug_direction: str):
         """Changer
             Control.x and Control.y there for debugging purposes
             but replaces teh direction of both values while updating the
@@ -84,17 +91,41 @@ class Snake_Main(Control, GameState):
             x: updated direction of x
             y: updated direction of y
         """
+
+        self.same_axis(x, y, debug_direction)
         Control.x, Control.y = self.dir.x, self.dir.y = x, y
+
+    def same_axis(self, to_check_x: int, to_check_y: int, direction: str):
+        """
+        Same axis , check if user doesnt go in the same axis twice
+
+        Currently , error prone code , debugger icecream being used
+
+        Parameters
+        ----------
+        to_check_x : int
+            value of the direction of x
+        to_check_y : int
+            value of the directino of y
+        """
+        # # Maybe check previous position ? im not 100% sure on this
+
+        # ic("To Change ", (to_check_x, to_check_y))
+        # ic("Tuple", self.dir.get_p())
+        # print("\n")
+        # ic("Main Direction " + direction)
+        # print("\n")
+        pass
 
     def change_dir(self, direction):
         if direction == "right":
-            self.changer(1, 0)
+            self.changer(1, 0, "right")
         elif direction == "left":
-            self.changer(-1, 0)
+            self.changer(-1, 0, "left")
         elif direction == "up":
-            self.changer(0, -1)
+            self.changer(0, -1, "up")
         elif direction == "down":
-            self.changer(0, 1)
+            self.changer(0, 1, "down")
 
     def __position_compare_x(self):
         """position x wrapper
@@ -120,13 +151,17 @@ class Snake_Main(Control, GameState):
             self.position.append(Vector(1, self.__position_compare_y()))
 
         elif self.__position_compare_x() < 1:
-            self.position.append(Vector(self.width / 10, self.__position_compare_y()))
+            self.position.append(
+                Vector(self.width / self.grid, self.__position_compare_y())
+            )
 
         elif self.__position_compare_y() > self.height // self.grid:
             self.position.append(Vector(self.__position_compare_x(), 1))
 
         elif self.__position_compare_y() < 1:
-            self.position.append(Vector(self.__position_compare_x(), self.height / 10))
+            self.position.append(
+                Vector(self.__position_compare_x(), self.height / self.grid)
+            )
 
         else:
 
@@ -153,9 +188,12 @@ class Snake_Main(Control, GameState):
             self.change_dir("down")
 
     def __life_change(self):
+        ic("Your lives are ", self.life)
         if self.life == 0:
-            print("life change ococurs")
+            self.GAME_STATE = False
+
         else:
+            self.life_counter += 1
             self.life -= 1
 
     def __snake_reducer(self):
