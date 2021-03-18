@@ -28,7 +28,7 @@ def main() -> None:
         "--y",
         metavar="",
         type=str,
-        default="red",
+        default="Purple",
         help="Enter number for snake Colour?",
     )
     args = parser.parse_args()

@@ -12,6 +12,10 @@ from system_components.frame import frame_height, frame_width
 __author__ = "Viv Sedov"
 
 
+def game_restart():
+    ...
+
+
 class GameStart:
     # Can be omitted, Python will give a default implementation
     def __new__(cls, **kwargs):
@@ -29,8 +33,10 @@ class GameStart:
         frame.set_canvas_background(snake.color.BACKGROUND_COLOR)
 
         timer = simplegui.create_timer(snake.speed, snake.timer_handler)
-        timer.start()
 
+        snake.timer = timer
+
+        timer.start()
         frame.start()
 
         return super().__new__(cls)
