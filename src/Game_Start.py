@@ -12,6 +12,9 @@ from system_components.frame import frame_height, frame_width
 __author__ = "Viv Sedov"
 
 
+def game_restart():
+    ...
+
 
 class GameStart:
     # Can be omitted, Python will give a default implementation
@@ -31,9 +34,9 @@ class GameStart:
 
         timer = simplegui.create_timer(snake.speed, snake.timer_handler)
 
-        frame.add_button("Restart Game", game_restart)
-        timer.start()
+        snake.timer = timer
 
+        timer.start()
         frame.start()
 
         return super().__new__(cls)
@@ -47,4 +50,4 @@ Steps :
  finished , uncomment this again . 
 """
 
-GameStart()
+# GameStart()
