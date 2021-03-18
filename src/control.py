@@ -77,6 +77,9 @@ class Game_Control(Snake_Main):
         else:
             self.speed -= 1
 
+    def __point_increase(self):
+        self.points += 1
+
     def _app_eaten(self):
         """apple eaten
 
@@ -90,12 +93,12 @@ class Game_Control(Snake_Main):
 
         for i in self.position:
 
-            # This tends to fail
             if i.get_p() == self.app_pos:
                 self.eat_control = True
                 # Redifine the given apple
                 self.app_pos, self.app_seg = self._app()
                 self.__speed_increase()
+                self.__point_increase()
 
     def _grower_eaten(self):
         """grower_eaten

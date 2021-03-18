@@ -68,6 +68,9 @@ class GameStart:
         frame.add_label("")
         frame.add_button("Pink", pink_button_handler)
         # We do not change the background colour
+
+        frame.add_label("Points")
+
         frame.set_canvas_background(snake.color.BACKGROUND_COLOR)
 
         timer = simplegui.create_timer(snake.speed, snake.timer_handler)
@@ -88,4 +91,4 @@ Steps :
  finished , uncomment this again . 
 """
 
-GameStart()
+# GameStart()
