@@ -46,7 +46,7 @@ class Snake_Main(Control, GameState):
 
             snake_amount: start and pointer to increase how many snake blocks you want
         """
-        super(Snake_Main, self).__init__(
+        super().__init__(
             width=frame_width,
             height=frame_height,
             x=x_pos,
