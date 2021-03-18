@@ -75,7 +75,7 @@ class Snake_Main(Control, GameState):
         self.eat_control = False
         self.segment_list = []
 
-    def changer(self, x: int, y: int):
+    def changer(self, x: int, y: int, debug_direction: str):
         """Changer
             Control.x and Control.y there for debugging purposes
             but replaces teh direction of both values while updating the
@@ -86,10 +86,10 @@ class Snake_Main(Control, GameState):
             y: updated direction of y
         """
 
-        self.same_axis(x, y)
+        self.same_axis(x, y, debug_direction)
         Control.x, Control.y = self.dir.x, self.dir.y = x, y
 
-    def same_axis(self, to_check_x: int, to_check_y: int):
+    def same_axis(self, to_check_x: int, to_check_y: int, direction: str):
         """
         Same axis , check if user doesnt go in the same axis twice
 
@@ -102,28 +102,24 @@ class Snake_Main(Control, GameState):
         to_check_y : int
             value of the directino of y
         """
-        if self.dir.x != to_check_x:
-            ic("self.dir.x = ", self.dir.x)
 
-            ic("direction = ", to_check_x)
-            print("\n")
+        # Maybe check previous position ? im not 100% sure on this
 
-        if self.dir.y != to_check_y:
-            ic("self.dir.y = ", self.dir.y)
-
-            ic("direction = ", to_check_y)
-            print("\n")
+        ic("To Change ", (to_check_x, to_check_y))
+        ic("Tuple", self.dir.get_p())
+        print("\n")
+        ic("Main Direction " + direction)
+        print("\n")
 
     def change_dir(self, direction):
         if direction == "right":
-
-            self.changer(1, 0)
+            self.changer(1, 0, "right")
         elif direction == "left":
-            self.changer(-1, 0)
+            self.changer(-1, 0, "left")
         elif direction == "up":
-            self.changer(0, -1)
+            self.changer(0, -1, "up")
         elif direction == "down":
-            self.changer(0, 1)
+            self.changer(0, 1, "down")
 
     def __position_compare_x(self):
         """position x wrapper
