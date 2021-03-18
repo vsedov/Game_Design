@@ -8,7 +8,6 @@ __status__ = "Development"
 from dataclasses import dataclass
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
-from icecream import ic
 
 from system_components.control import Control
 from system_components.frame import frame_height, frame_width
@@ -102,14 +101,14 @@ class Snake_Main(Control, GameState):
         to_check_y : int
             value of the directino of y
         """
+        # # Maybe check previous position ? im not 100% sure on this
 
-        # Maybe check previous position ? im not 100% sure on this
-
-        ic("To Change ", (to_check_x, to_check_y))
-        ic("Tuple", self.dir.get_p())
-        print("\n")
-        ic("Main Direction " + direction)
-        print("\n")
+        # ic("To Change ", (to_check_x, to_check_y))
+        # ic("Tuple", self.dir.get_p())
+        # print("\n")
+        # ic("Main Direction " + direction)
+        # print("\n")
+        pass
 
     def change_dir(self, direction):
         if direction == "right":
@@ -145,13 +144,17 @@ class Snake_Main(Control, GameState):
             self.position.append(Vector(1, self.__position_compare_y()))
 
         elif self.__position_compare_x() < 1:
-            self.position.append(Vector(self.width / 10, self.__position_compare_y()))
+            self.position.append(
+                Vector(self.width / self.grid, self.__position_compare_y())
+            )
 
         elif self.__position_compare_y() > self.height // self.grid:
             self.position.append(Vector(self.__position_compare_x(), 1))
 
         elif self.__position_compare_y() < 1:
-            self.position.append(Vector(self.__position_compare_x(), self.height / 10))
+            self.position.append(
+                Vector(self.__position_compare_x(), self.height / self.grid)
+            )
 
         else:
 
