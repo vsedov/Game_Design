@@ -48,8 +48,12 @@ class Game_Control(Snake_Main):
         )
         self.width = frame_width
         self.height = frame_height
-        self.app_pos, self.app_seg = self.app()
-        self.image = simplegui.load_image(&#34;https://svgshare.com/i/Urn.svg&#34;)
+        self.app_pos, self.app_seg = self._app()
+
+        self.speed = 100
+        self.max_speed = 10
+        self.main_points = 0
+        self.label = None
 
     def update_self(self, canvas):
         &#34;&#34;&#34;update_self
@@ -89,19 +93,35 @@ class Game_Control(Snake_Main):
 
         for k in self.segment_list:
             x = [i.get_p() for i in k]
-
-            # canvas.draw_image(
-            #     self.image,
-            #     (self.width // 10, self.height // 10),
-            #     (self.width, self.height),
-            #     (5, 5),
-            #     (10, 10),
-            # )
-            canvas.draw_polygon(x, 1, &#34;Purple&#34;, &#34;Black&#34;)
+            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, &#34;Black&#34;)
 
         self.update_self(canvas)
 
-        canvas.draw_polygon(self.app_seg, 1, &#34;Red&#34;, &#34;blue&#34;)
+        canvas.draw_polygon(self.app_seg, 1, &#34;Red&#34;, &#34;Red&#34;)
+        if self.GAME_STATE is False:
+            canvas.draw_text(&#34;GAME OVER&#34;, (self.width / 4, self.height / 4), 50, &#34;Blue&#34;)
+            self.timer.stop()
+
+    def __speed_increase(self):
+        &#34;&#34;&#34;
+        Increase speed with max speed of 10 - which is the fastest
+
+        Checker to define when the game is running live
+        &#34;&#34;&#34;
+        if self.speed &lt; self.max_speed:
+
+            self.speed = self.max_speed
+
+        else:
+            self.speed -= 1
+
+    def __point_increase(self):
+        &#34;&#34;&#34;
+        Live point score
+
+        Increases points when called
+        &#34;&#34;&#34;
+        self.main_points += 1
 
     def _app_eaten(self):
         &#34;&#34;&#34;apple eaten
@@ -116,13 +136,12 @@ class Game_Control(Snake_Main):
 
         for i in self.position:
 
-            # __import__(&#39;ipdb&#39;).set_trace()
-
-            # This tends to fail
             if i.get_p() == self.app_pos:
                 self.eat_control = True
                 # Redifine the given apple
-                self.app_pos, self.app_seg = self.app()
+                self.app_pos, self.app_seg = self._app()
+                self.__speed_increase()
+                self.__point_increase()
 
     def _grower_eaten(self):
         &#34;&#34;&#34;grower_eaten
@@ -147,10 +166,10 @@ class Game_Control(Snake_Main):
         self._self_collision()
         self._app_eaten()
         self._grower_eaten()
-
+        self.label.set_text(&#34;Points = &#34; + str(self.main_points))
         self.eat_control = False
 
-    def app(self):
+    def _app(self):
         &#34;&#34;&#34;app
 
         Apple segments , to create blocks , this CAN be Changed , though you need to
@@ -198,7 +217,7 @@ class Game_Control(Snake_Main):
 <span>(</span><span>amount=10)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>GameState(GAME_STATE: bool = False, RUNNING: bool = False, FINISHED: bool = False, POINTS: int = 0, SPEED: int = 100)</p>
+<div class="desc"><p>GameState(GAME_STATE: bool = False, POINTS: int = 0, SPEED: int = 100)</p>
 <p>Init : Local Var</p>
 <p>Main Control of games , assertion of any data will be advised here for debugging</p>
 <h2 id="args">Args</h2>
@@ -231,8 +250,12 @@ class Game_Control(Snake_Main):
         )
         self.width = frame_width
         self.height = frame_height
-        self.app_pos, self.app_seg = self.app()
-        self.image = simplegui.load_image(&#34;https://svgshare.com/i/Urn.svg&#34;)
+        self.app_pos, self.app_seg = self._app()
+
+        self.speed = 100
+        self.max_speed = 10
+        self.main_points = 0
+        self.label = None
 
     def update_self(self, canvas):
         &#34;&#34;&#34;update_self
@@ -272,19 +295,35 @@ class Game_Control(Snake_Main):
 
         for k in self.segment_list:
             x = [i.get_p() for i in k]
-
-            # canvas.draw_image(
-            #     self.image,
-            #     (self.width // 10, self.height // 10),
-            #     (self.width, self.height),
-            #     (5, 5),
-            #     (10, 10),
-            # )
-            canvas.draw_polygon(x, 1, &#34;Purple&#34;, &#34;Black&#34;)
+            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, &#34;Black&#34;)
 
         self.update_self(canvas)
 
-        canvas.draw_polygon(self.app_seg, 1, &#34;Red&#34;, &#34;blue&#34;)
+        canvas.draw_polygon(self.app_seg, 1, &#34;Red&#34;, &#34;Red&#34;)
+        if self.GAME_STATE is False:
+            canvas.draw_text(&#34;GAME OVER&#34;, (self.width / 4, self.height / 4), 50, &#34;Blue&#34;)
+            self.timer.stop()
+
+    def __speed_increase(self):
+        &#34;&#34;&#34;
+        Increase speed with max speed of 10 - which is the fastest
+
+        Checker to define when the game is running live
+        &#34;&#34;&#34;
+        if self.speed &lt; self.max_speed:
+
+            self.speed = self.max_speed
+
+        else:
+            self.speed -= 1
+
+    def __point_increase(self):
+        &#34;&#34;&#34;
+        Live point score
+
+        Increases points when called
+        &#34;&#34;&#34;
+        self.main_points += 1
 
     def _app_eaten(self):
         &#34;&#34;&#34;apple eaten
@@ -299,13 +338,12 @@ class Game_Control(Snake_Main):
 
         for i in self.position:
 
-            # __import__(&#39;ipdb&#39;).set_trace()
-
-            # This tends to fail
             if i.get_p() == self.app_pos:
                 self.eat_control = True
                 # Redifine the given apple
-                self.app_pos, self.app_seg = self.app()
+                self.app_pos, self.app_seg = self._app()
+                self.__speed_increase()
+                self.__point_increase()
 
     def _grower_eaten(self):
         &#34;&#34;&#34;grower_eaten
@@ -330,10 +368,10 @@ class Game_Control(Snake_Main):
         self._self_collision()
         self._app_eaten()
         self._grower_eaten()
-
+        self.label.set_text(&#34;Points = &#34; + str(self.main_points))
         self.eat_control = False
 
-    def app(self):
+    def _app(self):
         &#34;&#34;&#34;app
 
         Apple segments , to create blocks , this CAN be Changed , though you need to
@@ -374,19 +412,11 @@ class Game_Control(Snake_Main):
 </ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="src.control.Game_Control.FINISHED"><code class="name">var <span class="ident">FINISHED</span> : bool</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
 <dt id="src.control.Game_Control.GAME_STATE"><code class="name">var <span class="ident">GAME_STATE</span> : bool</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
 <dt id="src.control.Game_Control.POINTS"><code class="name">var <span class="ident">POINTS</span> : int</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="src.control.Game_Control.RUNNING"><code class="name">var <span class="ident">RUNNING</span> : bool</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -397,38 +427,6 @@ class Game_Control(Snake_Main):
 </dl>
 <h3>Methods</h3>
 <dl>
-<dt id="src.control.Game_Control.app"><code class="name flex">
-<span>def <span class="ident">app</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>app</p>
-<p>Apple segments , to create blocks , this CAN be Changed , though you need to
-define a value within the snake class first for teh HEAD of the snake to do so .</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def app(self):
-    &#34;&#34;&#34;app
-
-    Apple segments , to create blocks , this CAN be Changed , though you need to
-    define a value within the snake class first for teh HEAD of the snake to do so .
-    &#34;&#34;&#34;
-    app = self.random_app()
-
-    # This can be changed to what ever - so long as the cords are the same .
-    # You can change those values.
-
-    segements = [
-        (app[0] * self.grid - self.grid, app[1] * self.grid),
-        (app[0] * self.grid, app[1] * self.grid),
-        (app[0] * self.grid, app[1] * self.grid - self.grid),
-        (app[0] * self.grid - self.grid, app[1] * self.grid - self.grid),
-    ]
-
-    return app, segements</code></pre>
-</details>
-</dd>
 <dt id="src.control.Game_Control.draw_self"><code class="name flex">
 <span>def <span class="ident">draw_self</span></span>(<span>self, canvas)</span>
 </code></dt>
@@ -462,19 +460,14 @@ whihc is teh apple which is updated with the methods that have been shown below<
 
     for k in self.segment_list:
         x = [i.get_p() for i in k]
-
-        # canvas.draw_image(
-        #     self.image,
-        #     (self.width // 10, self.height // 10),
-        #     (self.width, self.height),
-        #     (5, 5),
-        #     (10, 10),
-        # )
-        canvas.draw_polygon(x, 1, &#34;Purple&#34;, &#34;Black&#34;)
+        canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, &#34;Black&#34;)
 
     self.update_self(canvas)
 
-    canvas.draw_polygon(self.app_seg, 1, &#34;Red&#34;, &#34;blue&#34;)</code></pre>
+    canvas.draw_polygon(self.app_seg, 1, &#34;Red&#34;, &#34;Red&#34;)
+    if self.GAME_STATE is False:
+        canvas.draw_text(&#34;GAME OVER&#34;, (self.width / 4, self.height / 4), 50, &#34;Blue&#34;)
+        self.timer.stop()</code></pre>
 </details>
 </dd>
 <dt id="src.control.Game_Control.random_app"><code class="name flex">
@@ -529,7 +522,7 @@ way wrapper has been included to adjust for errors {@ .... }</p></div>
     self._self_collision()
     self._app_eaten()
     self._grower_eaten()
-
+    self.label.set_text(&#34;Points = &#34; + str(self.main_points))
     self.eat_control = False</code></pre>
 </details>
 </dd>
@@ -595,12 +588,9 @@ refer to control class docs for further infomation .</p>
 <li>
 <h4><code><a title="src.control.Game_Control" href="#src.control.Game_Control">Game_Control</a></code></h4>
 <ul class="two-column">
-<li><code><a title="src.control.Game_Control.FINISHED" href="#src.control.Game_Control.FINISHED">FINISHED</a></code></li>
 <li><code><a title="src.control.Game_Control.GAME_STATE" href="#src.control.Game_Control.GAME_STATE">GAME_STATE</a></code></li>
 <li><code><a title="src.control.Game_Control.POINTS" href="#src.control.Game_Control.POINTS">POINTS</a></code></li>
-<li><code><a title="src.control.Game_Control.RUNNING" href="#src.control.Game_Control.RUNNING">RUNNING</a></code></li>
 <li><code><a title="src.control.Game_Control.SPEED" href="#src.control.Game_Control.SPEED">SPEED</a></code></li>
-<li><code><a title="src.control.Game_Control.app" href="#src.control.Game_Control.app">app</a></code></li>
 <li><code><a title="src.control.Game_Control.draw_self" href="#src.control.Game_Control.draw_self">draw_self</a></code></li>
 <li><code><a title="src.control.Game_Control.random_app" href="#src.control.Game_Control.random_app">random_app</a></code></li>
 <li><code><a title="src.control.Game_Control.timer_handler" href="#src.control.Game_Control.timer_handler">timer_handler</a></code></li>

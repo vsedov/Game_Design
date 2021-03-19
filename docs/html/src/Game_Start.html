@@ -35,27 +35,74 @@
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
 
 from control import Game_Control
-from main import Colors
 from system_components.frame import frame_height, frame_width
 
-__author__ = &#34;Viv Sedov&#34;
+
+def colour_button_handler(snake, colour):
+    snake.color.SNAKE_COLOR = colour
 
 
 class GameStart:
     # Can be omitted, Python will give a default implementation
     def __new__(cls, **kwargs):
 
+        points = 0
         # This would allow for this to be expanded
-        snake = Game_Control(kwargs.get(&#34;length&#34;, 2))
+        snake = Game_Control(kwargs.get(&#34;length&#34;, 5))
+
+        snake.color.SNAKE_COLOR = kwargs.get(&#34;colours&#34;, &#34;purple&#34;)
+
+        def red_button_handler():
+            snake.color.SNAKE_COLOR = &#34;Red&#34;
+
+        def orange_button_handler():
+            snake.color.SNAKE_COLOR = &#34;Orange&#34;
+
+        def yellow_button_handler():
+            snake.color.SNAKE_COLOR = &#34;Yellow&#34;
+
+        def green_button_handler():
+            snake.color.SNAKE_COLOR = &#34;Green&#34;
+
+        def blue_button_handler():
+            snake.color.SNAKE_COLOR = &#34;Blue&#34;
+
+        def purple_button_handler():
+            snake.color.SNAKE_COLOR = &#34;Purple&#34;
+
+        def pink_button_handler():
+            snake.color.SNAKE_COLOR = &#34;Pink&#34;
 
         frame = simplegui.create_frame(&#34;Snake&#34;, frame_width, frame_height)
         frame.set_keydown_handler(snake.key_down)
         frame.set_draw_handler(snake.draw_self)
-        frame.set_canvas_background(Colors.BACKGROUND_COLOR)
+        frame.add_label(&#34;Colour Options&#34;)
+        frame.add_button(&#34;Red&#34;, red_button_handler)
+        frame.add_label(&#34;&#34;)
+        frame.add_button(&#34;Orange&#34;, orange_button_handler)
+        frame.add_label(&#34;&#34;)
+        frame.add_button(&#34;Yellow&#34;, yellow_button_handler)
+        frame.add_label(&#34;&#34;)
+        frame.add_button(&#34;Green&#34;, green_button_handler)
+        frame.add_label(&#34;&#34;)
+        frame.add_button(&#34;Blue&#34;, blue_button_handler)
+        frame.add_label(&#34;&#34;)
+        frame.add_button(&#34;Purple&#34;, purple_button_handler)
+        frame.add_label(&#34;&#34;)
+        frame.add_button(&#34;Pink&#34;, pink_button_handler)
+        # We do not change the background colour
 
-        timer = simplegui.create_timer(100, snake.timer_handler)
+        label = frame.add_label(&#34;Points = &#34; + str(points))
+
+        snake.label = label
+
+        frame.set_canvas_background(snake.color.BACKGROUND_COLOR)
+
+        timer = simplegui.create_timer(snake.speed, snake.timer_handler)
+
+        snake.timer = timer
+
         timer.start()
-
         frame.start()
 
         return super().__new__(cls)
@@ -68,6 +115,7 @@ Steps :
  if you want to test a change have this file open and uncomment this , once you are 
  finished , uncomment this again . 
 &#34;&#34;&#34;
+
 # GameStart()</code></pre>
 </details>
 </section>
@@ -76,6 +124,22 @@ Steps :
 <section>
 </section>
 <section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="src.Game_Start.colour_button_handler"><code class="name flex">
+<span>def <span class="ident">colour_button_handler</span></span>(<span>snake, colour)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def colour_button_handler(snake, colour):
+    snake.color.SNAKE_COLOR = colour</code></pre>
+</details>
+</dd>
+</dl>
 </section>
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
@@ -94,17 +158,63 @@ Steps :
     # Can be omitted, Python will give a default implementation
     def __new__(cls, **kwargs):
 
+        points = 0
         # This would allow for this to be expanded
-        snake = Game_Control(kwargs.get(&#34;length&#34;, 2))
+        snake = Game_Control(kwargs.get(&#34;length&#34;, 5))
+
+        snake.color.SNAKE_COLOR = kwargs.get(&#34;colours&#34;, &#34;purple&#34;)
+
+        def red_button_handler():
+            snake.color.SNAKE_COLOR = &#34;Red&#34;
+
+        def orange_button_handler():
+            snake.color.SNAKE_COLOR = &#34;Orange&#34;
+
+        def yellow_button_handler():
+            snake.color.SNAKE_COLOR = &#34;Yellow&#34;
+
+        def green_button_handler():
+            snake.color.SNAKE_COLOR = &#34;Green&#34;
+
+        def blue_button_handler():
+            snake.color.SNAKE_COLOR = &#34;Blue&#34;
+
+        def purple_button_handler():
+            snake.color.SNAKE_COLOR = &#34;Purple&#34;
+
+        def pink_button_handler():
+            snake.color.SNAKE_COLOR = &#34;Pink&#34;
 
         frame = simplegui.create_frame(&#34;Snake&#34;, frame_width, frame_height)
         frame.set_keydown_handler(snake.key_down)
         frame.set_draw_handler(snake.draw_self)
-        frame.set_canvas_background(Colors.BACKGROUND_COLOR)
+        frame.add_label(&#34;Colour Options&#34;)
+        frame.add_button(&#34;Red&#34;, red_button_handler)
+        frame.add_label(&#34;&#34;)
+        frame.add_button(&#34;Orange&#34;, orange_button_handler)
+        frame.add_label(&#34;&#34;)
+        frame.add_button(&#34;Yellow&#34;, yellow_button_handler)
+        frame.add_label(&#34;&#34;)
+        frame.add_button(&#34;Green&#34;, green_button_handler)
+        frame.add_label(&#34;&#34;)
+        frame.add_button(&#34;Blue&#34;, blue_button_handler)
+        frame.add_label(&#34;&#34;)
+        frame.add_button(&#34;Purple&#34;, purple_button_handler)
+        frame.add_label(&#34;&#34;)
+        frame.add_button(&#34;Pink&#34;, pink_button_handler)
+        # We do not change the background colour
 
-        timer = simplegui.create_timer(100, snake.timer_handler)
+        label = frame.add_label(&#34;Points = &#34; + str(points))
+
+        snake.label = label
+
+        frame.set_canvas_background(snake.color.BACKGROUND_COLOR)
+
+        timer = simplegui.create_timer(snake.speed, snake.timer_handler)
+
+        snake.timer = timer
+
         timer.start()
-
         frame.start()
 
         return super().__new__(cls)</code></pre>
@@ -122,6 +232,11 @@ Steps :
 <li><h3>Super-module</h3>
 <ul>
 <li><code><a title="src" href="index.html">src</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="src.Game_Start.colour_button_handler" href="#src.Game_Start.colour_button_handler">colour_button_handler</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>

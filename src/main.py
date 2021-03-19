@@ -118,6 +118,15 @@ class Snake_Main(Control, GameState):
         pass
 
     def change_dir(self, direction):
+        """
+        Change Direction
+
+        Update Direction / position of snake
+
+        Parameters
+        ----------
+        direction : Call given by movement - SImplegui
+        """
         if direction == "right":
             self.changer(1, 0, "right")
         elif direction == "left":
@@ -188,6 +197,12 @@ class Snake_Main(Control, GameState):
             self.change_dir("down")
 
     def __life_change(self):
+        """
+        Life Change defined in the inherited class , if this is False
+        Game should halt if the lifes have reached zero
+
+        GAME STATE refer to control.py and main.py
+        """
         ic("Your lives are ", self.life)
         if self.life == 0:
             self.GAME_STATE = False
@@ -197,6 +212,11 @@ class Snake_Main(Control, GameState):
             self.life -= 1
 
     def __snake_reducer(self):
+        """
+        Snake reducer
+
+        Decreases amount given to how ever much health there is
+        """
         if len(self.position) > 2:
             self.position.pop()
         else:

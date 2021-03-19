@@ -36,6 +36,7 @@ __status__ = &#34;Development&#34;
 from dataclasses import dataclass
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
+from icecream import ic
 
 from system_components.control import Control
 from system_components.frame import frame_height, frame_width
@@ -46,7 +47,7 @@ from system_components.Vector import Vector
 @dataclass
 class Colors:
     BACKGROUND_COLOR: str = &#34;black&#34;
-    SNAKE_COLOR: str = &#34;red&#34;
+    SNAKE_COLOR: str = &#34;purple&#34;
 
 
 class Snake_Main(Control, GameState):
@@ -73,7 +74,7 @@ class Snake_Main(Control, GameState):
 
             snake_amount: start and pointer to increase how many snake blocks you want
         &#34;&#34;&#34;
-        super(Snake_Main, self).__init__(
+        super().__init__(
             width=frame_width,
             height=frame_height,
             x=x_pos,
@@ -81,14 +82,17 @@ class Snake_Main(Control, GameState):
             debug=False,
         )
         self.color = Colors()
-        self.life = 3
-        self.segment_list = []
-        self.width = width
-        self.height = height
-        self.grid = 10  # Add this to game state class
-        self.GAME_STATE = True  # We will have to localise this for now i want it here .
-        self.snake_amount = length
-        self.snake_block = Vector(
+        self.speed: int = 100
+        self.life: int = 3
+        self.width: int = width
+        self.height: int = height
+        self.grid: int = 10  # Add this to game state class
+        self.GAME_STATE: bool = (
+            True  # We will have to localise this for now i want it here .
+        )
+        self.points = self.POINTS
+        self.snake_amount: int = length
+        self.snake_block: Vector = Vector(
             self.width // self.internal_grid, self.height // self.internal_grid
         )
 
@@ -97,24 +101,15 @@ class Snake_Main(Control, GameState):
         isinstance(x_pos, int)
         isinstance(y_pos, int)
 
-        self.dir = Vector(x_pos, y_pos)
-        self.eat_control = False
+        self.dir: Vector = Vector(x_pos, y_pos)
+        self.eat_control: bool = False
         self.segment_list = []
 
-    def eaten(self):
-        &#34;&#34;&#34;Eaten
-            If self eat control is true
-            appends another block to teh position increasing its length
-        Args:
-            self.eat_control: Boolean Value -&gt; bool
-            self.position: list of blocks -&gt; list
+        self.life_counter: int = 0
 
-        &#34;&#34;&#34;
-        if self.eat_control is True:
-            self.position.append(self.snake_block)
-            self.eat_control = False
+        self.timer = None
 
-    def changer(self, x: int, y: int):
+    def changer(self, x: int, y: int, debug_direction: str):
         &#34;&#34;&#34;Changer
             Control.x and Control.y there for debugging purposes
             but replaces teh direction of both values while updating the
@@ -124,17 +119,50 @@ class Snake_Main(Control, GameState):
             x: updated direction of x
             y: updated direction of y
         &#34;&#34;&#34;
+
+        self.same_axis(x, y, debug_direction)
         Control.x, Control.y = self.dir.x, self.dir.y = x, y
 
+    def same_axis(self, to_check_x: int, to_check_y: int, direction: str):
+        &#34;&#34;&#34;
+        Same axis , check if user doesnt go in the same axis twice
+
+        Currently , error prone code , debugger icecream being used
+
+        Parameters
+        ----------
+        to_check_x : int
+            value of the direction of x
+        to_check_y : int
+            value of the directino of y
+        &#34;&#34;&#34;
+        # # Maybe check previous position ? im not 100% sure on this
+
+        # ic(&#34;To Change &#34;, (to_check_x, to_check_y))
+        # ic(&#34;Tuple&#34;, self.dir.get_p())
+        # print(&#34;\n&#34;)
+        # ic(&#34;Main Direction &#34; + direction)
+        # print(&#34;\n&#34;)
+        pass
+
     def change_dir(self, direction):
+        &#34;&#34;&#34;
+        Change Direction
+
+        Update Direction / position of snake
+
+        Parameters
+        ----------
+        direction : Call given by movement - SImplegui
+        &#34;&#34;&#34;
         if direction == &#34;right&#34;:
-            self.changer(1, 0)
+            self.changer(1, 0, &#34;right&#34;)
         elif direction == &#34;left&#34;:
-            self.changer(-1, 0)
+            self.changer(-1, 0, &#34;left&#34;)
         elif direction == &#34;up&#34;:
-            self.changer(0, -1)
+            self.changer(0, -1, &#34;up&#34;)
         elif direction == &#34;down&#34;:
-            self.changer(0, 1)
+            self.changer(0, 1, &#34;down&#34;)
 
     def __position_compare_x(self):
         &#34;&#34;&#34;position x wrapper
@@ -160,13 +188,17 @@ class Snake_Main(Control, GameState):
             self.position.append(Vector(1, self.__position_compare_y()))
 
         elif self.__position_compare_x() &lt; 1:
-            self.position.append(Vector(self.width / 10, self.__position_compare_y()))
+            self.position.append(
+                Vector(self.width / self.grid, self.__position_compare_y())
+            )
 
         elif self.__position_compare_y() &gt; self.height // self.grid:
             self.position.append(Vector(self.__position_compare_x(), 1))
 
         elif self.__position_compare_y() &lt; 1:
-            self.position.append(Vector(self.__position_compare_x(), self.height / 10))
+            self.position.append(
+                Vector(self.__position_compare_x(), self.height / self.grid)
+            )
 
         else:
 
@@ -193,12 +225,26 @@ class Snake_Main(Control, GameState):
             self.change_dir(&#34;down&#34;)
 
     def __life_change(self):
+        &#34;&#34;&#34;
+        Life Change defined in the inherited class , if this is False
+        Game should halt if the lifes have reached zero
+
+        GAME STATE refer to control.py and main.py
+        &#34;&#34;&#34;
+        ic(&#34;Your lives are &#34;, self.life)
         if self.life == 0:
-            print(&#34;life change ococurs&#34;)
+            self.GAME_STATE = False
+
         else:
+            self.life_counter += 1
             self.life -= 1
 
     def __snake_reducer(self):
+        &#34;&#34;&#34;
+        Snake reducer
+
+        Decreases amount given to how ever much health there is
+        &#34;&#34;&#34;
         if len(self.position) &gt; 2:
             self.position.pop()
         else:
@@ -232,17 +278,17 @@ if __name__ == &#34;__main__&#34;:
 <dl>
 <dt id="src.main.Colors"><code class="flex name class">
 <span>class <span class="ident">Colors</span></span>
-<span>(</span><span>BACKGROUND_COLOR: str = 'black', SNAKE_COLOR: str = 'red')</span>
+<span>(</span><span>BACKGROUND_COLOR: str = 'black', SNAKE_COLOR: str = 'purple')</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Colors(BACKGROUND_COLOR: str = 'black', SNAKE_COLOR: str = 'red')</p></div>
+<div class="desc"><p>Colors(BACKGROUND_COLOR: str = 'black', SNAKE_COLOR: str = 'purple')</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Colors:
     BACKGROUND_COLOR: str = &#34;black&#34;
-    SNAKE_COLOR: str = &#34;red&#34;</code></pre>
+    SNAKE_COLOR: str = &#34;purple&#34;</code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
@@ -261,7 +307,7 @@ if __name__ == &#34;__main__&#34;:
 <span>(</span><span>*, x_pos=1, y_pos=0, width=1024, height=1024, length=2)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>GameState(GAME_STATE: bool = False, RUNNING: bool = False, FINISHED: bool = False, POINTS: int = 0, SPEED: int = 100)</p>
+<div class="desc"><p>GameState(GAME_STATE: bool = False, POINTS: int = 0, SPEED: int = 100)</p>
 <p>Init : Local Var</p>
 <p>Main Control of games , assertion of any data will be advised here for debugging</p>
 <h2 id="args">Args</h2>
@@ -311,7 +357,7 @@ if __name__ == &#34;__main__&#34;:
 
             snake_amount: start and pointer to increase how many snake blocks you want
         &#34;&#34;&#34;
-        super(Snake_Main, self).__init__(
+        super().__init__(
             width=frame_width,
             height=frame_height,
             x=x_pos,
@@ -319,14 +365,17 @@ if __name__ == &#34;__main__&#34;:
             debug=False,
         )
         self.color = Colors()
-        self.life = 3
-        self.segment_list = []
-        self.width = width
-        self.height = height
-        self.grid = 10  # Add this to game state class
-        self.GAME_STATE = True  # We will have to localise this for now i want it here .
-        self.snake_amount = length
-        self.snake_block = Vector(
+        self.speed: int = 100
+        self.life: int = 3
+        self.width: int = width
+        self.height: int = height
+        self.grid: int = 10  # Add this to game state class
+        self.GAME_STATE: bool = (
+            True  # We will have to localise this for now i want it here .
+        )
+        self.points = self.POINTS
+        self.snake_amount: int = length
+        self.snake_block: Vector = Vector(
             self.width // self.internal_grid, self.height // self.internal_grid
         )
 
@@ -335,24 +384,15 @@ if __name__ == &#34;__main__&#34;:
         isinstance(x_pos, int)
         isinstance(y_pos, int)
 
-        self.dir = Vector(x_pos, y_pos)
-        self.eat_control = False
+        self.dir: Vector = Vector(x_pos, y_pos)
+        self.eat_control: bool = False
         self.segment_list = []
 
-    def eaten(self):
-        &#34;&#34;&#34;Eaten
-            If self eat control is true
-            appends another block to teh position increasing its length
-        Args:
-            self.eat_control: Boolean Value -&gt; bool
-            self.position: list of blocks -&gt; list
+        self.life_counter: int = 0
 
-        &#34;&#34;&#34;
-        if self.eat_control is True:
-            self.position.append(self.snake_block)
-            self.eat_control = False
+        self.timer = None
 
-    def changer(self, x: int, y: int):
+    def changer(self, x: int, y: int, debug_direction: str):
         &#34;&#34;&#34;Changer
             Control.x and Control.y there for debugging purposes
             but replaces teh direction of both values while updating the
@@ -362,17 +402,50 @@ if __name__ == &#34;__main__&#34;:
             x: updated direction of x
             y: updated direction of y
         &#34;&#34;&#34;
+
+        self.same_axis(x, y, debug_direction)
         Control.x, Control.y = self.dir.x, self.dir.y = x, y
 
+    def same_axis(self, to_check_x: int, to_check_y: int, direction: str):
+        &#34;&#34;&#34;
+        Same axis , check if user doesnt go in the same axis twice
+
+        Currently , error prone code , debugger icecream being used
+
+        Parameters
+        ----------
+        to_check_x : int
+            value of the direction of x
+        to_check_y : int
+            value of the directino of y
+        &#34;&#34;&#34;
+        # # Maybe check previous position ? im not 100% sure on this
+
+        # ic(&#34;To Change &#34;, (to_check_x, to_check_y))
+        # ic(&#34;Tuple&#34;, self.dir.get_p())
+        # print(&#34;\n&#34;)
+        # ic(&#34;Main Direction &#34; + direction)
+        # print(&#34;\n&#34;)
+        pass
+
     def change_dir(self, direction):
+        &#34;&#34;&#34;
+        Change Direction
+
+        Update Direction / position of snake
+
+        Parameters
+        ----------
+        direction : Call given by movement - SImplegui
+        &#34;&#34;&#34;
         if direction == &#34;right&#34;:
-            self.changer(1, 0)
+            self.changer(1, 0, &#34;right&#34;)
         elif direction == &#34;left&#34;:
-            self.changer(-1, 0)
+            self.changer(-1, 0, &#34;left&#34;)
         elif direction == &#34;up&#34;:
-            self.changer(0, -1)
+            self.changer(0, -1, &#34;up&#34;)
         elif direction == &#34;down&#34;:
-            self.changer(0, 1)
+            self.changer(0, 1, &#34;down&#34;)
 
     def __position_compare_x(self):
         &#34;&#34;&#34;position x wrapper
@@ -398,13 +471,17 @@ if __name__ == &#34;__main__&#34;:
             self.position.append(Vector(1, self.__position_compare_y()))
 
         elif self.__position_compare_x() &lt; 1:
-            self.position.append(Vector(self.width / 10, self.__position_compare_y()))
+            self.position.append(
+                Vector(self.width / self.grid, self.__position_compare_y())
+            )
 
         elif self.__position_compare_y() &gt; self.height // self.grid:
             self.position.append(Vector(self.__position_compare_x(), 1))
 
         elif self.__position_compare_y() &lt; 1:
-            self.position.append(Vector(self.__position_compare_x(), self.height / 10))
+            self.position.append(
+                Vector(self.__position_compare_x(), self.height / self.grid)
+            )
 
         else:
 
@@ -431,12 +508,26 @@ if __name__ == &#34;__main__&#34;:
             self.change_dir(&#34;down&#34;)
 
     def __life_change(self):
+        &#34;&#34;&#34;
+        Life Change defined in the inherited class , if this is False
+        Game should halt if the lifes have reached zero
+
+        GAME STATE refer to control.py and main.py
+        &#34;&#34;&#34;
+        ic(&#34;Your lives are &#34;, self.life)
         if self.life == 0:
-            print(&#34;life change ococurs&#34;)
+            self.GAME_STATE = False
+
         else:
+            self.life_counter += 1
             self.life -= 1
 
     def __snake_reducer(self):
+        &#34;&#34;&#34;
+        Snake reducer
+
+        Decreases amount given to how ever much health there is
+        &#34;&#34;&#34;
         if len(self.position) &gt; 2:
             self.position.pop()
         else:
@@ -460,19 +551,11 @@ if __name__ == &#34;__main__&#34;:
 </ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="src.main.Snake_Main.FINISHED"><code class="name">var <span class="ident">FINISHED</span> : bool</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
 <dt id="src.main.Snake_Main.GAME_STATE"><code class="name">var <span class="ident">GAME_STATE</span> : bool</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
 <dt id="src.main.Snake_Main.POINTS"><code class="name">var <span class="ident">POINTS</span> : int</code></dt>
-<dd>
-<div class="desc"></div>
-</dd>
-<dt id="src.main.Snake_Main.RUNNING"><code class="name">var <span class="ident">RUNNING</span> : bool</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -487,24 +570,39 @@ if __name__ == &#34;__main__&#34;:
 <span>def <span class="ident">change_dir</span></span>(<span>self, direction)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Change Direction</p>
+<p>Update Direction / position of snake</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>direction</code></strong> :&ensp;<code>Call given by movement - SImplegui</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def change_dir(self, direction):
+    &#34;&#34;&#34;
+    Change Direction
+
+    Update Direction / position of snake
+
+    Parameters
+    ----------
+    direction : Call given by movement - SImplegui
+    &#34;&#34;&#34;
     if direction == &#34;right&#34;:
-        self.changer(1, 0)
+        self.changer(1, 0, &#34;right&#34;)
     elif direction == &#34;left&#34;:
-        self.changer(-1, 0)
+        self.changer(-1, 0, &#34;left&#34;)
     elif direction == &#34;up&#34;:
-        self.changer(0, -1)
+        self.changer(0, -1, &#34;up&#34;)
     elif direction == &#34;down&#34;:
-        self.changer(0, 1)</code></pre>
+        self.changer(0, 1, &#34;down&#34;)</code></pre>
 </details>
 </dd>
 <dt id="src.main.Snake_Main.changer"><code class="name flex">
-<span>def <span class="ident">changer</span></span>(<span>self, x: int, y: int)</span>
+<span>def <span class="ident">changer</span></span>(<span>self, x: int, y: int, debug_direction: str)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Changer
@@ -522,7 +620,7 @@ debugging value</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def changer(self, x: int, y: int):
+<pre><code class="python">def changer(self, x: int, y: int, debug_direction: str):
     &#34;&#34;&#34;Changer
         Control.x and Control.y there for debugging purposes
         but replaces teh direction of both values while updating the
@@ -532,35 +630,9 @@ debugging value</p>
         x: updated direction of x
         y: updated direction of y
     &#34;&#34;&#34;
-    Control.x, Control.y = self.dir.x, self.dir.y = x, y</code></pre>
-</details>
-</dd>
-<dt id="src.main.Snake_Main.eaten"><code class="name flex">
-<span>def <span class="ident">eaten</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Eaten
-If self eat control is true
-appends another block to teh position increasing its length</p>
-<h2 id="args">Args</h2>
-<p>self.eat_control: Boolean Value -&gt; bool
-self.position: list of blocks -&gt; list</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def eaten(self):
-    &#34;&#34;&#34;Eaten
-        If self eat control is true
-        appends another block to teh position increasing its length
-    Args:
-        self.eat_control: Boolean Value -&gt; bool
-        self.position: list of blocks -&gt; list
 
-    &#34;&#34;&#34;
-    if self.eat_control is True:
-        self.position.append(self.snake_block)
-        self.eat_control = False</code></pre>
+    self.same_axis(x, y, debug_direction)
+    Control.x, Control.y = self.dir.x, self.dir.y = x, y</code></pre>
 </details>
 </dd>
 <dt id="src.main.Snake_Main.key_down"><code class="name flex">
@@ -598,6 +670,46 @@ Fkey + [i in ["i","j","k","l"]] will update movement</p>
         self.change_dir(&#34;down&#34;)</code></pre>
 </details>
 </dd>
+<dt id="src.main.Snake_Main.same_axis"><code class="name flex">
+<span>def <span class="ident">same_axis</span></span>(<span>self, to_check_x: int, to_check_y: int, direction: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Same axis , check if user doesnt go in the same axis twice</p>
+<p>Currently , error prone code , debugger icecream being used</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>to_check_x</code></strong> :&ensp;<code>int</code></dt>
+<dd>value of the direction of x</dd>
+<dt><strong><code>to_check_y</code></strong> :&ensp;<code>int</code></dt>
+<dd>value of the directino of y</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def same_axis(self, to_check_x: int, to_check_y: int, direction: str):
+    &#34;&#34;&#34;
+    Same axis , check if user doesnt go in the same axis twice
+
+    Currently , error prone code , debugger icecream being used
+
+    Parameters
+    ----------
+    to_check_x : int
+        value of the direction of x
+    to_check_y : int
+        value of the directino of y
+    &#34;&#34;&#34;
+    # # Maybe check previous position ? im not 100% sure on this
+
+    # ic(&#34;To Change &#34;, (to_check_x, to_check_y))
+    # ic(&#34;Tuple&#34;, self.dir.get_p())
+    # print(&#34;\n&#34;)
+    # ic(&#34;Main Direction &#34; + direction)
+    # print(&#34;\n&#34;)
+    pass</code></pre>
+</details>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -626,15 +738,13 @@ Fkey + [i in ["i","j","k","l"]] will update movement</p>
 <li>
 <h4><code><a title="src.main.Snake_Main" href="#src.main.Snake_Main">Snake_Main</a></code></h4>
 <ul class="two-column">
-<li><code><a title="src.main.Snake_Main.FINISHED" href="#src.main.Snake_Main.FINISHED">FINISHED</a></code></li>
 <li><code><a title="src.main.Snake_Main.GAME_STATE" href="#src.main.Snake_Main.GAME_STATE">GAME_STATE</a></code></li>
 <li><code><a title="src.main.Snake_Main.POINTS" href="#src.main.Snake_Main.POINTS">POINTS</a></code></li>
-<li><code><a title="src.main.Snake_Main.RUNNING" href="#src.main.Snake_Main.RUNNING">RUNNING</a></code></li>
 <li><code><a title="src.main.Snake_Main.SPEED" href="#src.main.Snake_Main.SPEED">SPEED</a></code></li>
 <li><code><a title="src.main.Snake_Main.change_dir" href="#src.main.Snake_Main.change_dir">change_dir</a></code></li>
 <li><code><a title="src.main.Snake_Main.changer" href="#src.main.Snake_Main.changer">changer</a></code></li>
-<li><code><a title="src.main.Snake_Main.eaten" href="#src.main.Snake_Main.eaten">eaten</a></code></li>
 <li><code><a title="src.main.Snake_Main.key_down" href="#src.main.Snake_Main.key_down">key_down</a></code></li>
+<li><code><a title="src.main.Snake_Main.same_axis" href="#src.main.Snake_Main.same_axis">same_axis</a></code></li>
 </ul>
 </li>
 </ul>

@@ -7,6 +7,17 @@ from icecream import ic
 
 class Menu:
     def __init__(self, frame):
+        """
+        Init - start if menu
+
+        Allow Side info to be parsed and to be modified
+        Also starts menue from this file
+
+        Parameters
+        ----------
+        frame : frame is teh frame in which i can force end or force frame.stop
+            Allow ease of access from different sources
+        """
         self.option: bool = False
         self.IMG = simplegui.load_image("http://personal.rhul.ac.uk/zjac/281/snake.png")
         self.IMG_CENTRE = (78, 66)
@@ -16,12 +27,21 @@ class Menu:
         )
         self.frame = frame
 
-    # This is active before eveyrthing else woudl starrt
     def start_game(self, main_length: int, speed: int):
         if self.option is True:
             self.frame.stop()
 
     def click(self, pos):
+        """
+        pos
+
+        Define where the user mouse click is
+
+        Parameters
+        ----------
+        pos : Position of mouse
+            tuple argument , - x,y
+        """
         if pos[0] >= 128 and pos[0] <= 384:
             if pos[1] >= 0 and pos[1] <= 64:
                 ic("Easy")
@@ -46,6 +66,16 @@ class Menu:
                 sys.exit()
 
     def draw(self, canvas):
+        """
+        Draw canvas
+
+        Draw polygon size of blocks / rectangle this is the bassis of how hard teh game
+        would have to be
+
+        Parameters
+        ----------
+        canvas : Update to canvas
+        """
 
         canvas.draw_image(
             self.IMG, self.IMG_CENTRE, self.IMG_DIMS, (256, (2 * 512 / 3)), (512, 512)
