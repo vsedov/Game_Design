@@ -62,6 +62,7 @@ class Snake_Main(Control, GameState):
         self.GAME_STATE: bool = (
             True  # We will have to localise this for now i want it here .
         )
+        self.points = self.POINTS
         self.snake_amount: int = length
         self.snake_block: Vector = Vector(
             self.width // self.internal_grid, self.height // self.internal_grid
@@ -189,7 +190,7 @@ class Snake_Main(Control, GameState):
     def __life_change(self):
         ic("Your lives are ", self.life)
         if self.life == 0:
-            print("life change ococurs")
+            self.GAME_STATE = False
 
         else:
             self.life_counter += 1
