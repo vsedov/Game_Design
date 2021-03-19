@@ -190,7 +190,7 @@ class Snake_Main(Control, GameState):
     def __life_change(self):
         ic("Your lives are ", self.life)
         if self.life == 0:
-            print("life change ococurs")
+            self.GAME_STATE = False
 
         else:
             self.life_counter += 1

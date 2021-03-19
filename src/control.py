@@ -70,10 +70,9 @@ class Game_Control(Snake_Main):
         self.update_self(canvas)
 
         canvas.draw_polygon(self.app_seg, 1, "Red", "Red")
-
         if self.GAME_STATE is False:
-            pass
-        # Here i want to draw some infomation
+            canvas.draw_text("GAME OVER", (self.width / 4, self.height / 4), 50, "Blue")
+            self.timer.stop()
 
     def __speed_increase(self):
         if self.speed < self.max_speed:
