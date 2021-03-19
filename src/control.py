@@ -75,6 +75,11 @@ class Game_Control(Snake_Main):
             self.timer.stop()
 
     def __speed_increase(self):
+        """
+        Increase speed with max speed of 10 - which is the fastest
+
+        Checker to define when the game is running live
+        """
         if self.speed < self.max_speed:
 
             self.speed = self.max_speed
@@ -83,6 +88,11 @@ class Game_Control(Snake_Main):
             self.speed -= 1
 
     def __point_increase(self):
+        """
+        Live point score
+
+        Increases points when called
+        """
         self.main_points += 1
 
     def _app_eaten(self):
