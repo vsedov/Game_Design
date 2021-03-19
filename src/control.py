@@ -14,7 +14,7 @@ from system_components.Vector import Vector
 
 
 class Game_Control(Snake_Main):
-    def __init__(self, amount=10):
+    def __init__(self, amount=10, speed=100):
         super().__init__(
             x_pos=1, y_pos=0, width=frame_width, height=frame_height, length=amount
         )
@@ -22,7 +22,7 @@ class Game_Control(Snake_Main):
         self.height = frame_height
         self.app_pos, self.app_seg = self._app()
 
-        self.speed = 100
+        self.speed = speed
         self.max_speed = 10
         self.main_points = 0
         self.label = None

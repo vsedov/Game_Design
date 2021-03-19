@@ -6,19 +6,21 @@
 #
 # File Name: menu_controller
 
+
 from Game_Start import GameStart
-from menu import to_start
-
-
-class MenuStartGame:
-    def __new__(cls, *kwargs):
-
-        pass
+from menu import ControlData, ToStart
 
 
 def main() -> None:
-    to_start()
-    GameStart(length=10)
+
+    game_starter = ToStart()
+    game_starter.to_start()
+
+    "This is for debugging purposes"
+    # ic(ControlData.length)
+    # ic(ControlData.speed)
+
+    GameStart(length=ControlData.length, speed=ControlData.speed)
 
 
 if __name__ == "__main__":
