@@ -12,6 +12,7 @@ from menu import to_start
 
 class MenuStartGame:
     def __new__(cls, *kwargs):
+
         pass
 
 
