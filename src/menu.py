@@ -4,8 +4,6 @@ from time import sleep  # import codeskulptor
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
 from icecream import ic
 
-from Game_Start import GameStart
-
 
 class Menu:
     def __init__(self, frame):
@@ -21,7 +19,7 @@ class Menu:
     # This is active before eveyrthing else woudl starrt
     def start_game(self, main_length: int, speed: int):
         if self.option is True:
-            return self.frame.stop(), GameStart(length=10)
+            self.frame.stop()
 
     def click(self, pos):
         if pos[0] >= 128 and pos[0] <= 384:
@@ -74,15 +72,16 @@ class Menu:
         canvas.draw_text("High score: ", (339.2, 486.4), 23, "White", "monospace")
 
 
-frame = simplegui.create_frame("Home", 512, 512)
+def to_start():
 
-menu = Menu(frame)
+    frame = simplegui.create_frame("Home", 512, 512)
 
+    menu = Menu(frame)
 
-frame.set_canvas_background("#2C6A6A")
+    frame.set_canvas_background("#2C6A6A")
 
-frame.set_mouseclick_handler(menu.click)
+    frame.set_mouseclick_handler(menu.click)
 
-frame.set_draw_handler(menu.draw)
+    frame.set_draw_handler(menu.draw)
 
-frame.start()
+    frame.start()
