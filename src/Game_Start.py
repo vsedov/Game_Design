@@ -5,6 +5,7 @@
 # File Name: Game_Start
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
+from icecream import ic
 
 from control import Game_Control
 from system_components.frame import frame_height, frame_width
@@ -20,7 +21,9 @@ class GameStart:
 
         points = 0
         # This would allow for this to be expanded
-        snake = Game_Control(kwargs.get("length", 5))
+        snake = Game_Control(amount=kwargs.get("length", 5))
+
+        ic(snake.snake_amount)
 
         snake.color.SNAKE_COLOR = kwargs.get("colours", "purple")
 
