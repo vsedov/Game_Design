@@ -5,17 +5,18 @@
 # Copyright © 2021-03-19 01:18 Viv Sedov
 #
 # File Name: menu_controller
-__author__ = "Viv Sedov"
-__email__ = "viv.sv@hotmail.com"
-
 
 from Game_Start import GameStart
 from menu import to_start
 
 
+class MenuStartGame:
+    def __new__(cls, *kwargs):
+        pass
+
+
 def main() -> None:
     to_start()
-
     GameStart(length=10)
 
 
