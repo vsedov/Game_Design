@@ -9,12 +9,6 @@ import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
 from control import Game_Control
 from system_components.frame import frame_height, frame_width
 
-__author__ = "Viv Sedov"
-
-
-def game_restart():
-    ...
-
 
 def colour_button_handler(snake, colour):
     snake.color.SNAKE_COLOR = colour

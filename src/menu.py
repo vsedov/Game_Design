@@ -8,7 +8,7 @@ from Game_Start import GameStart
 
 
 class Menu:
-    def __init__(self):
+    def __init__(self, frame):
         self.option: bool = False
         self.IMG = simplegui.load_image("http://personal.rhul.ac.uk/zjac/281/snake.png")
         self.IMG_CENTRE = (78, 66)
@@ -16,31 +16,31 @@ class Menu:
         self.sound = simplegui.load_sound(
             "http://commondatastorage.googleapis.com/codeskulptor-assets/week7-brrring.m4a"
         )
+        self.frame = frame
 
     # This is active before eveyrthing else woudl starrt
-    def __start_game(self, main_length: int, speed: int):
+    def start_game(self, main_length: int, speed: int):
         if self.option is True:
-            GameStart(length=main_length)
-            print(pointer)
+            return self.frame.stop(), GameStart(length=10)
 
     def click(self, pos):
         if pos[0] >= 128 and pos[0] <= 384:
             if pos[1] >= 0 and pos[1] <= 64:
                 ic("Easy")
-                self.sound.play()
+                # self.sound.play()
                 self.option = True
-                self.__start_game(main_length=5, speed=100)
+                self.start_game(main_length=5, speed=100)
 
             elif pos[1] >= 128 and pos[1] <= 192:
                 self.option = True
                 ic("Medium")
                 self.sound.play()
-                # self.__start_game(main_length=15, speed=80)
+                self.start_game(main_length=15, speed=80)
 
             elif pos[1] >= 256 and pos[1] <= 320:
                 ic("Hard")
                 self.sound.play()
-                # self.__start_game(main_length=25, speed=50)
+                self.start_game(main_length=25, speed=50)
 
             elif pos[1] >= 384 and pos[1] <= 448:
                 self.sound.play()
@@ -48,6 +48,7 @@ class Menu:
                 sys.exit()
 
     def draw(self, canvas):
+
         canvas.draw_image(
             self.IMG, self.IMG_CENTRE, self.IMG_DIMS, (256, (2 * 512 / 3)), (512, 512)
         )
@@ -73,18 +74,15 @@ class Menu:
         canvas.draw_text("High score: ", (339.2, 486.4), 23, "White", "monospace")
 
 
-def main() -> None:
-    menu = Menu()
-    frame = simplegui.create_frame("Home", 512, 512)
+frame = simplegui.create_frame("Home", 512, 512)
 
-    frame.set_canvas_background("#2C6A6A")
-
-    frame.set_mouseclick_handler(menu.click)
-
-    frame.set_draw_handler(menu.draw)
-
-    frame.start()
+menu = Menu(frame)
 
 
-if __name__ == "__main__":
-    main()
+frame.set_canvas_background("#2C6A6A")
+
+frame.set_mouseclick_handler(menu.click)
+
+frame.set_draw_handler(menu.draw)
+
+frame.start()
