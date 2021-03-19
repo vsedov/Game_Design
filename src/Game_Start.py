@@ -24,6 +24,7 @@ class GameStart:
     # Can be omitted, Python will give a default implementation
     def __new__(cls, **kwargs):
 
+        points = 0
         # This would allow for this to be expanded
         snake = Game_Control(kwargs.get("length", 5))
 
@@ -69,7 +70,9 @@ class GameStart:
         frame.add_button("Pink", pink_button_handler)
         # We do not change the background colour
 
-        frame.add_label("Points")
+        label = frame.add_label("Points = " + str(points))
+
+        snake.label = label
 
         frame.set_canvas_background(snake.color.BACKGROUND_COLOR)
 
@@ -91,4 +94,4 @@ Steps :
  finished , uncomment this again . 
 """
 
-# GameStart()
+GameStart()

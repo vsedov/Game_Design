@@ -24,6 +24,8 @@ class Game_Control(Snake_Main):
 
         self.speed = 100
         self.max_speed = 10
+        self.main_points = 0
+        self.label = None
 
     def update_self(self, canvas):
         """update_self
@@ -69,6 +71,10 @@ class Game_Control(Snake_Main):
 
         canvas.draw_polygon(self.app_seg, 1, "Red", "Red")
 
+        if self.GAME_STATE is False:
+            pass
+        # Here i want to draw some infomation
+
     def __speed_increase(self):
         if self.speed < self.max_speed:
 
@@ -78,7 +84,7 @@ class Game_Control(Snake_Main):
             self.speed -= 1
 
     def __point_increase(self):
-        self.points += 1
+        self.main_points += 1
 
     def _app_eaten(self):
         """apple eaten
@@ -123,7 +129,7 @@ class Game_Control(Snake_Main):
         self._self_collision()
         self._app_eaten()
         self._grower_eaten()
-
+        self.label.set_text("Points = " + str(self.main_points))
         self.eat_control = False
 
     def _app(self):
