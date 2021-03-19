@@ -92,30 +92,7 @@ class Snake_Main(Control, GameState):
             y: updated direction of y
         """
 
-        self.same_axis(x, y, debug_direction)
         Control.x, Control.y = self.dir.x, self.dir.y = x, y
-
-    def same_axis(self, to_check_x: int, to_check_y: int, direction: str):
-        """
-        Same axis , check if user doesnt go in the same axis twice
-
-        Currently , error prone code , debugger icecream being used
-
-        Parameters
-        ----------
-        to_check_x : int
-            value of the direction of x
-        to_check_y : int
-            value of the directino of y
-        """
-        # # Maybe check previous position ? im not 100% sure on this
-
-        # ic("To Change ", (to_check_x, to_check_y))
-        # ic("Tuple", self.dir.get_p())
-        # print("\n")
-        # ic("Main Direction " + direction)
-        # print("\n")
-        pass
 
     def change_dir(self, direction):
         """
