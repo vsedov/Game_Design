@@ -3,7 +3,6 @@ from dataclasses import dataclass
 from time import sleep  # import codeskulptor
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
-from icecream import ic
 
 
 @dataclass
@@ -39,7 +38,7 @@ class Menu:
 
             self.speed = speed
             self.length = main_length
-            ControlData.length = self.speed
+            ControlData.speed = self.speed
             ControlData.length = self.length
 
             self.frame.stop()
@@ -57,21 +56,22 @@ class Menu:
         """
         if pos[0] >= 128 and pos[0] <= 384:
             if pos[1] >= 0 and pos[1] <= 64:
-                ic("Easy")
+                # ic("Easy")
                 self.sound.play()
                 self.option = True
                 self.start_game(main_length=5, speed=100)
 
             elif pos[1] >= 128 and pos[1] <= 192:
                 self.option = True
-                ic("Medium")
+                # ic("Medium")
                 self.sound.play()
-                self.start_game(main_length=100, speed=80)
+                self.start_game(main_length=50, speed=80)
 
             elif pos[1] >= 256 and pos[1] <= 320:
-                ic("Hard")
+                self.option = True
+                # ic("Hard")
                 self.sound.play()
-                self.start_game(main_length=25, speed=50)
+                self.start_game(main_length=100, speed=50)
 
             elif pos[1] >= 384 and pos[1] <= 448:
                 self.sound.play()

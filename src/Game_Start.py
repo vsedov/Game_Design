@@ -21,7 +21,9 @@ class GameStart:
 
         points = 0
         # This would allow for this to be expanded
-        snake = Game_Control(amount=kwargs.get("length", 5))
+        snake = Game_Control(
+            amount=kwargs.get("length", 5), speed=kwargs.get("speed", 100)
+        )
 
         ic(snake.snake_amount)
 

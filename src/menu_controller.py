@@ -7,8 +7,6 @@
 # File Name: menu_controller
 
 
-from icecream import ic
-
 from Game_Start import GameStart
 from menu import ControlData, ToStart
 
@@ -18,8 +16,9 @@ def main() -> None:
     game_starter = ToStart()
     game_starter.to_start()
 
-    ic(ControlData.length)
-    ic(ControlData.speed)
+    "This is for debugging purposes"
+    # ic(ControlData.length)
+    # ic(ControlData.speed)
 
     GameStart(length=ControlData.length, speed=ControlData.speed)
 
