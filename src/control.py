@@ -170,6 +170,6 @@ class Game_Control(Snake_Main):
             tuple: Tuple to be modified
         """
         return (
-            random.randrange(2, self.width // self.grid),
-            random.randrange(2, self.height // self.grid),
+            random.randrange(5, self.width // 10),
+            random.randrange(5, self.height // 10),
         )
