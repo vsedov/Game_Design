@@ -58,7 +58,7 @@ class Snake_Main(Control, GameState):
         self.life: int = 3
         self.width: int = width
         self.height: int = height
-        self.grid: int = 10  # Add this to game state class
+        self.grid: int = 17  # Add this to game state class
         self.GAME_STATE: bool = (
             True  # We will have to localise this for now i want it here .
         )
@@ -134,19 +134,24 @@ class Snake_Main(Control, GameState):
         will wrap around teh borders of the grid
         """
         if self.__position_compare_x() > self.width // self.grid:
+            ic("0.0")
             self.position.append(Vector(1, self.__position_compare_y()))
 
         elif self.__position_compare_x() < 1:
+            ic("1.0")
             self.position.append(
                 Vector(self.width / self.grid, self.__position_compare_y())
             )
 
         elif self.__position_compare_y() > self.height // self.grid:
+            ic("2.0")
+
             self.position.append(Vector(self.__position_compare_x(), 1))
 
         elif self.__position_compare_y() < 1:
+            ic("3.0")
             self.position.append(
-                Vector(self.__position_compare_x(), self.height / self.grid)
+                Vector(self.__position_compare_x(), self.height // self.grid)
             )
 
         else:

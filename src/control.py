@@ -63,7 +63,6 @@ class Game_Control(Snake_Main):
         Args:
             canvas: canvas alows stuff to be draw onto the canvas , parser
         """
-
         for k in self.segment_list:
             x = [i.get_p() for i in k]
             canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, "Black")
@@ -173,6 +172,6 @@ class Game_Control(Snake_Main):
             tuple: Tuple to be modified
         """
         return (
-            random.randrange(5, self.width // self.grid),
-            random.randrange(5, self.height // self.grid),
+            random.randrange(1, self.width // self.grid),
+            random.randrange(1, self.height // self.grid),
         )
