@@ -14,7 +14,7 @@ from system_components.Vector import Vector
 
 
 class Game_Control(Snake_Main):
-    def __init__(self, amount=10, speed=100):
+    def __init__(self, amount=10, speed=100, timer=None):
         super().__init__(
             x_pos=1, y_pos=0, width=frame_width, height=frame_height, length=amount
         )
@@ -26,6 +26,7 @@ class Game_Control(Snake_Main):
         self.max_speed = 10
         self.main_points = 0
         self.label = None
+        self.timer = timer
 
     def update_self(self, canvas):
         """update_self
@@ -74,7 +75,7 @@ class Game_Control(Snake_Main):
             canvas.draw_text("GAME OVER", (self.width / 4, self.height / 4), 50, "Blue")
             self.timer.stop()
 
-    def __speed_increase(self):
+    def speed_increase(self):
         """
         Increase speed with max speed of 10 - which is the fastest
 
@@ -86,6 +87,8 @@ class Game_Control(Snake_Main):
 
         else:
             self.speed -= 1
+
+        # Isue this doesnt update the timer , so the speed does not increase like i wanted to
 
     def __point_increase(self):
         """
@@ -112,7 +115,7 @@ class Game_Control(Snake_Main):
                 self.eat_control = True
                 # Redifine the given apple
                 self.app_pos, self.app_seg = self._app()
-                self.__speed_increase()
+                self.speed_increase()
                 self.__point_increase()
 
     def _grower_eaten(self):
@@ -170,6 +173,6 @@ class Game_Control(Snake_Main):
             tuple: Tuple to be modified
         """
         return (
-            random.randrange(5, self.width // 10),
-            random.randrange(5, self.height // 10),
+            random.randrange(5, self.width // self.grid),
+            random.randrange(5, self.height // self.grid),
         )

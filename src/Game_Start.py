@@ -76,7 +76,6 @@ class GameStart:
         frame.set_canvas_background(snake.color.BACKGROUND_COLOR)
 
         timer = simplegui.create_timer(snake.speed, snake.timer_handler)
-
         snake.timer = timer
 
         timer.start()
@@ -93,4 +92,4 @@ Steps :
  finished , uncomment this again . 
 """
 
-# GameStart()
+GameStart()
