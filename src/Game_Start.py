@@ -9,17 +9,45 @@ from icecream import ic
 
 from control import Game_Control
 from system_components.frame import frame_height, frame_width
+import json
 
+from dataclasses import dataclass
+from icecream import ic
 
 def colour_button_handler(snake, colour):
     snake.color.SNAKE_COLOR = colour
 
+class Data:
+    def __init__(self, points, username) -> None:
+        self.data = None
+        self.points = points
+        self.username = username
 
+        self._read_file()
+        self._write_file()
+
+    # working
+    def _read_file(self):
+        with open('src/data.json') as json_file:
+            self.data = json.load(json_file)
+
+    
+    def _write_file(self):
+        for i in self.data['scores']:
+            if self.username not in i['username']:
+                self.data['scores'].append({ 'username': self.username, 'highscore': self.points })
+            elif self.points > i['highscore']:
+                self.data['scores'][i]['highscore'] = self.points
+                
+                ic("Within write status " , self.data)
+            
+            
 class GameStart:
     # Can be omitted, Python will give a default implementation
     def __new__(cls, **kwargs):
 
         points = 0
+        username = ""
         # This would allow for this to be expanded
         snake = Game_Control(
             amount=kwargs.get("length", 5), speed=kwargs.get("speed", 100)
@@ -49,10 +77,18 @@ class GameStart:
 
         def pink_button_handler():
             snake.color.SNAKE_COLOR = "Pink"
+        
+        def username_handler(text):
+            global username   
+            username = text
+
+        Data(points, username)
 
         frame = simplegui.create_frame("Snake", frame_width, frame_height)
         frame.set_keydown_handler(snake.key_down)
         frame.set_draw_handler(snake.draw_self)
+        frame.add_label("Game Options")
+        frame.add_input("Username", username_handler, 50)
         frame.add_label("Colour Options")
         frame.add_button("Red", red_button_handler)
         frame.add_label("")
@@ -92,4 +128,4 @@ Steps :
  finished , uncomment this again . 
 """
 
-# GameStart()
+GameStart()
