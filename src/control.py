@@ -76,7 +76,7 @@ class Game_Control(Snake_Main):
 
             "You have to stop the timer : before writing otherwise you get multiple write instances"
             self.timer.stop()
-            JsonData(50000, "ixahmedxi")
+            JsonData(10000, "test")
             self.frame.stop()
 
     def speed_increase(self):
