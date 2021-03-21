@@ -25,42 +25,21 @@ class JsonData:
         try:
             # writer = self.data["scores"]
 
-            values = []
-            for info in (pointer := (self.data["scores"])) :
+            # values = []
+            for counter, info in enumerate(self.data["scores"]):
+                values = info.values()
+                if self.username in values:
+                    x = dict(info.items())
+                    high_score = x["highscore"]
 
-                for v in info.values():
-                    values.append(v)
+                    if self.json_points >= high_score:
+                        high_score = self.json_points
 
-                if self.username in info.values():
-                    ic(info.items())
-                    # Index of position
-                    # extraction of infomation
+                    x["highscore"] = high_score
+                    ic(x)
 
-            # values = list(zip(values[::2], values[1::2]))
-            # ic(values)
-
-            # It cant be in a loop
-
-        #  if self.username not in [i[0] for i in values]:
-        #      print(True)
-
-        #     pointer.append(
-        #         {"username": self.username, "highscore": self.json_points}
-        #     )
-        #     self._writer(self.data)
-
-        # elif self.username in i:
-        #     if self.json_points > i[1]:
-        #         indexed_var = values.index(i[1])
-        #         item = indexed_var // 2
-        #         if item < 0:
-        #             item = 0
-        #         pointer[item]["highscore"] = self.json_points
-        #         self._writer(self.data)
-
-        #     else:
-        #         return None
         except Exception as e:
+
             pass
 
     def _writer(self, parser):

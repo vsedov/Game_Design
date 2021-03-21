@@ -1,0 +1,29 @@
+
+
+                    # Index of position
+                    # extraction of infomation
+
+            # values = list(zip(values[::2], values[1::2]))
+            # ic(values)
+
+            # It cant be in a loop
+
+        #  if self.username not in [i[0] for i in values]:
+        #      print(True)
+
+        #     pointer.append(
+        #         {"username": self.username, "highscore": self.json_points}
+        #     )
+        #     self._writer(self.data)
+
+        # elif self.username in i:
+        #     if self.json_points > i[1]:
+        #         indexed_var = values.index(i[1])
+        #         item = indexed_var // 2
+        #         if item < 0:
+        #             item = 0
+        #         pointer[item]["highscore"] = self.json_points
+        #         self._writer(self.data)
+
+        #     else:
+        #         return None
