@@ -134,22 +134,17 @@ class Snake_Main(Control, GameState):
         will wrap around teh borders of the grid
         """
         if self.__position_compare_x() > self.width // self.grid:
-            ic("0.0")
             self.position.append(Vector(1, self.__position_compare_y()))
 
         elif self.__position_compare_x() < 1:
-            ic("1.0")
             self.position.append(
                 Vector(self.width / self.grid, self.__position_compare_y())
             )
 
         elif self.__position_compare_y() > self.height // self.grid:
-            ic("2.0")
-
             self.position.append(Vector(self.__position_compare_x(), 1))
 
         elif self.__position_compare_y() < 1:
-            ic("3.0")
             self.position.append(
                 Vector(self.__position_compare_x(), self.height // self.grid)
             )
@@ -169,13 +164,13 @@ class Snake_Main(Control, GameState):
         Args:
             key: SimpleGUICS2Pygame command
         """
-        if key == simplegui.KEY_MAP["right"] and self.dir.x == 0:
+        if key == simplegui.KEY_MAP["d"] and self.dir.x == 0:
             self.change_dir("right")
-        elif key == simplegui.KEY_MAP["left"] and self.dir.x == 0:
+        elif key == simplegui.KEY_MAP["a"] and self.dir.x == 0:
             self.change_dir("left")
-        elif key == simplegui.KEY_MAP["up"] and self.dir.y == 0:
+        elif key == simplegui.KEY_MAP["w"] and self.dir.y == 0:
             self.change_dir("up")
-        elif key == simplegui.KEY_MAP["down"] and self.dir.y == 0:
+        elif key == simplegui.KEY_MAP["s"] and self.dir.y == 0:
             self.change_dir("down")
 
     def __life_change(self):
