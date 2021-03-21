@@ -41,7 +41,8 @@ class JsonData:
                 print(values)
                 for i in range(len(values)):
                     if self.username == values[i]:
-                        print(i)
+
+                        print("item at", i)
                         ic(values[i])
 
                         item = i - 2
@@ -52,8 +53,11 @@ class JsonData:
                                 item = i - 1
                             else:
                                 item = 0
+                        else:
+                            if i >= 2:
+                                item = i - 2
 
-                        print(item)
+                                print(item, "now")
 
                         self.data["scores"][item]["highscore"] = self.json_points
 

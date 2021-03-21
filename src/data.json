@@ -6,15 +6,19 @@
         },
         {
             "username": "Bob",
-            "highscore": 10000
+            "highscore": 50000000
         },
         {
             "username": "test",
-            "highscore": 10000
+            "highscore": 50000
         },
         {
             "username": "anothertest",
-            "highscore": 10
+            "highscore": 50000000
+        },
+        {
+            "username": "Viv",
+            "highscore": 50
         }
     ]
 }
