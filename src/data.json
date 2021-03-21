@@ -6,19 +6,7 @@
         },
         {
             "username": "Bob",
-            "highscore": 500
-        },
-        {
-            "username": "test",
-            "highscore": 500
-        },
-        {
-            "username": "anothertest",
-            "highscore": 5
-        },
-        {
-            "username": "Viv",
-            "highscore": 50
+            "highscore": 30
         }
     ]
 }

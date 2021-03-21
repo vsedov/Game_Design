@@ -29,6 +29,7 @@ class Game_Control(Snake_Main):
         self.label = None
         self.timer = timer
         self.frame = frame
+        self.user_name = None
 
     def update_self(self, canvas):
         """update_self
@@ -76,7 +77,7 @@ class Game_Control(Snake_Main):
 
             "You have to stop the timer : before writing otherwise you get multiple write instances"
             self.timer.stop()
-            JsonData(500000, "Viv")
+            JsonData(self.main_points, self.user_name)
             self.frame.stop()
 
     def speed_increase(self):

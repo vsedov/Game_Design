@@ -1,8 +1,6 @@
 import json
 from dataclasses import dataclass
 
-from icecream import ic
-
 
 @dataclass(init=True)
 class JsonData:
@@ -13,41 +11,34 @@ class JsonData:
 
         self._read_file()
 
-    # working
-
-    def item(self, item):
-        pass
+    def _writer(self, parser):
+        # ic(parser)
+        with open("data.json", "w") as json_file:
+            json.dump(parser, json_file, indent=4)
 
     def _read_file(self):
         with open("data.json") as json_file:
             self.data = json.load(json_file)
 
         try:
-            # writer = self.data["scores"]
+            container = []
+            for counter, info in enumerate(main := (self.data["scores"])):
 
-            # values = []
-            for counter, info in enumerate(self.data["scores"]):
+                container.append(info)
                 values = info.values()
                 if self.username in values:
                     x = dict(info.items())
                     high_score = x["highscore"]
 
                     if self.json_points >= high_score:
-                        high_score = self.json_points
+                        main[counter]["highscore"] = self.json_points
+                        return self._writer(self.data)
 
-                    x["highscore"] = high_score
-                    ic(x)
+                    else:
+                        continue
+            if self.username not in container:
+                main.append({"username": self.username, "highscore": self.json_points})
+                return self._writer(self.data)
 
         except Exception as e:
-
             pass
-
-    def _writer(self, parser):
-        # ic(parser)
-        with open("data.json", "w") as json_file:
-            json.dump(parser, json_file, indent=4)
-
-
-"""
-
-"""
