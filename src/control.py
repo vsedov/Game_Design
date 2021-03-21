@@ -12,7 +12,6 @@ from main import Snake_Main
 from system_components.frame import frame_height, frame_width
 from system_components.Vector import Vector
 
-
 class Game_Control(Snake_Main):
     def __init__(self, amount=10, speed=100, timer=None):
         super().__init__(
