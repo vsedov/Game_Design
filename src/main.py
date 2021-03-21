@@ -138,7 +138,7 @@ class Snake_Main(Control, GameState):
 
         elif self.__position_compare_x() < 1:
             self.position.append(
-                Vector(self.width / self.grid, self.__position_compare_y())
+                Vector(self.width // self.grid, self.__position_compare_y())
             )
 
         elif self.__position_compare_y() > self.height // self.grid:
