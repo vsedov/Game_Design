@@ -2,23 +2,27 @@
     "scores": [
         {
             "username": "ixahmedxi",
-            "highscore": 10000
+            "highscore": 1
         },
         {
             "username": "Bob",
-            "highscore": 50000000
+            "highscore": 500
         },
         {
             "username": "test",
-            "highscore": 50000
+            "highscore": 500
         },
         {
             "username": "anothertest",
-            "highscore": 50000000
+            "highscore": 5
         },
         {
             "username": "Viv",
             "highscore": 50
+        },
+        {
+            "username": "test",
+            "highscore": 500000
         }
     ]
 }

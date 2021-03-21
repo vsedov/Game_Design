@@ -1,8 +1,6 @@
 import json
 from dataclasses import dataclass
 
-from icecream import ic
-
 
 @dataclass(init=True)
 class JsonData:
@@ -31,40 +29,27 @@ class JsonData:
                 for v in info.values():
                     values.append(v)
 
-            if self.username not in values:
-                pointer.append(
-                    {"username": self.username, "highscore": self.json_points}
-                )
-                self._writer(self.data)
+            values = list(zip(values[::2], values[1::2]))
 
-            else:
-                print(values)
-                for i in range(len(values)):
-                    if self.username == values[i]:
+            for i in values:
+                if self.username in i:
 
-                        print("item at", i)
-                        ic(values[i])
+                    pointer.append(
+                        {"username": self.username, "highscore": self.json_points}
+                    )
+                    self._writer(self.data)
 
-                        item = i - 2
-                        ic(i, " at ", item)
-                        if item <= 0:
-                            print(item)
-                            if i >= 2:
-                                item = i - 1
-                            else:
-                                item = 0
-                        else:
-                            if i >= 2:
-                                item = i - 2
-
-                                print(item, "now")
-
-                        self.data["scores"][item]["highscore"] = self.json_points
-
+                elif self.username in i:
+                    if self.json_points > i[1]:
+                        indexed_var = values.index(i[1])
+                        item = indexed_var // 2
+                        if item < 0:
+                            item = 0
+                        pointer[item]["highscore"] = self.json_points
                         self._writer(self.data)
 
-        # Some really fuck code but it works i think i havent tested this properly though
-        # probably doesnt work  with more than one user >.< idk
+                    else:
+                        return None
 
         except Exception as e:
             pass
