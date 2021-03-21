@@ -8,9 +8,11 @@ import random
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
 
+from json_controller import JsonData
 from main import Snake_Main
 from system_components.frame import frame_height, frame_width
 from system_components.Vector import Vector
+
 
 class Game_Control(Snake_Main):
     def __init__(self, amount=10, speed=100, timer=None):
@@ -40,7 +42,6 @@ class Game_Control(Snake_Main):
         """
 
         self.segment_list = []
-        # print(self.eat_control)
         for pos in self.position:
             segment = [
                 Vector(pos.x * self.grid - self.grid, pos.y * self.grid),
@@ -71,6 +72,10 @@ class Game_Control(Snake_Main):
         canvas.draw_polygon(self.app_seg, 1, "Red", "Red")
         if self.GAME_STATE is False:
             canvas.draw_text("GAME OVER", (self.width / 4, self.height / 4), 50, "Blue")
+            # In here we want to update this code
+
+            JsonData(self.points, "Bob")
+
             self.timer.stop()
 
     def speed_increase(self):
