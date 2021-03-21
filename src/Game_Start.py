@@ -6,7 +6,6 @@
 
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
-from icecream import ic
 
 from control import Game_Control
 from system_components.frame import frame_height, frame_width
@@ -24,10 +23,10 @@ class GameStart:
         username = ""
         # This would allow for this to be expanded
         snake = Game_Control(
-            amount=kwargs.get("length", 5), speed=kwargs.get("speed", 100)
+            amount=kwargs.get("length", 100), speed=kwargs.get("speed", 100)
         )
 
-        ic(snake.snake_amount)
+        # ic(snake.snake_amount)
 
         snake.color.SNAKE_COLOR = kwargs.get("colours", "purple")
 
@@ -61,6 +60,7 @@ class GameStart:
         frame.set_draw_handler(snake.draw_self)
         frame.add_label("Game Options")
         frame.add_input("Username", username_handler, 50)
+        frame.add_label("")
         frame.add_label("Colour Options")
         frame.add_button("Red", red_button_handler)
         frame.add_label("")
@@ -85,6 +85,7 @@ class GameStart:
 
         timer = simplegui.create_timer(snake.speed, snake.timer_handler)
         snake.timer = timer
+        snake.frame = frame
 
         timer.start()
         frame.start()

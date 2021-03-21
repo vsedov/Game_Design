@@ -1,8 +1,12 @@
 {
-  "scores": [
-    {
-      "username": "ixahmedxi",
-      "highscore": 10
-    }
-  ]
+    "scores": [
+        {
+            "username": "ixahmedxi",
+            "highscore": 50000
+        },
+        {
+            "username": "Bob",
+            "highscore": 50000
+        }
+    ]
 }

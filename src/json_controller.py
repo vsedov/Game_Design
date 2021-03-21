@@ -1,8 +1,6 @@
 import json
 from dataclasses import dataclass
 
-from icecream import ic
-
 
 @dataclass(init=True)
 class JsonData:
@@ -12,21 +10,46 @@ class JsonData:
         self.username = username
 
         self._read_file()
-        self._write_file()
 
     # working
     def _read_file(self):
-        with open("src/data.json") as json_file:
+        with open("data.json") as json_file:
             self.data = json.load(json_file)
 
-    def _write_file(self):
-        for i in self.data["scores"]:
-            if self.username not in i["username"]:
-                ic("this should be active ", self.username)
-                self.data["scores"].append(
-                    {"username": self.username, "highscore": self.points}
-                )
-            elif self.points > i["highscore"]:
-                self.data["scores"][i]["highscore"] = self.points
+        try:
+            # writer = self.data["scores"]
 
-                ic("Within write status ", self.data)
+            values = []
+            for info in (pointer := (self.data["scores"])) :
+
+                for i, v in info.items():
+                    values.append(v)
+
+            if self.username not in values:
+                pointer.append(
+                    {"username": self.username, "highscore": self.json_points}
+                )
+                self._writer(self.data)
+
+            else:
+                for i in range(len(values)):
+                    if self.username == values[i]:
+                        if self.json_points > values[i + 1]:
+                            self.data["scores"][i]["highscore"] = self.json_points
+                            self._writer(self.data)
+
+        # Some really fuck code but it works i think i havent tested this properly though
+        # probably doesnt work  with more than one user >.< idk
+
+        except Exception as e:
+            pass
+
+    def _writer(self, parser):
+        # ic(parser)
+        with open("data.json", "w") as json_file:
+            json.dump(parser, json_file, indent=4)
+
+
+"""
+
+"""

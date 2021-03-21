@@ -15,7 +15,7 @@ from system_components.Vector import Vector
 
 
 class Game_Control(Snake_Main):
-    def __init__(self, amount=10, speed=100, timer=None):
+    def __init__(self, amount=10, speed=100, timer=None, frame=None):
         super().__init__(
             x_pos=1, y_pos=0, width=frame_width, height=frame_height, length=amount
         )
@@ -28,6 +28,7 @@ class Game_Control(Snake_Main):
         self.main_points = 0
         self.label = None
         self.timer = timer
+        self.frame = frame
 
     def update_self(self, canvas):
         """update_self
@@ -72,11 +73,11 @@ class Game_Control(Snake_Main):
         canvas.draw_polygon(self.app_seg, 1, "Red", "Red")
         if self.GAME_STATE is False:
             canvas.draw_text("GAME OVER", (self.width / 4, self.height / 4), 50, "Blue")
-            # In here we want to update this code
 
-            JsonData(self.points, "Bob")
-
+            "You have to stop the timer : before writing otherwise you get multiple write instances"
             self.timer.stop()
+            JsonData(50000, "ixahmedxi")
+            self.frame.stop()
 
     def speed_increase(self):
         """
