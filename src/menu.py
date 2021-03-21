@@ -26,14 +26,22 @@ class Menu:
         """
         self.option: bool = False
         self.IMG = simplegui.load_image("http://personal.rhul.ac.uk/zjac/281/snake.png")
-	    self.l1 = [-12,-8,-4,0,4,8,12]
-	    self.IMG2 = simplegui.load_image('http://personal.rhul.ac.uk/zjac/281/snake.png')
-	    self.l2 = [-11,-7,-3,1,5,9,13]
-	    self.IMG3 = simplegui.load_image('https://opengameart.org/sites/default/files/styles/medium/public/apple_1_0.png')
-	    self.l3 = [-10,-6,-2,2,6,10,14]
-	    self.IMG4 = simplegui.load_image('https://opengameart.org/sites/default/files/styles/medium/public/SneckoCreature.PNG')
-	    self.l4 = [-9,-5,-1,3,7,11,15]
-	    self.theme = 1
+
+        self.l1 = [-12, -8, -4, 0, 4, 8, 12]
+
+        self.IMG2 = simplegui.load_image(
+            "http://personal.rhul.ac.uk/zjac/281/snake.png"
+        )
+        self.l2 = [-11, -7, -3, 1, 5, 9, 13]
+        self.IMG3 = simplegui.load_image(
+            "https://opengameart.org/sites/default/files/styles/medium/public/apple_1_0.png"
+        )
+        self.l3 = [-10, -6, -2, 2, 6, 10, 14]
+        self.IMG4 = simplegui.load_image(
+            "https://opengameart.org/sites/default/files/styles/medium/public/SneckoCreature.PNG"
+        )
+        self.l4 = [-9, -5, -1, 3, 7, 11, 15]
+        self.theme = 1
         self.IMG_CENTRE = (78, 66)
         self.IMG_DIMS = (156, 132)
         self.sound = simplegui.load_sound(
@@ -85,12 +93,12 @@ class Menu:
                 self.sound.play()
                 sleep(1.00)
                 sys.exit()
-	        
-	    global theme
-        if (pos[1] >=30 and pos [1] <= 48):
-            if (pos[0] >=460  and pos[0] <=475):
+
+        global theme
+        if pos[1] >= 30 and pos[1] <= 48:
+            if pos[0] >= 460 and pos[0] <= 475:
                 theme -= 1
-            elif (pos[0] >=478 and pos[0] <=506):
+            elif pos[0] >= 478 and pos[0] <= 506:
                 theme += 1
 
     def draw(self, canvas):
@@ -106,19 +114,42 @@ class Menu:
         """
 
         if self.theme in self.l1:
-            canvas.draw_image(self.IMG, self.IMG_CENTRE, self.IMG_DIMS, (300, (2*512 /4)), (512,512))
+            canvas.draw_image(
+                self.IMG,
+                self.IMG_CENTRE,
+                self.IMG_DIMS,
+                (300, (2 * 512 / 4)),
+                (512, 512),
+            )
         elif self.theme in self.l2:
-            canvas.draw_image(self.IMG2, self.IMG_CENTRE, self.IMG_DIMS, (256, (2*512 /4)), (512,512))
+            canvas.draw_image(
+                self.IMG2,
+                self.IMG_CENTRE,
+                self.IMG_DIMS,
+                (256, (2 * 512 / 4)),
+                (512, 512),
+            )
         elif self.theme in self.l3:
-            canvas.draw_image(self.IMG3, self.IMG_CENTRE, self.IMG_DIMS, (256, (2*512 /4)), (512,512))
+            canvas.draw_image(
+                self.IMG3,
+                self.IMG_CENTRE,
+                self.IMG_DIMS,
+                (256, (2 * 512 / 4)),
+                (512, 512),
+            )
         elif self.theme in self.l4:
-            canvas.draw_image(self.IMG4, self.IMG_CENTRE, self.IMG_DIMS, (256, (2*512 /4)), (512,512))
+            canvas.draw_image(
+                self.IMG4,
+                self.IMG_CENTRE,
+                self.IMG_DIMS,
+                (256, (2 * 512 / 4)),
+                (512, 512),
+            )
 
-	    canvas.draw_polygon([(460, 48), (506, 48), (506, 0), (460, 0)], 5, '#660099')
-        canvas.draw_text('Theme', (463, 27), 15, 'White', 'monospace')
-        canvas.draw_text('<--', (465, 40), 15, 'White', 'monospace')
-        canvas.draw_text('-->', (478, 40), 15, 'White', 'monospace')
-
+        canvas.draw_polygon([(460, 48), (506, 48), (506, 0), (460, 0)], 5, "#660099")
+        canvas.draw_text("Theme", (463, 27), 15, "White", "monospace")
+        canvas.draw_text("<--", (465, 40), 15, "White", "monospace")
+        canvas.draw_text("-->", (478, 40), 15, "White", "monospace")
 
         canvas.draw_polygon([(128, 64), (384, 64), (384, 0), (128, 0)], 5, "#660099")
         canvas.draw_text("Easy", (204.8, 45), 23, "White", "monospace")
