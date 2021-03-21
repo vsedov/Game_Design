@@ -1,6 +1,8 @@
 import json
 from dataclasses import dataclass
 
+from icecream import ic
+
 
 @dataclass(init=True)
 class JsonData:
@@ -29,28 +31,35 @@ class JsonData:
                 for v in info.values():
                     values.append(v)
 
-            values = list(zip(values[::2], values[1::2]))
+                if self.username in info.values():
+                    ic(info.items())
+                    # Index of position
+                    # extraction of infomation
 
-            for i in values:
-                if self.username in i:
+            # values = list(zip(values[::2], values[1::2]))
+            # ic(values)
 
-                    pointer.append(
-                        {"username": self.username, "highscore": self.json_points}
-                    )
-                    self._writer(self.data)
+            # It cant be in a loop
 
-                elif self.username in i:
-                    if self.json_points > i[1]:
-                        indexed_var = values.index(i[1])
-                        item = indexed_var // 2
-                        if item < 0:
-                            item = 0
-                        pointer[item]["highscore"] = self.json_points
-                        self._writer(self.data)
+        #  if self.username not in [i[0] for i in values]:
+        #      print(True)
 
-                    else:
-                        return None
+        #     pointer.append(
+        #         {"username": self.username, "highscore": self.json_points}
+        #     )
+        #     self._writer(self.data)
 
+        # elif self.username in i:
+        #     if self.json_points > i[1]:
+        #         indexed_var = values.index(i[1])
+        #         item = indexed_var // 2
+        #         if item < 0:
+        #             item = 0
+        #         pointer[item]["highscore"] = self.json_points
+        #         self._writer(self.data)
+
+        #     else:
+        #         return None
         except Exception as e:
             pass
 
