@@ -55,7 +55,7 @@ class Snake_Main(Control, GameState):
         )
         self.color = Colors()
         self.speed: int = 100
-        self.life: int = 3
+        self.life: int = 5
         self.width: int = width
         self.height: int = height
         self.grid: int = 17  # Add this to game state class

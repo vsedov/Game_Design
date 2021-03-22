@@ -20,10 +20,11 @@ class GameStart:
     def __new__(cls, **kwargs):
 
         points = 0
+        lives = 5
         username = ""
         # This would allow for this to be expanded
         snake = Game_Control(
-            amount=kwargs.get("length", 2), speed=kwargs.get("speed", 100)
+            amount=kwargs.get("length", 100), speed=kwargs.get("speed", 100)
         )
 
         # ic(snake.snake_amount)
@@ -51,46 +52,52 @@ class GameStart:
         def pink_button_handler():
             snake.color.SNAKE_COLOR = "Pink"
 
+        def white_space(frame):
+            return frame.add_label("")
+
         frame = simplegui.create_frame("Snake", frame_width, frame_height)
         frame.set_keydown_handler(snake.key_down)
         frame.set_draw_handler(snake.draw_self)
         frame.add_label("Game Options")
-        frame.add_label("")
+        white_space(frame)
 
         frame.add_label("Colour Options")
         frame.add_button("Red", red_button_handler)
-        frame.add_label("")
 
+        white_space(frame)
         frame.add_button("Orange", orange_button_handler)
-        frame.add_label("")
 
+        white_space(frame)
         frame.add_button("Yellow", yellow_button_handler)
-        frame.add_label("")
+        white_space(frame)
 
         frame.add_button("Green", green_button_handler)
-        frame.add_label("")
+        white_space(frame)
 
         frame.add_button("Blue", blue_button_handler)
-        frame.add_label("")
+        white_space(frame)
 
         frame.add_button("Purple", purple_button_handler)
-        frame.add_label("")
+        white_space(frame)
 
         frame.add_button("Pink", pink_button_handler)
-        frame.add_label("")
+        white_space(frame)
         # We do not change the background colour
 
         label = frame.add_label("Points = " + str(points))
+        white_space(frame)
+        lives = frame.add_label("lives = " + str(lives))
 
-        frame.add_label("")
-        frame.add_label("")
+        white_space(frame)
+        white_space(frame)
 
         frame.add_button("Save and exit", snake._save)
-        frame.add_label("")
+        white_space(frame)
 
         frame.add_button("exit", snake._exit)
 
         snake.label = label
+        snake.lives = lives
         "This will not work"
         # snake.user_name = username
 

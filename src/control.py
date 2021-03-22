@@ -32,6 +32,7 @@ class Game_Control(Snake_Main):
         self.max_speed = 10
         self.main_points = 0
         self.label = None
+        self.lives = None
         self.timer = timer
         self.frame = frame
         "Due to Username not being defined properly , username will be Bob"
@@ -144,6 +145,7 @@ class Game_Control(Snake_Main):
                 self.position.pop()
                 self.__point_decrease()
                 self.bad_app_pos, self.bad_app_seg = self._app()
+                self.life -= 1
 
     def _grower_eaten(self):
         """grower_eaten
@@ -170,6 +172,7 @@ class Game_Control(Snake_Main):
         self._bad_app_eaten()
         self._grower_eaten()
         self.label.set_text("Points = " + str(self.main_points))
+        self.lives.set_text("lives = " + str(self.life))
         self.eat_control = False
 
     def _app(self):
