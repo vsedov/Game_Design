@@ -78,9 +78,12 @@ class Game_Control(Snake_Main):
 
         self.update_self(canvas)
 
+        # Good apple
         canvas.draw_polygon(self.app_seg, 1, "green", "green")
 
+        # Bad apple
         canvas.draw_polygon(self.bad_app_seg, 1, "Red", "Red")
+
         if self.GAME_STATE is False:
             canvas.draw_text("GAME OVER", (self.width / 4, self.height / 4), 50, "Blue")
 
@@ -209,11 +212,22 @@ class Game_Control(Snake_Main):
         )
 
     def _save(self):
+        """
+        Save
+
+        Save and end game - with user infomation
+        """
         self.timer.stop()
         JsonData(self.main_points, self.user_name)
         self.frame.stop()
         sys.exit(0)
 
     def _exit(self):
+        """
+        exit
+
+        exit without user infomation
+        """
         self.timer.stop()
+        self.frame.stop()
         sys.exit(0)
