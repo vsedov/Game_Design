@@ -5,7 +5,6 @@
 # File Name: control
 
 import random
-import sys
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
 
@@ -87,7 +86,7 @@ class Game_Control(Snake_Main):
         # Game Over state is very quick and just ends the program
         if self.GAME_STATE is False:
             canvas.draw_text(
-                "GAME OVER", (self.width // 2, self.height // 2), 50, "Blue"
+                "GAME OVER - press ", (self.width // 2, self.height // 2), 50, "Blue"
             )
 
             "You have to stop the timer : before writing otherwise you get multiple write instances"
@@ -228,10 +227,13 @@ class Game_Control(Snake_Main):
         Save and end game - with user infomation
         """
         self.timer.stop()
+
         JsonData(self.main_points, self.user_name)
 
+        self._exit_after_save()
+
+    def _exit_after_save(self):
         self.frame.stop()
-        sys.exit(0)
 
     def _exit(self):
         """
@@ -241,4 +243,4 @@ class Game_Control(Snake_Main):
         """
         self.timer.stop()
         self.frame.stop()
-        sys.exit(0)
+        # sys.exit(0)
