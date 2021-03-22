@@ -6,7 +6,11 @@
         },
         {
             "username": "Bob",
-            "highscore": 30
+            "highscore": 10
+        },
+        {
+            "username": "Viv",
+            "highscore": 0
         }
     ]
 }

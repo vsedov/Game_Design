@@ -7,6 +7,7 @@
 import random
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
+from icecream import ic
 
 from json_controller import JsonData
 from main import Snake_Main
@@ -29,7 +30,8 @@ class Game_Control(Snake_Main):
         self.label = None
         self.timer = timer
         self.frame = frame
-        self.user_name = None
+        "Due to Username not being defined properly , username will be Bob"
+        self.user_name = "Viv"
 
     def update_self(self, canvas):
         """update_self
@@ -78,6 +80,7 @@ class Game_Control(Snake_Main):
             "You have to stop the timer : before writing otherwise you get multiple write instances"
             self.timer.stop()
             JsonData(self.main_points, self.user_name)
+
             self.frame.stop()
 
     def speed_increase(self):
@@ -181,3 +184,7 @@ class Game_Control(Snake_Main):
             random.randrange(1, self.width // self.grid),
             random.randrange(1, self.height // self.grid),
         )
+
+    def _restart_game(self):
+        ic("restart game has started")
+        pass

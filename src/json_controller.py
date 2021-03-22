@@ -6,9 +6,10 @@ from dataclasses import dataclass
 class JsonData:
     def __init__(self, points, username) -> None:
         self.data = None
-        self.json_points = points
-        self.username = username
+        self.json_points: int = points
+        self.username: str = username
 
+        self.__name_exists: bool = False
         self._read_file()
 
     def _writer(self, parser):
@@ -21,12 +22,10 @@ class JsonData:
             self.data = json.load(json_file)
 
         try:
-            container = []
             for counter, info in enumerate(main := (self.data["scores"])):
-
-                container.append(info)
                 values = info.values()
                 if self.username in values:
+                    self.__name_exists = True
                     x = dict(info.items())
                     high_score = x["highscore"]
 
@@ -35,8 +34,9 @@ class JsonData:
                         return self._writer(self.data)
 
                     else:
-                        continue
-            if self.username not in container:
+                        break
+
+            if not self.__name_exists:
                 main.append({"username": self.username, "highscore": self.json_points})
                 return self._writer(self.data)
 
