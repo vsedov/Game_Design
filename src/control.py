@@ -73,7 +73,7 @@ class Game_Control(Snake_Main):
         """
         for k in self.segment_list:
             x = [i.get_p() for i in k]
-            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, "Black")
+            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, "#8052EC")
 
         self.update_self(canvas)
 
@@ -82,8 +82,8 @@ class Game_Control(Snake_Main):
 
         # Bad apple
         canvas.draw_polygon(self.bad_app_seg, 1, "Red", "Red")
-
         # Game Over state is very quick and just ends the program
+
         if self.GAME_STATE is False:
             canvas.draw_text(
                 "GAME OVER - press ", (self.width // 2, self.height // 2), 50, "Blue"
@@ -230,7 +230,11 @@ class Game_Control(Snake_Main):
 
         JsonData(self.main_points, self.user_name)
 
-        self._exit_after_save()
+        [print(x) for x in range(100)]
+
+        self.timer.start()
+
+        # self._exit_after_save()
 
     def _exit_after_save(self):
         self.frame.stop()

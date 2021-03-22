@@ -8,46 +8,29 @@
 __author__ = "Viv Sedov"
 __email__ = "viv.sv@hotmail.com"
 
-import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
 from frosch import hook
-from icecream import ic
 
 
-class Welcome:
-    def __init__(self, frame):
-        self.inp = None
-        self.frame = frame
+class WhoAmI:
+    def __new__(cls):
+        print("Some  infomation about me :")
+        return super(WhoAmI, cls).__new__(cls)
 
-        self.message = "Good job!"
-
-    def click(self, pos):
-        ic(pos)
-
-    def input_handle(self):
-        pass
-
-    def draw(self, canvas):
-        canvas.draw_text("Welcome", [175, 256], 48, "Purple")
-
-    def input_handle(self, text):
-        ic(text)
+    def __init__(self):
+        self.name = "Viv Sedov"
+        self.email = "viv.sv@hotmail.com"
+        self.role = "Sudent"
+        self.hobbies = [
+            "Programming (allot)",
+            "Watching Anime",
+            "Reading Manga",
+            "Learning Japanese",
+            "Being up all Night figuring out how to FIX that ONE BUG...",
+        ]
 
 
 def main() -> None:
-
-    # -------------------------------------------------
-    frame = simplegui.create_frame("Home", 512, 512)
-    # -------------------------------------------------
-
-    bob = Welcome(frame)
-
-    inp = frame.add_input("Name", bob.input_handle, 100)
-
-    bob.inp = inp
-    frame.set_draw_handler(bob.draw)
-    frame.set_mouseclick_handler(bob.click)
-
-    frame.start()
+    bob = WhoAmI()
 
 
 if __name__ == "__main__":
