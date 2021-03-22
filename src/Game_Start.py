@@ -23,7 +23,7 @@ class GameStart:
         username = ""
         # This would allow for this to be expanded
         snake = Game_Control(
-            amount=kwargs.get("length", 100), speed=kwargs.get("speed", 100)
+            amount=kwargs.get("length", 10), speed=kwargs.get("speed", 100)
         )
 
         # ic(snake.snake_amount)
@@ -50,10 +50,6 @@ class GameStart:
 
         def pink_button_handler():
             snake.color.SNAKE_COLOR = "Pink"
-
-        def username_handler(text):
-            global username
-            username = text
 
         frame = simplegui.create_frame("Snake", frame_width, frame_height)
         frame.set_keydown_handler(snake.key_down)
@@ -85,9 +81,14 @@ class GameStart:
         # We do not change the background colour
 
         label = frame.add_label("Points = " + str(points))
+
+        frame.add_label("")
         frame.add_label("")
 
-        frame.add_button("Retart_Game", snake._restart_game)
+        frame.add_button("Save and exit", snake._save)
+        frame.add_label("")
+
+        frame.add_button("exit", snake._exit)
 
         snake.label = label
         "This will not work"
