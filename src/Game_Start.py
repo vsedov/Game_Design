@@ -59,27 +59,39 @@ class GameStart:
         frame.set_keydown_handler(snake.key_down)
         frame.set_draw_handler(snake.draw_self)
         frame.add_label("Game Options")
-        frame.add_input("Username", username_handler, 50)
         frame.add_label("")
+
         frame.add_label("Colour Options")
         frame.add_button("Red", red_button_handler)
         frame.add_label("")
+
         frame.add_button("Orange", orange_button_handler)
         frame.add_label("")
+
         frame.add_button("Yellow", yellow_button_handler)
         frame.add_label("")
+
         frame.add_button("Green", green_button_handler)
         frame.add_label("")
+
         frame.add_button("Blue", blue_button_handler)
         frame.add_label("")
+
         frame.add_button("Purple", purple_button_handler)
         frame.add_label("")
+
         frame.add_button("Pink", pink_button_handler)
+        frame.add_label("")
         # We do not change the background colour
 
         label = frame.add_label("Points = " + str(points))
+        frame.add_label("")
+
+        frame.add_button("Retart_Game", snake._restart_game)
 
         snake.label = label
+        "This will not work"
+        # snake.user_name = username
 
         frame.set_canvas_background(snake.color.BACKGROUND_COLOR)
 
