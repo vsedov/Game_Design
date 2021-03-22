@@ -84,8 +84,11 @@ class Game_Control(Snake_Main):
         # Bad apple
         canvas.draw_polygon(self.bad_app_seg, 1, "Red", "Red")
 
+        # Game Over state is very quick and just ends the program
         if self.GAME_STATE is False:
-            canvas.draw_text("GAME OVER", (self.width / 4, self.height / 4), 50, "Blue")
+            canvas.draw_text(
+                "GAME OVER", (self.width // 2, self.height // 2), 50, "Blue"
+            )
 
             "You have to stop the timer : before writing otherwise you get multiple write instances"
             self._save()
@@ -104,6 +107,13 @@ class Game_Control(Snake_Main):
             self.speed -= 1
 
         # Isue this doesnt update the timer , so the speed does not increase like i wanted to
+
+    def __life_decrease(self):
+
+        if self.life == 0:
+            self.GAME_STATE = False
+        else:
+            self.life -= 1
 
     def __point_increase(self):
         """
@@ -147,8 +157,8 @@ class Game_Control(Snake_Main):
                 "remove"
                 self.position.pop()
                 self.__point_decrease()
+                self.__life_decrease()
                 self.bad_app_pos, self.bad_app_seg = self._app()
-                self.life -= 1
 
     def _grower_eaten(self):
         """grower_eaten
@@ -219,6 +229,7 @@ class Game_Control(Snake_Main):
         """
         self.timer.stop()
         JsonData(self.main_points, self.user_name)
+
         self.frame.stop()
         sys.exit(0)
 
