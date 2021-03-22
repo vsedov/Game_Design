@@ -23,7 +23,7 @@ class GameStart:
         username = ""
         # This would allow for this to be expanded
         snake = Game_Control(
-            amount=kwargs.get("length", 10), speed=kwargs.get("speed", 100)
+            amount=kwargs.get("length", 2), speed=kwargs.get("speed", 100)
         )
 
         # ic(snake.snake_amount)

@@ -22,7 +22,11 @@ class Game_Control(Snake_Main):
         )
         self.width = frame_width
         self.height = frame_height
+
+        "Good apple incrase length"
         self.app_pos, self.app_seg = self._app()
+        "Bad apple reduces length"
+        self.bad_app_pos, self.bad_app_seg = self._app()
 
         self.speed = speed
         self.max_speed = 10
@@ -73,7 +77,9 @@ class Game_Control(Snake_Main):
 
         self.update_self(canvas)
 
-        canvas.draw_polygon(self.app_seg, 1, "Red", "Red")
+        canvas.draw_polygon(self.app_seg, 1, "green", "green")
+
+        canvas.draw_polygon(self.bad_app_seg, 1, "Red", "Red")
         if self.GAME_STATE is False:
             canvas.draw_text("GAME OVER", (self.width / 4, self.height / 4), 50, "Blue")
 
@@ -103,6 +109,14 @@ class Game_Control(Snake_Main):
         """
         self.main_points += 1
 
+    def __point_decrease(self):
+        """
+        point decreaser
+
+        if hit red apple  points will decrease
+        """
+        self.main_points -= 1
+
     def _app_eaten(self):
         """apple eaten
 
@@ -122,6 +136,14 @@ class Game_Control(Snake_Main):
                 self.app_pos, self.app_seg = self._app()
                 self.speed_increase()
                 self.__point_increase()
+
+    def _bad_app_eaten(self):
+        for i in self.position:
+            if i.get_p() == self.bad_app_pos:
+                "remove"
+                self.position.pop()
+                self.__point_decrease()
+                self.bad_app_pos, self.bad_app_seg = self._app()
 
     def _grower_eaten(self):
         """grower_eaten
@@ -145,6 +167,7 @@ class Game_Control(Snake_Main):
         self._control()
         self._self_collision()
         self._app_eaten()
+        self._bad_app_eaten()
         self._grower_eaten()
         self.label.set_text("Points = " + str(self.main_points))
         self.eat_control = False
@@ -184,7 +207,7 @@ class Game_Control(Snake_Main):
 
     def _save(self):
         self.timer.stop()
-        JsonData(self.json_points, self.user_name)
+        JsonData(self.main_points, self.user_name)
         self.frame.stop()
         sys.exit(0)
 
