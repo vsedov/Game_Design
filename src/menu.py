@@ -1,3 +1,9 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+# vim:fenc=utf-8
+#
+# File Name: menu
+
 import sys
 from dataclasses import dataclass
 from time import sleep  # import codeskulptor
