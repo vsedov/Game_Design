@@ -94,12 +94,11 @@ class Menu:
                 sleep(1.00)
                 sys.exit()
 
-        global theme
         if pos[1] >= 30 and pos[1] <= 48:
             if pos[0] >= 460 and pos[0] <= 475:
-                theme -= 1
+                self.theme -= 1
             elif pos[0] >= 478 and pos[0] <= 506:
-                theme += 1
+                self.theme += 1
 
     def draw(self, canvas):
         """
