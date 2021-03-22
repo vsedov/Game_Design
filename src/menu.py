@@ -32,24 +32,37 @@ class Menu:
         """
         self.option: bool = False
         self.IMG = simplegui.load_image("http://personal.rhul.ac.uk/zjac/281/snake.png")
-
+        self.IMG_CENTRE = (78, 66)
+        self.IMG_DIMS = (156, 132)
+        
         self.l1 = [-12, -8, -4, 0, 4, 8, 12]
 
         self.IMG2 = simplegui.load_image(
-            "http://personal.rhul.ac.uk/zjac/281/snake.png"
+            "http://personal.rhul.ac.uk/zjac/281/Snake%20on%20an%20old%20stump_0.png"
         )
+
+        self.IMG_CENTRE2 = (125, 125)
+        self.IMG_DIMS2 = (250, 250)
+        
         self.l2 = [-11, -7, -3, 1, 5, 9, 13]
         self.IMG3 = simplegui.load_image(
-            "https://opengameart.org/sites/default/files/styles/medium/public/apple_1_0.png"
+            "http://personal.rhul.ac.uk/zjac/281/apple_1_0.png"
         )
+        
+        self.IMG_CENTRE3 = (108, 125)
+        self.IMG_DIMS3 = (216, 250)
+        
         self.l3 = [-10, -6, -2, 2, 6, 10, 14]
         self.IMG4 = simplegui.load_image(
-            "https://opengameart.org/sites/default/files/styles/medium/public/SneckoCreature.PNG"
+            "http://personal.rhul.ac.uk/zjac/281/SneckoCreature.PNG"
         )
+
+        self.IMG_CENTRE4 = (125, 69.5)
+        self.IMG_DIMS4 = (250, 139)
+        
         self.l4 = [-9, -5, -1, 3, 7, 11, 15]
         self.theme = 1
-        self.IMG_CENTRE = (78, 66)
-        self.IMG_DIMS = (156, 132)
+        
         self.sound = simplegui.load_sound(
             "http://commondatastorage.googleapis.com/codeskulptor-assets/week7-brrring.m4a"
         )
@@ -93,7 +106,7 @@ class Menu:
                 self.option = True
                 # ic("Hard")
                 self.sound.play()
-                self.start_game(main_length=200, speed=50)
+                self.start_game(main_length=100, speed=50)
 
             elif pos[1] >= 384 and pos[1] <= 448:
                 self.sound.play()
@@ -123,30 +136,30 @@ class Menu:
                 self.IMG,
                 self.IMG_CENTRE,
                 self.IMG_DIMS,
-                (300, (2 * 512 / 4)),
+                (256, (2 * 512 / 4)),
                 (512, 512),
             )
         elif self.theme in self.l2:
             canvas.draw_image(
                 self.IMG2,
-                self.IMG_CENTRE,
-                self.IMG_DIMS,
+                self.IMG_CENTRE2,
+                self.IMG_DIMS2,
                 (256, (2 * 512 / 4)),
                 (512, 512),
             )
         elif self.theme in self.l3:
             canvas.draw_image(
                 self.IMG3,
-                self.IMG_CENTRE,
-                self.IMG_DIMS,
+                self.IMG_CENTRE3,
+                self.IMG_DIMS3,
                 (256, (2 * 512 / 4)),
-                (512, 512),
+                (400, 400),
             )
         elif self.theme in self.l4:
             canvas.draw_image(
                 self.IMG4,
-                self.IMG_CENTRE,
-                self.IMG_DIMS,
+                self.IMG_CENTRE4,
+                self.IMG_DIMS4,
                 (256, (2 * 512 / 4)),
                 (512, 512),
             )
