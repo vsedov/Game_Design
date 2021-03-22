@@ -93,7 +93,7 @@ class Menu:
                 self.option = True
                 # ic("Hard")
                 self.sound.play()
-                self.start_game(main_length=100, speed=50)
+                self.start_game(main_length=200, speed=50)
 
             elif pos[1] >= 384 and pos[1] <= 448:
                 self.sound.play()

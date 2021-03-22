@@ -78,11 +78,10 @@ class Game_Control(Snake_Main):
         self.update_self(canvas)
 
         # Good apple
-        canvas.draw_polygon(self.app_seg, 1, "green", "green")
+        canvas.draw_polygon(self.app_seg, 1, "green", "#5EE06F")
 
         # Bad apple
-        canvas.draw_polygon(self.bad_app_seg, 1, "Red", "Red")
-        # Game Over state is very quick and just ends the program
+        canvas.draw_polygon(self.bad_app_seg, 1, "red", "#EA4D43")
 
         if self.GAME_STATE is False:
             canvas.draw_text(
