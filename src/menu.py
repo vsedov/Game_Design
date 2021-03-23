@@ -17,6 +17,7 @@ class ControlData:
     speed: int = 0
     username: str = None
 
+
 class Menu:
     def __init__(self, frame):
         """
@@ -32,37 +33,35 @@ class Menu:
         """
         self.option: bool = False
 
-        
-        self.IMG:simplegui = simplegui.load_image(
+        self.IMG: simplegui = simplegui.load_image(
             "http://personal.rhul.ac.uk/zjac/281/snake.png"
-            )
-        self.IMG_CENTRE:tuple = (78, 66)
-        self.IMG_DIMS:tuple = (156, 132)
-        self.theme_1:int = 0
+        )
+        self.IMG_CENTRE: tuple = (78, 66)
+        self.IMG_DIMS: tuple = (156, 132)
+        self.theme_1: int = 0
 
-        self.IMG2:simplegui = simplegui.load_image(
+        self.IMG2: simplegui = simplegui.load_image(
             "http://personal.rhul.ac.uk/zjac/281/Snake%20on%20an%20old%20stump_0.png"
         )
-        self.IMG_CENTRE2:tuple = (125, 125)
-        self.IMG_DIMS2:tuple = (250, 250)
-        self.theme_2:int = 1
-        
-        self.IMG3:simplegui = simplegui.load_image(
+        self.IMG_CENTRE2: tuple = (125, 125)
+        self.IMG_DIMS2: tuple = (250, 250)
+        self.theme_2: int = 1
+
+        self.IMG3: simplegui = simplegui.load_image(
             "http://personal.rhul.ac.uk/zjac/281/apple_1_0.png"
         )
-        self.IMG_CENTRE3:tuple = (108, 125)
-        self.IMG_DIMS3:tuple = (216, 250)
-        self.theme_3:int = 2
-        
-        self.IMG4:simplegui = simplegui.load_image(
+        self.IMG_CENTRE3: tuple = (108, 125)
+        self.IMG_DIMS3: tuple = (216, 250)
+        self.theme_3: int = 2
+
+        self.IMG4: simplegui = simplegui.load_image(
             "http://personal.rhul.ac.uk/zjac/281/SneckoCreature.PNG"
         )
-        self.IMG_CENTRE4:tuple = (125, 69.5)
-        self.IMG_DIMS4:tuple = (250, 139)
-        self.theme_4:int = 3
+        self.IMG_CENTRE4: tuple = (125, 69.5)
+        self.IMG_DIMS4: tuple = (250, 139)
+        self.theme_4: int = 3
 
-        
-        self.theme:int = 0
+        self.theme: int = 0
 
         self.sound = simplegui.load_sound(
             "http://commondatastorage.googleapis.com/codeskulptor-assets/week7-brrring.m4a"
@@ -70,8 +69,8 @@ class Menu:
 
         self.input = self.frame.add_input("Name", menu.input_handler, 100)
         self.frame = frame
-        
-        
+
+        self.input = None
 
     def start_game(self, main_length: int, speed: int):
         if self.option is True:
@@ -80,14 +79,17 @@ class Menu:
             self.length = main_length
             ControlData.speed = self.speed
             ControlData.length = self.length
+            self.none_checker()
 
             self.frame.stop()
 
     def input_handler():
         pass
 
-    
-    
+    def none_checker(self):
+        if self.input is None:
+            pass
+
     def click(self, pos):
         """
         pos
@@ -122,20 +124,23 @@ class Menu:
                 self.sound.play()
                 sleep(1.00)
                 sys.exit()
-            #print(self.frame.inp.get_text())
+            # print(self.frame.inp.get_text())
 
         if pos[1] >= 30 and pos[1] <= 48:
             if pos[0] >= 460 and pos[0] <= 475:
-                if (self.theme == 0):
+                if self.theme == 0:
                     self.theme = 3
                 else:
                     self.theme -= 1
             elif pos[0] >= 478 and pos[0] <= 506:
-                if (self.theme == 3):
+                if self.theme == 3:
                     self.theme = 0
                 else:
                     self.theme += 1
-            print (self.theme)
+            print(self.theme)
+
+    def input_handler(self, bob):
+        print(bob)
 
     def draw(self, canvas):
         """
@@ -210,11 +215,13 @@ class Menu:
 
 frame = simplegui.create_frame("Home", 512, 512)
 
+
 class ToStart(ControlData):
     def __init__(self):
         super().__init__(frame)
         self.frame = frame
- #       self.inp = inp
+
+    #       self.inp = inp
 
     def to_start(self):
 
@@ -225,5 +232,7 @@ class ToStart(ControlData):
         self.frame.set_mouseclick_handler(menu.click)
 
         self.frame.set_draw_handler(menu.draw)
-        
+
+        self.frame.add_input("Name", menu.input_handler, 100)
+
         self.frame.start()
