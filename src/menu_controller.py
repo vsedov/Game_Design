@@ -19,7 +19,6 @@ def main() -> None:
     "This is for debugging purposes"
     # ic(ControlData.length)
     # ic(ControlData.speed)
-
     GameStart(length=ControlData.length, speed=ControlData.speed)
 
 
