@@ -1,3 +1,9 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+# vim:fenc=utf-8
+#
+# File Name: menu
+
 import sys
 from dataclasses import dataclass
 from time import sleep  # import codeskulptor
@@ -28,6 +34,35 @@ class Menu:
         self.IMG = simplegui.load_image("http://personal.rhul.ac.uk/zjac/281/snake.png")
         self.IMG_CENTRE = (78, 66)
         self.IMG_DIMS = (156, 132)
+
+        self.l1 = [-12, -8, -4, 0, 4, 8, 12]
+
+        self.IMG2 = simplegui.load_image(
+            "http://personal.rhul.ac.uk/zjac/281/Snake%20on%20an%20old%20stump_0.png"
+        )
+
+        self.IMG_CENTRE2 = (125, 125)
+        self.IMG_DIMS2 = (250, 250)
+
+        self.l2 = [-11, -7, -3, 1, 5, 9, 13]
+        self.IMG3 = simplegui.load_image(
+            "http://personal.rhul.ac.uk/zjac/281/apple_1_0.png"
+        )
+
+        self.IMG_CENTRE3 = (108, 125)
+        self.IMG_DIMS3 = (216, 250)
+
+        self.l3 = [-10, -6, -2, 2, 6, 10, 14]
+        self.IMG4 = simplegui.load_image(
+            "http://personal.rhul.ac.uk/zjac/281/SneckoCreature.PNG"
+        )
+
+        self.IMG_CENTRE4 = (125, 69.5)
+        self.IMG_DIMS4 = (250, 139)
+
+        self.l4 = [-9, -5, -1, 3, 7, 11, 15]
+        self.theme = 1
+
         self.sound = simplegui.load_sound(
             "http://commondatastorage.googleapis.com/codeskulptor-assets/week7-brrring.m4a"
         )
@@ -78,6 +113,12 @@ class Menu:
                 sleep(1.00)
                 sys.exit()
 
+        if pos[1] >= 30 and pos[1] <= 48:
+            if pos[0] >= 460 and pos[0] <= 475:
+                self.theme -= 1
+            elif pos[0] >= 478 and pos[0] <= 506:
+                self.theme += 1
+
     def draw(self, canvas):
         """
         Draw canvas
@@ -90,9 +131,43 @@ class Menu:
         canvas : Update to canvas
         """
 
-        canvas.draw_image(
-            self.IMG, self.IMG_CENTRE, self.IMG_DIMS, (256, (2 * 512 / 3)), (512, 512)
-        )
+        if self.theme in self.l1:
+            canvas.draw_image(
+                self.IMG,
+                self.IMG_CENTRE,
+                self.IMG_DIMS,
+                (256, (2 * 512 / 4)),
+                (512, 512),
+            )
+        elif self.theme in self.l2:
+            canvas.draw_image(
+                self.IMG2,
+                self.IMG_CENTRE2,
+                self.IMG_DIMS2,
+                (256, (2 * 512 / 4)),
+                (512, 512),
+            )
+        elif self.theme in self.l3:
+            canvas.draw_image(
+                self.IMG3,
+                self.IMG_CENTRE3,
+                self.IMG_DIMS3,
+                (256, (2 * 512 / 4)),
+                (400, 400),
+            )
+        elif self.theme in self.l4:
+            canvas.draw_image(
+                self.IMG4,
+                self.IMG_CENTRE4,
+                self.IMG_DIMS4,
+                (256, (2 * 512 / 4)),
+                (512, 512),
+            )
+
+        canvas.draw_polygon([(460, 48), (506, 48), (506, 0), (460, 0)], 5, "#660099")
+        canvas.draw_text("Theme", (463, 27), 15, "White", "monospace")
+        canvas.draw_text("<--", (465, 40), 15, "White", "monospace")
+        canvas.draw_text("-->", (478, 40), 15, "White", "monospace")
 
         canvas.draw_polygon([(128, 64), (384, 64), (384, 0), (128, 0)], 5, "#660099")
         canvas.draw_text("Easy", (204.8, 45), 23, "White", "monospace")
