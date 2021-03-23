@@ -7,9 +7,11 @@
 import random
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
+from icecream import ic
 
 from json_controller import JsonData
 from main import Snake_Main
+from menu import ControlData
 from system_components.frame import frame_height, frame_width
 from system_components.Vector import Vector
 
@@ -35,7 +37,7 @@ class Game_Control(Snake_Main):
         self.timer = timer
         self.frame = frame
         "Due to Username not being defined properly , username will be Bob"
-        self.user_name = "Viv"
+        self.user_name = ControlData.username
 
     def update_self(self, canvas):
         """update_self
@@ -83,9 +85,10 @@ class Game_Control(Snake_Main):
         # Bad apple
         canvas.draw_polygon(self.bad_app_seg, 1, "red", "#EA4D43")
 
+        # Game Over state is very quick and just ends the program
         if self.GAME_STATE is False:
             canvas.draw_text(
-                "GAME OVER - press ", (self.width // 2, self.height // 2), 50, "Blue"
+                "GAME OVER", (self.width // 2, self.height // 2), 50, "Blue"
             )
 
             "You have to stop the timer : before writing otherwise you get multiple write instances"
@@ -177,6 +180,7 @@ class Game_Control(Snake_Main):
         collisions must all be parsed via the timer , hence why its wise to do so this
         way wrapper has been included to adjust for errors {@ .... }
         """
+        ic(self.user_name)
         self._control()
         self._self_collision()
         self._app_eaten()
@@ -225,17 +229,17 @@ class Game_Control(Snake_Main):
 
         Save and end game - with user infomation
         """
+
         self.timer.stop()
-
         JsonData(self.main_points, self.user_name)
+        self._save_exit()
 
-        [print(x) for x in range(100)]
+    def _save_exit(self):
+        """
+        Exit if the save command has been executed
 
-        self.timer.start()
-
-        # self._exit_after_save()
-
-    def _exit_after_save(self):
+        exits frame to go back to menu
+        """
         self.frame.stop()
 
     def _exit(self):

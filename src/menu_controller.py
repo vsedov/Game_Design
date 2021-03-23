@@ -20,6 +20,8 @@ def main() -> None:
     # ic(ControlData.length)
     # ic(ControlData.speed)
     GameStart(length=ControlData.length, speed=ControlData.speed)
+    # We just call this back
+    main()
 
 
 if __name__ == "__main__":
