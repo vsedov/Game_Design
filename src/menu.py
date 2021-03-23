@@ -4,9 +4,11 @@
 #
 # File Name: menu
 
+import json
 import sys
 from dataclasses import dataclass
-from time import sleep  # import codeskulptor
+from time import sleep
+from typing import Counter
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
 
@@ -15,6 +17,7 @@ import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
 class ControlData:
     length: int = 0
     speed: int = 0
+    "Defualt value is Bob"
     username: str = None
 
 
@@ -67,10 +70,11 @@ class Menu:
             "http://commondatastorage.googleapis.com/codeskulptor-assets/week7-brrring.m4a"
         )
 
-        self.input = self.frame.add_input("Name", menu.input_handler, 100)
         self.frame = frame
 
-        self.input = None
+        self.defined: bool = False
+
+        self.top_player = None
 
     def start_game(self, main_length: int, speed: int):
         if self.option is True:
@@ -79,16 +83,20 @@ class Menu:
             self.length = main_length
             ControlData.speed = self.speed
             ControlData.length = self.length
-            self.none_checker()
+
+            print(self.top_player)
+
+            # You have two lists , you want to combine those two lists
 
             self.frame.stop()
 
-    def input_handler():
-        pass
+    def input_handler(self, text):
 
-    def none_checker(self):
-        if self.input is None:
-            pass
+        if text != "" or text is not None:
+            ControlData.username = text
+        else:
+
+            ControlData.username = "Bob"
 
     def click(self, pos):
         """
@@ -124,7 +132,6 @@ class Menu:
                 self.sound.play()
                 sleep(1.00)
                 sys.exit()
-            # print(self.frame.inp.get_text())
 
         if pos[1] >= 30 and pos[1] <= 48:
             if pos[0] >= 460 and pos[0] <= 475:
@@ -137,10 +144,27 @@ class Menu:
                     self.theme = 0
                 else:
                     self.theme += 1
-            print(self.theme)
 
-    def input_handler(self, bob):
-        print(bob)
+    def runner(self):
+        try:
+            if self.top_player is None:
+
+                with open("data.json", "r") as read_file:
+                    main_file = json.load(read_file)["scores"]
+
+                    container = Counter(dict([x.items() for x in main_file]))
+                    main_tuple = sum(container.most_common()[0], ())
+
+                    # Hypothesis is working
+
+                    self.top_player = f"{main_tuple[1][:7]} :: {main_tuple[3]}"
+
+            else:
+                return self.top_player
+
+        except Exception as e:
+            raise e
+        return "bob"
 
     def draw(self, canvas):
         """
@@ -210,18 +234,18 @@ class Menu:
         )
         canvas.draw_text("Exit", (230.4, 420), 23, "White", "monospace")
 
-        canvas.draw_text("High score: ", (150, 486.4), 23, "White", "monospace")
+        canvas.draw_text("High Score: ", (150, 486.4), 23, "grey", "monospace")
 
-
-frame = simplegui.create_frame("Home", 512, 512)
+        canvas.draw_text(self.runner(), (320, 486.4), 23, "White", "monospace")
 
 
 class ToStart(ControlData):
-    def __init__(self):
+    def __init__(self, frame=None):
         super().__init__(frame)
-        self.frame = frame
-
-    #       self.inp = inp
+        if frame is None:
+            self.frame = simplegui.create_frame("Home", 512, 512)
+        else:
+            self.frame = frame
 
     def to_start(self):
 
