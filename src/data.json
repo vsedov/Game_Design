@@ -1,0 +1,16 @@
+{
+    "scores": [
+        {
+            "username": "ixahmedxi",
+            "highscore": 1
+        },
+        {
+            "username": "Bob",
+            "highscore": 10
+        },
+        {
+            "username": "Viv",
+            "highscore": 100
+        }
+    ]
+}

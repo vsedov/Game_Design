@@ -7,26 +7,37 @@
 import random
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
+from icecream import ic
 
+from json_controller import JsonData
 from main import Snake_Main
+from menu import ControlData
 from system_components.frame import frame_height, frame_width
 from system_components.Vector import Vector
 
 
 class Game_Control(Snake_Main):
-    def __init__(self, amount=10, speed=100, timer=None):
+    def __init__(self, amount=10, speed=100, timer=None, frame=None):
         super().__init__(
             x_pos=1, y_pos=0, width=frame_width, height=frame_height, length=amount
         )
         self.width = frame_width
         self.height = frame_height
+
+        "Good apple incrase length"
         self.app_pos, self.app_seg = self._app()
+        "Bad apple reduces length"
+        self.bad_app_pos, self.bad_app_seg = self._app()
 
         self.speed = speed
         self.max_speed = 10
         self.main_points = 0
         self.label = None
+        self.lives = None
         self.timer = timer
+        self.frame = frame
+        "Due to Username not being defined properly , username will be Bob"
+        self.user_name = ControlData.username
 
     def update_self(self, canvas):
         """update_self
@@ -41,7 +52,6 @@ class Game_Control(Snake_Main):
         """
 
         self.segment_list = []
-        # print(self.eat_control)
         for pos in self.position:
             segment = [
                 Vector(pos.x * self.grid - self.grid, pos.y * self.grid),
@@ -65,14 +75,24 @@ class Game_Control(Snake_Main):
         """
         for k in self.segment_list:
             x = [i.get_p() for i in k]
-            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, "Black")
+            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, "#8052EC")
 
         self.update_self(canvas)
 
-        canvas.draw_polygon(self.app_seg, 1, "Red", "Red")
+        # Good apple
+        canvas.draw_polygon(self.app_seg, 1, "green", "#5EE06F")
+
+        # Bad apple
+        canvas.draw_polygon(self.bad_app_seg, 1, "red", "#EA4D43")
+
+        # Game Over state is very quick and just ends the program
         if self.GAME_STATE is False:
-            canvas.draw_text("GAME OVER", (self.width / 4, self.height / 4), 50, "Blue")
-            self.timer.stop()
+            canvas.draw_text(
+                "GAME OVER", (self.width // 2, self.height // 2), 50, "Blue"
+            )
+
+            "You have to stop the timer : before writing otherwise you get multiple write instances"
+            self._save()
 
     def speed_increase(self):
         """
@@ -89,6 +109,13 @@ class Game_Control(Snake_Main):
 
         # Isue this doesnt update the timer , so the speed does not increase like i wanted to
 
+    def __life_decrease(self):
+
+        if self.life == 0:
+            self.GAME_STATE = False
+        else:
+            self.life -= 1
+
     def __point_increase(self):
         """
         Live point score
@@ -96,6 +123,14 @@ class Game_Control(Snake_Main):
         Increases points when called
         """
         self.main_points += 1
+
+    def __point_decrease(self):
+        """
+        point decreaser
+
+        if hit red apple  points will decrease
+        """
+        self.main_points -= 1
 
     def _app_eaten(self):
         """apple eaten
@@ -117,6 +152,15 @@ class Game_Control(Snake_Main):
                 self.speed_increase()
                 self.__point_increase()
 
+    def _bad_app_eaten(self):
+        for i in self.position:
+            if i.get_p() == self.bad_app_pos:
+                "remove"
+                self.position.pop()
+                self.__point_decrease()
+                self.__life_decrease()
+                self.bad_app_pos, self.bad_app_seg = self._app()
+
     def _grower_eaten(self):
         """grower_eaten
 
@@ -136,11 +180,14 @@ class Game_Control(Snake_Main):
         collisions must all be parsed via the timer , hence why its wise to do so this
         way wrapper has been included to adjust for errors {@ .... }
         """
+        ic(self.user_name)
         self._control()
         self._self_collision()
         self._app_eaten()
+        self._bad_app_eaten()
         self._grower_eaten()
         self.label.set_text("Points = " + str(self.main_points))
+        self.lives.set_text("lives = " + str(self.life))
         self.eat_control = False
 
     def _app(self):
@@ -175,3 +222,32 @@ class Game_Control(Snake_Main):
             random.randrange(1, self.width // self.grid),
             random.randrange(1, self.height // self.grid),
         )
+
+    def _save(self):
+        """
+        Save
+
+        Save and end game - with user infomation
+        """
+
+        self.timer.stop()
+        JsonData(self.main_points, self.user_name)
+        self._save_exit()
+
+    def _save_exit(self):
+        """
+        Exit if the save command has been executed
+
+        exits frame to go back to menu
+        """
+        self.frame.stop()
+
+    def _exit(self):
+        """
+        exit
+
+        exit without user infomation
+        """
+        self.timer.stop()
+        self.frame.stop()
+        # sys.exit(0)

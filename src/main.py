@@ -8,7 +8,6 @@ __status__ = "Development"
 from dataclasses import dataclass
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
-from icecream import ic
 
 from system_components.control import Control
 from system_components.frame import frame_height, frame_width
@@ -55,7 +54,7 @@ class Snake_Main(Control, GameState):
         )
         self.color = Colors()
         self.speed: int = 100
-        self.life: int = 3
+        self.life: int = 5
         self.width: int = width
         self.height: int = height
         self.grid: int = 17  # Add this to game state class
@@ -180,7 +179,7 @@ class Snake_Main(Control, GameState):
 
         GAME STATE refer to control.py and main.py
         """
-        ic("Your lives are ", self.life)
+        # ic("Your lives are ", self.life)
         if self.life == 0:
             self.GAME_STATE = False
 
