@@ -149,7 +149,7 @@ class Menu:
         try:
             if self.top_player is None:
 
-                with open("src/data.json", "r") as read_file:
+                with open("system_components/data.json", "r") as read_file:
                     main_file = json.load(read_file)["scores"]
 
                     container = Counter(dict([x.items() for x in main_file]))

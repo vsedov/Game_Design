@@ -20,11 +20,11 @@ class JsonData:
 
     def _writer(self, parser):
         # ic(parser)
-        with open("src/data.json", "w") as json_file:
+        with open("system_components/data.json", "w") as json_file:
             json.dump(parser, json_file, indent=4)
 
     def _read_file(self):
-        with open("src/data.json") as json_file:
+        with open("system_components/data.json") as json_file:
             self.data = json.load(json_file)
 
         try:
