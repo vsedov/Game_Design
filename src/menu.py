@@ -149,7 +149,7 @@ class Menu:
         try:
             if self.top_player is None:
 
-                with open("data.json", "r") as read_file:
+                with open("src/system_components/data.json", "r") as read_file:
                     main_file = json.load(read_file)["scores"]
 
                     container = Counter(dict([x.items() for x in main_file]))
@@ -157,7 +157,7 @@ class Menu:
 
                     # Hypothesis is working
 
-                    self.top_player = f"{main_tuple[1][:7]} :: {main_tuple[3]}"
+                    self.top_player = f"{main_tuple[1][:7]} {main_tuple[3]}"
 
             else:
                 return self.top_player
@@ -234,9 +234,11 @@ class Menu:
         )
         canvas.draw_text("Exit", (230.4, 420), 23, "White", "monospace")
 
-        canvas.draw_text("High Score: ", (150, 486.4), 23, "grey", "monospace")
+        canvas.draw_text("High Score: ", (100, 475), 23, "White", "monospace")
 
-        canvas.draw_text(self.runner(), (320, 486.4), 23, "White", "monospace")
+        canvas.draw_text("Use WASD to move snake", (100, 500), 23, "White", "monospace")
+
+        canvas.draw_text(self.runner(), (270, 475), 23, "White", "monospace")
 
 
 class ToStart(ControlData):
