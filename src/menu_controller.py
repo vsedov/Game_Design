@@ -11,7 +11,7 @@ from Game_Start import GameStart
 from menu import ControlData, ToStart
 
 
-def main() -> None:
+def itself() -> None:
 
     game_starter = ToStart()
     game_starter.to_start()
@@ -21,8 +21,4 @@ def main() -> None:
     # ic(ControlData.speed)
     GameStart(length=ControlData.length, speed=ControlData.speed)
     # We just call this back
-    main()
-
-
-if __name__ == "__main__":
-    main()
+    itself()
