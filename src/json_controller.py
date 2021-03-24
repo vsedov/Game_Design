@@ -19,11 +19,25 @@ class JsonData:
         self._read_file()
 
     def _writer(self, parser):
+        """
+        write self.name to json file
+
+        writer parser into json file
+
+        Parameters
+        ----------
+        parser : dictionary to be writen
+        """
         # ic(parser)
         with open("src/system_components/data.json", "w") as json_file:
             json.dump(parser, json_file, indent=4)
 
     def _read_file(self):
+        """
+        read file
+
+        read from json
+        """
         with open("src/system_components/data.json") as json_file:
             self.data = json.load(json_file)
 

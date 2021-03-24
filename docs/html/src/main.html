@@ -36,7 +36,6 @@ __status__ = &#34;Development&#34;
 from dataclasses import dataclass
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
-from icecream import ic
 
 from system_components.control import Control
 from system_components.frame import frame_height, frame_width
@@ -47,7 +46,7 @@ from system_components.Vector import Vector
 @dataclass
 class Colors:
     BACKGROUND_COLOR: str = &#34;black&#34;
-    SNAKE_COLOR: str = &#34;purple&#34;
+    SNAKE_COLOR: str = &#34;#8052EC&#34;
 
 
 class Snake_Main(Control, GameState):
@@ -83,10 +82,10 @@ class Snake_Main(Control, GameState):
         )
         self.color = Colors()
         self.speed: int = 100
-        self.life: int = 3
+        self.life: int = 5
         self.width: int = width
         self.height: int = height
-        self.grid: int = 10  # Add this to game state class
+        self.grid: int = 17  # Add this to game state class
         self.GAME_STATE: bool = (
             True  # We will have to localise this for now i want it here .
         )
@@ -120,30 +119,7 @@ class Snake_Main(Control, GameState):
             y: updated direction of y
         &#34;&#34;&#34;
 
-        self.same_axis(x, y, debug_direction)
         Control.x, Control.y = self.dir.x, self.dir.y = x, y
-
-    def same_axis(self, to_check_x: int, to_check_y: int, direction: str):
-        &#34;&#34;&#34;
-        Same axis , check if user doesnt go in the same axis twice
-
-        Currently , error prone code , debugger icecream being used
-
-        Parameters
-        ----------
-        to_check_x : int
-            value of the direction of x
-        to_check_y : int
-            value of the directino of y
-        &#34;&#34;&#34;
-        # # Maybe check previous position ? im not 100% sure on this
-
-        # ic(&#34;To Change &#34;, (to_check_x, to_check_y))
-        # ic(&#34;Tuple&#34;, self.dir.get_p())
-        # print(&#34;\n&#34;)
-        # ic(&#34;Main Direction &#34; + direction)
-        # print(&#34;\n&#34;)
-        pass
 
     def change_dir(self, direction):
         &#34;&#34;&#34;
@@ -189,7 +165,7 @@ class Snake_Main(Control, GameState):
 
         elif self.__position_compare_x() &lt; 1:
             self.position.append(
-                Vector(self.width / self.grid, self.__position_compare_y())
+                Vector(self.width // self.grid, self.__position_compare_y())
             )
 
         elif self.__position_compare_y() &gt; self.height // self.grid:
@@ -197,7 +173,7 @@ class Snake_Main(Control, GameState):
 
         elif self.__position_compare_y() &lt; 1:
             self.position.append(
-                Vector(self.__position_compare_x(), self.height / self.grid)
+                Vector(self.__position_compare_x(), self.height // self.grid)
             )
 
         else:
@@ -215,13 +191,13 @@ class Snake_Main(Control, GameState):
         Args:
             key: SimpleGUICS2Pygame command
         &#34;&#34;&#34;
-        if key == simplegui.KEY_MAP[&#34;right&#34;] and self.dir.x == 0:
+        if key == simplegui.KEY_MAP[&#34;d&#34;] and self.dir.x == 0:
             self.change_dir(&#34;right&#34;)
-        elif key == simplegui.KEY_MAP[&#34;left&#34;] and self.dir.x == 0:
+        elif key == simplegui.KEY_MAP[&#34;a&#34;] and self.dir.x == 0:
             self.change_dir(&#34;left&#34;)
-        elif key == simplegui.KEY_MAP[&#34;up&#34;] and self.dir.y == 0:
+        elif key == simplegui.KEY_MAP[&#34;w&#34;] and self.dir.y == 0:
             self.change_dir(&#34;up&#34;)
-        elif key == simplegui.KEY_MAP[&#34;down&#34;] and self.dir.y == 0:
+        elif key == simplegui.KEY_MAP[&#34;s&#34;] and self.dir.y == 0:
             self.change_dir(&#34;down&#34;)
 
     def __life_change(self):
@@ -231,7 +207,7 @@ class Snake_Main(Control, GameState):
 
         GAME STATE refer to control.py and main.py
         &#34;&#34;&#34;
-        ic(&#34;Your lives are &#34;, self.life)
+        # ic(&#34;Your lives are &#34;, self.life)
         if self.life == 0:
             self.GAME_STATE = False
 
@@ -278,17 +254,17 @@ if __name__ == &#34;__main__&#34;:
 <dl>
 <dt id="src.main.Colors"><code class="flex name class">
 <span>class <span class="ident">Colors</span></span>
-<span>(</span><span>BACKGROUND_COLOR: str = 'black', SNAKE_COLOR: str = 'purple')</span>
+<span>(</span><span>BACKGROUND_COLOR: str = 'black', SNAKE_COLOR: str = '#8052EC')</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Colors(BACKGROUND_COLOR: str = 'black', SNAKE_COLOR: str = 'purple')</p></div>
+<div class="desc"><p>Colors(BACKGROUND_COLOR: str = 'black', SNAKE_COLOR: str = '#8052EC')</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Colors:
     BACKGROUND_COLOR: str = &#34;black&#34;
-    SNAKE_COLOR: str = &#34;purple&#34;</code></pre>
+    SNAKE_COLOR: str = &#34;#8052EC&#34;</code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
@@ -366,10 +342,10 @@ if __name__ == &#34;__main__&#34;:
         )
         self.color = Colors()
         self.speed: int = 100
-        self.life: int = 3
+        self.life: int = 5
         self.width: int = width
         self.height: int = height
-        self.grid: int = 10  # Add this to game state class
+        self.grid: int = 17  # Add this to game state class
         self.GAME_STATE: bool = (
             True  # We will have to localise this for now i want it here .
         )
@@ -403,30 +379,7 @@ if __name__ == &#34;__main__&#34;:
             y: updated direction of y
         &#34;&#34;&#34;
 
-        self.same_axis(x, y, debug_direction)
         Control.x, Control.y = self.dir.x, self.dir.y = x, y
-
-    def same_axis(self, to_check_x: int, to_check_y: int, direction: str):
-        &#34;&#34;&#34;
-        Same axis , check if user doesnt go in the same axis twice
-
-        Currently , error prone code , debugger icecream being used
-
-        Parameters
-        ----------
-        to_check_x : int
-            value of the direction of x
-        to_check_y : int
-            value of the directino of y
-        &#34;&#34;&#34;
-        # # Maybe check previous position ? im not 100% sure on this
-
-        # ic(&#34;To Change &#34;, (to_check_x, to_check_y))
-        # ic(&#34;Tuple&#34;, self.dir.get_p())
-        # print(&#34;\n&#34;)
-        # ic(&#34;Main Direction &#34; + direction)
-        # print(&#34;\n&#34;)
-        pass
 
     def change_dir(self, direction):
         &#34;&#34;&#34;
@@ -472,7 +425,7 @@ if __name__ == &#34;__main__&#34;:
 
         elif self.__position_compare_x() &lt; 1:
             self.position.append(
-                Vector(self.width / self.grid, self.__position_compare_y())
+                Vector(self.width // self.grid, self.__position_compare_y())
             )
 
         elif self.__position_compare_y() &gt; self.height // self.grid:
@@ -480,7 +433,7 @@ if __name__ == &#34;__main__&#34;:
 
         elif self.__position_compare_y() &lt; 1:
             self.position.append(
-                Vector(self.__position_compare_x(), self.height / self.grid)
+                Vector(self.__position_compare_x(), self.height // self.grid)
             )
 
         else:
@@ -498,13 +451,13 @@ if __name__ == &#34;__main__&#34;:
         Args:
             key: SimpleGUICS2Pygame command
         &#34;&#34;&#34;
-        if key == simplegui.KEY_MAP[&#34;right&#34;] and self.dir.x == 0:
+        if key == simplegui.KEY_MAP[&#34;d&#34;] and self.dir.x == 0:
             self.change_dir(&#34;right&#34;)
-        elif key == simplegui.KEY_MAP[&#34;left&#34;] and self.dir.x == 0:
+        elif key == simplegui.KEY_MAP[&#34;a&#34;] and self.dir.x == 0:
             self.change_dir(&#34;left&#34;)
-        elif key == simplegui.KEY_MAP[&#34;up&#34;] and self.dir.y == 0:
+        elif key == simplegui.KEY_MAP[&#34;w&#34;] and self.dir.y == 0:
             self.change_dir(&#34;up&#34;)
-        elif key == simplegui.KEY_MAP[&#34;down&#34;] and self.dir.y == 0:
+        elif key == simplegui.KEY_MAP[&#34;s&#34;] and self.dir.y == 0:
             self.change_dir(&#34;down&#34;)
 
     def __life_change(self):
@@ -514,7 +467,7 @@ if __name__ == &#34;__main__&#34;:
 
         GAME STATE refer to control.py and main.py
         &#34;&#34;&#34;
-        ic(&#34;Your lives are &#34;, self.life)
+        # ic(&#34;Your lives are &#34;, self.life)
         if self.life == 0:
             self.GAME_STATE = False
 
@@ -631,7 +584,6 @@ debugging value</p>
         y: updated direction of y
     &#34;&#34;&#34;
 
-    self.same_axis(x, y, debug_direction)
     Control.x, Control.y = self.dir.x, self.dir.y = x, y</code></pre>
 </details>
 </dd>
@@ -660,54 +612,14 @@ Fkey + [i in ["i","j","k","l"]] will update movement</p>
     Args:
         key: SimpleGUICS2Pygame command
     &#34;&#34;&#34;
-    if key == simplegui.KEY_MAP[&#34;right&#34;] and self.dir.x == 0:
+    if key == simplegui.KEY_MAP[&#34;d&#34;] and self.dir.x == 0:
         self.change_dir(&#34;right&#34;)
-    elif key == simplegui.KEY_MAP[&#34;left&#34;] and self.dir.x == 0:
+    elif key == simplegui.KEY_MAP[&#34;a&#34;] and self.dir.x == 0:
         self.change_dir(&#34;left&#34;)
-    elif key == simplegui.KEY_MAP[&#34;up&#34;] and self.dir.y == 0:
+    elif key == simplegui.KEY_MAP[&#34;w&#34;] and self.dir.y == 0:
         self.change_dir(&#34;up&#34;)
-    elif key == simplegui.KEY_MAP[&#34;down&#34;] and self.dir.y == 0:
+    elif key == simplegui.KEY_MAP[&#34;s&#34;] and self.dir.y == 0:
         self.change_dir(&#34;down&#34;)</code></pre>
-</details>
-</dd>
-<dt id="src.main.Snake_Main.same_axis"><code class="name flex">
-<span>def <span class="ident">same_axis</span></span>(<span>self, to_check_x: int, to_check_y: int, direction: str)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Same axis , check if user doesnt go in the same axis twice</p>
-<p>Currently , error prone code , debugger icecream being used</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>to_check_x</code></strong> :&ensp;<code>int</code></dt>
-<dd>value of the direction of x</dd>
-<dt><strong><code>to_check_y</code></strong> :&ensp;<code>int</code></dt>
-<dd>value of the directino of y</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def same_axis(self, to_check_x: int, to_check_y: int, direction: str):
-    &#34;&#34;&#34;
-    Same axis , check if user doesnt go in the same axis twice
-
-    Currently , error prone code , debugger icecream being used
-
-    Parameters
-    ----------
-    to_check_x : int
-        value of the direction of x
-    to_check_y : int
-        value of the directino of y
-    &#34;&#34;&#34;
-    # # Maybe check previous position ? im not 100% sure on this
-
-    # ic(&#34;To Change &#34;, (to_check_x, to_check_y))
-    # ic(&#34;Tuple&#34;, self.dir.get_p())
-    # print(&#34;\n&#34;)
-    # ic(&#34;Main Direction &#34; + direction)
-    # print(&#34;\n&#34;)
-    pass</code></pre>
 </details>
 </dd>
 </dl>
@@ -744,7 +656,6 @@ Fkey + [i in ["i","j","k","l"]] will update movement</p>
 <li><code><a title="src.main.Snake_Main.change_dir" href="#src.main.Snake_Main.change_dir">change_dir</a></code></li>
 <li><code><a title="src.main.Snake_Main.changer" href="#src.main.Snake_Main.changer">changer</a></code></li>
 <li><code><a title="src.main.Snake_Main.key_down" href="#src.main.Snake_Main.key_down">key_down</a></code></li>
-<li><code><a title="src.main.Snake_Main.same_axis" href="#src.main.Snake_Main.same_axis">same_axis</a></code></li>
 </ul>
 </li>
 </ul>

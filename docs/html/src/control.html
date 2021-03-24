@@ -36,24 +36,35 @@ import random
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
 
+from json_controller import JsonData
 from main import Snake_Main
+from menu import ControlData
 from system_components.frame import frame_height, frame_width
 from system_components.Vector import Vector
 
 
 class Game_Control(Snake_Main):
-    def __init__(self, amount=10):
+    def __init__(self, amount=10, speed=100, timer=None, frame=None):
         super().__init__(
             x_pos=1, y_pos=0, width=frame_width, height=frame_height, length=amount
         )
         self.width = frame_width
         self.height = frame_height
-        self.app_pos, self.app_seg = self._app()
 
-        self.speed = 100
+        &#34;Good apple incrase length&#34;
+        self.app_pos, self.app_seg = self._app()
+        &#34;Bad apple reduces length&#34;
+        self.bad_app_pos, self.bad_app_seg = self._app()
+
+        self.speed = speed
         self.max_speed = 10
         self.main_points = 0
         self.label = None
+        self.lives = None
+        self.timer = timer
+        self.frame = frame
+        &#34;Due to Username not being defined properly , username will be Bob&#34;
+        self.user_name = ControlData.username
 
     def update_self(self, canvas):
         &#34;&#34;&#34;update_self
@@ -68,7 +79,6 @@ class Game_Control(Snake_Main):
         &#34;&#34;&#34;
 
         self.segment_list = []
-        # print(self.eat_control)
         for pos in self.position:
             segment = [
                 Vector(pos.x * self.grid - self.grid, pos.y * self.grid),
@@ -90,19 +100,28 @@ class Game_Control(Snake_Main):
         Args:
             canvas: canvas alows stuff to be draw onto the canvas , parser
         &#34;&#34;&#34;
-
         for k in self.segment_list:
             x = [i.get_p() for i in k]
-            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, &#34;Black&#34;)
+            canvas.draw_polygon(x, 1, &#34;purple&#34;, self.color.SNAKE_COLOR)
 
         self.update_self(canvas)
 
-        canvas.draw_polygon(self.app_seg, 1, &#34;Red&#34;, &#34;Red&#34;)
-        if self.GAME_STATE is False:
-            canvas.draw_text(&#34;GAME OVER&#34;, (self.width / 4, self.height / 4), 50, &#34;Blue&#34;)
-            self.timer.stop()
+        # Good apple
+        canvas.draw_polygon(self.app_seg, 1, &#34;green&#34;, &#34;#5EE06F&#34;)
 
-    def __speed_increase(self):
+        # Bad apple
+        canvas.draw_polygon(self.bad_app_seg, 1, &#34;red&#34;, &#34;#EA4D43&#34;)
+
+        # Game Over state is very quick and just ends the program
+        if self.GAME_STATE is False:
+            canvas.draw_text(
+                &#34;GAME OVER&#34;, (self.width // 2, self.height // 2), 50, &#34;Blue&#34;
+            )
+
+            &#34;You have to stop the timer : before writing otherwise you get multiple write instances&#34;
+            self._save()
+
+    def speed_increase(self):
         &#34;&#34;&#34;
         Increase speed with max speed of 10 - which is the fastest
 
@@ -115,6 +134,20 @@ class Game_Control(Snake_Main):
         else:
             self.speed -= 1
 
+        # Isue this doesnt update the timer , so the speed does not increase like i wanted to
+
+    def __life_decrease(self):
+        &#34;&#34;&#34;
+        Life decreaser
+
+        decrease life
+        &#34;&#34;&#34;
+
+        if self.life &lt; 1:
+            self.GAME_STATE = False
+        else:
+            self.life -= 1
+
     def __point_increase(self):
         &#34;&#34;&#34;
         Live point score
@@ -122,6 +155,14 @@ class Game_Control(Snake_Main):
         Increases points when called
         &#34;&#34;&#34;
         self.main_points += 1
+
+    def __point_decrease(self):
+        &#34;&#34;&#34;
+        point decreaser
+
+        if hit red apple  points will decrease
+        &#34;&#34;&#34;
+        self.main_points -= 1
 
     def _app_eaten(self):
         &#34;&#34;&#34;apple eaten
@@ -140,8 +181,17 @@ class Game_Control(Snake_Main):
                 self.eat_control = True
                 # Redifine the given apple
                 self.app_pos, self.app_seg = self._app()
-                self.__speed_increase()
+                self.speed_increase()
                 self.__point_increase()
+
+    def _bad_app_eaten(self):
+        for i in self.position:
+            if i.get_p() == self.bad_app_pos:
+                &#34;remove&#34;
+                self.position.pop()
+                self.__point_decrease()
+                self.__life_decrease()
+                self.bad_app_pos, self.bad_app_seg = self._app()
 
     def _grower_eaten(self):
         &#34;&#34;&#34;grower_eaten
@@ -162,11 +212,14 @@ class Game_Control(Snake_Main):
         collisions must all be parsed via the timer , hence why its wise to do so this
         way wrapper has been included to adjust for errors {@ .... }
         &#34;&#34;&#34;
+        # ic(self.user_name)
         self._control()
         self._self_collision()
         self._app_eaten()
+        self._bad_app_eaten()
         self._grower_eaten()
         self.label.set_text(&#34;Points = &#34; + str(self.main_points))
+        self.lives.set_text(&#34;lives = &#34; + str(self.life))
         self.eat_control = False
 
     def _app(self):
@@ -198,9 +251,38 @@ class Game_Control(Snake_Main):
             tuple: Tuple to be modified
         &#34;&#34;&#34;
         return (
-            random.randrange(2, self.width // self.grid),
-            random.randrange(2, self.height // self.grid),
-        )</code></pre>
+            random.randrange(1, self.width // self.grid),
+            random.randrange(1, self.height // self.grid),
+        )
+
+    def _save(self):
+        &#34;&#34;&#34;
+        Save
+
+        Save and end game - with user infomation
+        &#34;&#34;&#34;
+
+        self.timer.stop()
+        JsonData(self.main_points, self.user_name)
+        self._save_exit()
+
+    def _save_exit(self):
+        &#34;&#34;&#34;
+        Exit if the save command has been executed
+
+        exits frame to go back to menu
+        &#34;&#34;&#34;
+        self.frame.stop()
+
+    def _exit(self):
+        &#34;&#34;&#34;
+        exit
+
+        exit without user infomation
+        &#34;&#34;&#34;
+        self.timer.stop()
+        self.frame.stop()
+        # sys.exit(0)</code></pre>
 </details>
 </section>
 <section>
@@ -214,7 +296,7 @@ class Game_Control(Snake_Main):
 <dl>
 <dt id="src.control.Game_Control"><code class="flex name class">
 <span>class <span class="ident">Game_Control</span></span>
-<span>(</span><span>amount=10)</span>
+<span>(</span><span>amount=10, speed=100, timer=None, frame=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>GameState(GAME_STATE: bool = False, POINTS: int = 0, SPEED: int = 100)</p>
@@ -244,18 +326,27 @@ class Game_Control(Snake_Main):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Game_Control(Snake_Main):
-    def __init__(self, amount=10):
+    def __init__(self, amount=10, speed=100, timer=None, frame=None):
         super().__init__(
             x_pos=1, y_pos=0, width=frame_width, height=frame_height, length=amount
         )
         self.width = frame_width
         self.height = frame_height
-        self.app_pos, self.app_seg = self._app()
 
-        self.speed = 100
+        &#34;Good apple incrase length&#34;
+        self.app_pos, self.app_seg = self._app()
+        &#34;Bad apple reduces length&#34;
+        self.bad_app_pos, self.bad_app_seg = self._app()
+
+        self.speed = speed
         self.max_speed = 10
         self.main_points = 0
         self.label = None
+        self.lives = None
+        self.timer = timer
+        self.frame = frame
+        &#34;Due to Username not being defined properly , username will be Bob&#34;
+        self.user_name = ControlData.username
 
     def update_self(self, canvas):
         &#34;&#34;&#34;update_self
@@ -270,7 +361,6 @@ class Game_Control(Snake_Main):
         &#34;&#34;&#34;
 
         self.segment_list = []
-        # print(self.eat_control)
         for pos in self.position:
             segment = [
                 Vector(pos.x * self.grid - self.grid, pos.y * self.grid),
@@ -292,19 +382,28 @@ class Game_Control(Snake_Main):
         Args:
             canvas: canvas alows stuff to be draw onto the canvas , parser
         &#34;&#34;&#34;
-
         for k in self.segment_list:
             x = [i.get_p() for i in k]
-            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, &#34;Black&#34;)
+            canvas.draw_polygon(x, 1, &#34;purple&#34;, self.color.SNAKE_COLOR)
 
         self.update_self(canvas)
 
-        canvas.draw_polygon(self.app_seg, 1, &#34;Red&#34;, &#34;Red&#34;)
-        if self.GAME_STATE is False:
-            canvas.draw_text(&#34;GAME OVER&#34;, (self.width / 4, self.height / 4), 50, &#34;Blue&#34;)
-            self.timer.stop()
+        # Good apple
+        canvas.draw_polygon(self.app_seg, 1, &#34;green&#34;, &#34;#5EE06F&#34;)
 
-    def __speed_increase(self):
+        # Bad apple
+        canvas.draw_polygon(self.bad_app_seg, 1, &#34;red&#34;, &#34;#EA4D43&#34;)
+
+        # Game Over state is very quick and just ends the program
+        if self.GAME_STATE is False:
+            canvas.draw_text(
+                &#34;GAME OVER&#34;, (self.width // 2, self.height // 2), 50, &#34;Blue&#34;
+            )
+
+            &#34;You have to stop the timer : before writing otherwise you get multiple write instances&#34;
+            self._save()
+
+    def speed_increase(self):
         &#34;&#34;&#34;
         Increase speed with max speed of 10 - which is the fastest
 
@@ -317,6 +416,20 @@ class Game_Control(Snake_Main):
         else:
             self.speed -= 1
 
+        # Isue this doesnt update the timer , so the speed does not increase like i wanted to
+
+    def __life_decrease(self):
+        &#34;&#34;&#34;
+        Life decreaser
+
+        decrease life
+        &#34;&#34;&#34;
+
+        if self.life &lt; 1:
+            self.GAME_STATE = False
+        else:
+            self.life -= 1
+
     def __point_increase(self):
         &#34;&#34;&#34;
         Live point score
@@ -324,6 +437,14 @@ class Game_Control(Snake_Main):
         Increases points when called
         &#34;&#34;&#34;
         self.main_points += 1
+
+    def __point_decrease(self):
+        &#34;&#34;&#34;
+        point decreaser
+
+        if hit red apple  points will decrease
+        &#34;&#34;&#34;
+        self.main_points -= 1
 
     def _app_eaten(self):
         &#34;&#34;&#34;apple eaten
@@ -342,8 +463,17 @@ class Game_Control(Snake_Main):
                 self.eat_control = True
                 # Redifine the given apple
                 self.app_pos, self.app_seg = self._app()
-                self.__speed_increase()
+                self.speed_increase()
                 self.__point_increase()
+
+    def _bad_app_eaten(self):
+        for i in self.position:
+            if i.get_p() == self.bad_app_pos:
+                &#34;remove&#34;
+                self.position.pop()
+                self.__point_decrease()
+                self.__life_decrease()
+                self.bad_app_pos, self.bad_app_seg = self._app()
 
     def _grower_eaten(self):
         &#34;&#34;&#34;grower_eaten
@@ -364,11 +494,14 @@ class Game_Control(Snake_Main):
         collisions must all be parsed via the timer , hence why its wise to do so this
         way wrapper has been included to adjust for errors {@ .... }
         &#34;&#34;&#34;
+        # ic(self.user_name)
         self._control()
         self._self_collision()
         self._app_eaten()
+        self._bad_app_eaten()
         self._grower_eaten()
         self.label.set_text(&#34;Points = &#34; + str(self.main_points))
+        self.lives.set_text(&#34;lives = &#34; + str(self.life))
         self.eat_control = False
 
     def _app(self):
@@ -400,9 +533,38 @@ class Game_Control(Snake_Main):
             tuple: Tuple to be modified
         &#34;&#34;&#34;
         return (
-            random.randrange(2, self.width // self.grid),
-            random.randrange(2, self.height // self.grid),
-        )</code></pre>
+            random.randrange(1, self.width // self.grid),
+            random.randrange(1, self.height // self.grid),
+        )
+
+    def _save(self):
+        &#34;&#34;&#34;
+        Save
+
+        Save and end game - with user infomation
+        &#34;&#34;&#34;
+
+        self.timer.stop()
+        JsonData(self.main_points, self.user_name)
+        self._save_exit()
+
+    def _save_exit(self):
+        &#34;&#34;&#34;
+        Exit if the save command has been executed
+
+        exits frame to go back to menu
+        &#34;&#34;&#34;
+        self.frame.stop()
+
+    def _exit(self):
+        &#34;&#34;&#34;
+        exit
+
+        exit without user infomation
+        &#34;&#34;&#34;
+        self.timer.stop()
+        self.frame.stop()
+        # sys.exit(0)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -423,6 +585,17 @@ class Game_Control(Snake_Main):
 <dt id="src.control.Game_Control.SPEED"><code class="name">var <span class="ident">SPEED</span> : int</code></dt>
 <dd>
 <div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="src.control.Game_Control.frame"><code class="name">var <span class="ident">frame</span></code></dt>
+<dd>
+<div class="desc"><p>Due to Username not being defined properly , username will be Bob</p></div>
+</dd>
+<dt id="src.control.Game_Control.height"><code class="name">var <span class="ident">height</span></code></dt>
+<dd>
+<div class="desc"><p>Good apple incrase length</p></div>
 </dd>
 </dl>
 <h3>Methods</h3>
@@ -457,17 +630,26 @@ whihc is teh apple which is updated with the methods that have been shown below<
     Args:
         canvas: canvas alows stuff to be draw onto the canvas , parser
     &#34;&#34;&#34;
-
     for k in self.segment_list:
         x = [i.get_p() for i in k]
-        canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, &#34;Black&#34;)
+        canvas.draw_polygon(x, 1, &#34;purple&#34;, self.color.SNAKE_COLOR)
 
     self.update_self(canvas)
 
-    canvas.draw_polygon(self.app_seg, 1, &#34;Red&#34;, &#34;Red&#34;)
+    # Good apple
+    canvas.draw_polygon(self.app_seg, 1, &#34;green&#34;, &#34;#5EE06F&#34;)
+
+    # Bad apple
+    canvas.draw_polygon(self.bad_app_seg, 1, &#34;red&#34;, &#34;#EA4D43&#34;)
+
+    # Game Over state is very quick and just ends the program
     if self.GAME_STATE is False:
-        canvas.draw_text(&#34;GAME OVER&#34;, (self.width / 4, self.height / 4), 50, &#34;Blue&#34;)
-        self.timer.stop()</code></pre>
+        canvas.draw_text(
+            &#34;GAME OVER&#34;, (self.width // 2, self.height // 2), 50, &#34;Blue&#34;
+        )
+
+        &#34;You have to stop the timer : before writing otherwise you get multiple write instances&#34;
+        self._save()</code></pre>
 </details>
 </dd>
 <dt id="src.control.Game_Control.random_app"><code class="name flex">
@@ -494,9 +676,35 @@ whihc is teh apple which is updated with the methods that have been shown below<
         tuple: Tuple to be modified
     &#34;&#34;&#34;
     return (
-        random.randrange(2, self.width // self.grid),
-        random.randrange(2, self.height // self.grid),
+        random.randrange(1, self.width // self.grid),
+        random.randrange(1, self.height // self.grid),
     )</code></pre>
+</details>
+</dd>
+<dt id="src.control.Game_Control.speed_increase"><code class="name flex">
+<span>def <span class="ident">speed_increase</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Increase speed with max speed of 10 - which is the fastest</p>
+<p>Checker to define when the game is running live</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def speed_increase(self):
+    &#34;&#34;&#34;
+    Increase speed with max speed of 10 - which is the fastest
+
+    Checker to define when the game is running live
+    &#34;&#34;&#34;
+    if self.speed &lt; self.max_speed:
+
+        self.speed = self.max_speed
+
+    else:
+        self.speed -= 1
+
+    # Isue this doesnt update the timer , so the speed does not increase like i wanted to</code></pre>
 </details>
 </dd>
 <dt id="src.control.Game_Control.timer_handler"><code class="name flex">
@@ -518,11 +726,14 @@ way wrapper has been included to adjust for errors {@ .... }</p></div>
     collisions must all be parsed via the timer , hence why its wise to do so this
     way wrapper has been included to adjust for errors {@ .... }
     &#34;&#34;&#34;
+    # ic(self.user_name)
     self._control()
     self._self_collision()
     self._app_eaten()
+    self._bad_app_eaten()
     self._grower_eaten()
     self.label.set_text(&#34;Points = &#34; + str(self.main_points))
+    self.lives.set_text(&#34;lives = &#34; + str(self.life))
     self.eat_control = False</code></pre>
 </details>
 </dd>
@@ -556,7 +767,6 @@ refer to control class docs for further infomation .</p>
     &#34;&#34;&#34;
 
     self.segment_list = []
-    # print(self.eat_control)
     for pos in self.position:
         segment = [
             Vector(pos.x * self.grid - self.grid, pos.y * self.grid),
@@ -592,7 +802,10 @@ refer to control class docs for further infomation .</p>
 <li><code><a title="src.control.Game_Control.POINTS" href="#src.control.Game_Control.POINTS">POINTS</a></code></li>
 <li><code><a title="src.control.Game_Control.SPEED" href="#src.control.Game_Control.SPEED">SPEED</a></code></li>
 <li><code><a title="src.control.Game_Control.draw_self" href="#src.control.Game_Control.draw_self">draw_self</a></code></li>
+<li><code><a title="src.control.Game_Control.frame" href="#src.control.Game_Control.frame">frame</a></code></li>
+<li><code><a title="src.control.Game_Control.height" href="#src.control.Game_Control.height">height</a></code></li>
 <li><code><a title="src.control.Game_Control.random_app" href="#src.control.Game_Control.random_app">random_app</a></code></li>
+<li><code><a title="src.control.Game_Control.speed_increase" href="#src.control.Game_Control.speed_increase">speed_increase</a></code></li>
 <li><code><a title="src.control.Game_Control.timer_handler" href="#src.control.Game_Control.timer_handler">timer_handler</a></code></li>
 <li><code><a title="src.control.Game_Control.update_self" href="#src.control.Game_Control.update_self">update_self</a></code></li>
 </ul>

@@ -32,6 +32,7 @@
 #
 # File Name: Game_Start
 
+
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
 
 from control import Game_Control
@@ -47,10 +48,16 @@ class GameStart:
     def __new__(cls, **kwargs):
 
         points = 0
+        lives = 5
+        username = &#34;&#34;
         # This would allow for this to be expanded
-        snake = Game_Control(kwargs.get(&#34;length&#34;, 5))
+        snake = Game_Control(
+            amount=kwargs.get(&#34;length&#34;, 10), speed=kwargs.get(&#34;speed&#34;, 100)
+        )
 
-        snake.color.SNAKE_COLOR = kwargs.get(&#34;colours&#34;, &#34;purple&#34;)
+        # ic(snake.snake_amount)
+
+        snake.color.SNAKE_COLOR = kwargs.get(&#34;colours&#34;, &#34;#8052EC&#34;)
 
         def red_button_handler():
             snake.color.SNAKE_COLOR = &#34;Red&#34;
@@ -73,34 +80,70 @@ class GameStart:
         def pink_button_handler():
             snake.color.SNAKE_COLOR = &#34;Pink&#34;
 
+        def white_space(frame):
+            return frame.add_label(&#34;&#34;)
+
         frame = simplegui.create_frame(&#34;Snake&#34;, frame_width, frame_height)
         frame.set_keydown_handler(snake.key_down)
         frame.set_draw_handler(snake.draw_self)
+        frame.add_label(&#34;Game status&#34;)
+        white_space(frame)
+        label = frame.add_label(&#34;Points = &#34; + str(points))
+        lives = frame.add_label(&#34;lives = &#34; + str(lives))
+        white_space(frame)
+
+        frame.add_label(&#34;Game Options&#34;)
+        white_space(frame)
+
         frame.add_label(&#34;Colour Options&#34;)
         frame.add_button(&#34;Red&#34;, red_button_handler)
-        frame.add_label(&#34;&#34;)
+
+        white_space(frame)
         frame.add_button(&#34;Orange&#34;, orange_button_handler)
-        frame.add_label(&#34;&#34;)
+
+        white_space(frame)
         frame.add_button(&#34;Yellow&#34;, yellow_button_handler)
-        frame.add_label(&#34;&#34;)
+        white_space(frame)
+
         frame.add_button(&#34;Green&#34;, green_button_handler)
-        frame.add_label(&#34;&#34;)
+        white_space(frame)
+
         frame.add_button(&#34;Blue&#34;, blue_button_handler)
-        frame.add_label(&#34;&#34;)
+        white_space(frame)
+
         frame.add_button(&#34;Purple&#34;, purple_button_handler)
-        frame.add_label(&#34;&#34;)
+        white_space(frame)
+
         frame.add_button(&#34;Pink&#34;, pink_button_handler)
+        white_space(frame)
         # We do not change the background colour
 
-        label = frame.add_label(&#34;Points = &#34; + str(points))
+        white_space(frame)
+        white_space(frame)
+
+        frame.add_button(&#34;Save and exit&#34;, snake._save)
+        white_space(frame)
+
+        frame.add_button(&#34;exit&#34;, snake._exit)
+        white_space(frame)
+        white_space(frame)
+        white_space(frame)
+        frame.add_label(&#34;Help:&#34;)
+        frame.add_label(&#34;Use the WASD keys to move the snake in any direction&#34;)
+        frame.add_label(&#34;Red apples are poisonous, it decreases your life count&#34;)
+        frame.add_label(&#34;Green apples are good, they increase your points&#34;)
+        frame.add_label(&#34;Please press enter after you have inserted your name&#34;)
 
         snake.label = label
+        snake.lives = lives
+        &#34;This will not work&#34;
+        # snake.user_name = username
 
         frame.set_canvas_background(snake.color.BACKGROUND_COLOR)
 
         timer = simplegui.create_timer(snake.speed, snake.timer_handler)
-
         snake.timer = timer
+        snake.frame = frame
 
         timer.start()
         frame.start()
@@ -159,10 +202,16 @@ Steps :
     def __new__(cls, **kwargs):
 
         points = 0
+        lives = 5
+        username = &#34;&#34;
         # This would allow for this to be expanded
-        snake = Game_Control(kwargs.get(&#34;length&#34;, 5))
+        snake = Game_Control(
+            amount=kwargs.get(&#34;length&#34;, 10), speed=kwargs.get(&#34;speed&#34;, 100)
+        )
 
-        snake.color.SNAKE_COLOR = kwargs.get(&#34;colours&#34;, &#34;purple&#34;)
+        # ic(snake.snake_amount)
+
+        snake.color.SNAKE_COLOR = kwargs.get(&#34;colours&#34;, &#34;#8052EC&#34;)
 
         def red_button_handler():
             snake.color.SNAKE_COLOR = &#34;Red&#34;
@@ -185,34 +234,70 @@ Steps :
         def pink_button_handler():
             snake.color.SNAKE_COLOR = &#34;Pink&#34;
 
+        def white_space(frame):
+            return frame.add_label(&#34;&#34;)
+
         frame = simplegui.create_frame(&#34;Snake&#34;, frame_width, frame_height)
         frame.set_keydown_handler(snake.key_down)
         frame.set_draw_handler(snake.draw_self)
+        frame.add_label(&#34;Game status&#34;)
+        white_space(frame)
+        label = frame.add_label(&#34;Points = &#34; + str(points))
+        lives = frame.add_label(&#34;lives = &#34; + str(lives))
+        white_space(frame)
+
+        frame.add_label(&#34;Game Options&#34;)
+        white_space(frame)
+
         frame.add_label(&#34;Colour Options&#34;)
         frame.add_button(&#34;Red&#34;, red_button_handler)
-        frame.add_label(&#34;&#34;)
+
+        white_space(frame)
         frame.add_button(&#34;Orange&#34;, orange_button_handler)
-        frame.add_label(&#34;&#34;)
+
+        white_space(frame)
         frame.add_button(&#34;Yellow&#34;, yellow_button_handler)
-        frame.add_label(&#34;&#34;)
+        white_space(frame)
+
         frame.add_button(&#34;Green&#34;, green_button_handler)
-        frame.add_label(&#34;&#34;)
+        white_space(frame)
+
         frame.add_button(&#34;Blue&#34;, blue_button_handler)
-        frame.add_label(&#34;&#34;)
+        white_space(frame)
+
         frame.add_button(&#34;Purple&#34;, purple_button_handler)
-        frame.add_label(&#34;&#34;)
+        white_space(frame)
+
         frame.add_button(&#34;Pink&#34;, pink_button_handler)
+        white_space(frame)
         # We do not change the background colour
 
-        label = frame.add_label(&#34;Points = &#34; + str(points))
+        white_space(frame)
+        white_space(frame)
+
+        frame.add_button(&#34;Save and exit&#34;, snake._save)
+        white_space(frame)
+
+        frame.add_button(&#34;exit&#34;, snake._exit)
+        white_space(frame)
+        white_space(frame)
+        white_space(frame)
+        frame.add_label(&#34;Help:&#34;)
+        frame.add_label(&#34;Use the WASD keys to move the snake in any direction&#34;)
+        frame.add_label(&#34;Red apples are poisonous, it decreases your life count&#34;)
+        frame.add_label(&#34;Green apples are good, they increase your points&#34;)
+        frame.add_label(&#34;Please press enter after you have inserted your name&#34;)
 
         snake.label = label
+        snake.lives = lives
+        &#34;This will not work&#34;
+        # snake.user_name = username
 
         frame.set_canvas_background(snake.color.BACKGROUND_COLOR)
 
         timer = simplegui.create_timer(snake.speed, snake.timer_handler)
-
         snake.timer = timer
+        snake.frame = frame
 
         timer.start()
         frame.start()
