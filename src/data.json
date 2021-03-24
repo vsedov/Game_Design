@@ -11,6 +11,10 @@
         {
             "username": "Viv",
             "highscore": 100
+        },
+        {
+            "username": null,
+            "highscore": 0
         }
     ]
 }
