@@ -157,7 +157,7 @@ class Menu:
 
                     # Hypothesis is working
 
-                    self.top_player = f"{main_tuple[1][:7]} :: {main_tuple[3]}"
+                    self.top_player = f"{main_tuple[1][:7]} {main_tuple[3]}"
 
             else:
                 return self.top_player

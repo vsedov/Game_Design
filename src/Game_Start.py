@@ -58,6 +58,12 @@ class GameStart:
         frame = simplegui.create_frame("Snake", frame_width, frame_height)
         frame.set_keydown_handler(snake.key_down)
         frame.set_draw_handler(snake.draw_self)
+        frame.add_label("Game status")
+        white_space(frame)
+        label = frame.add_label("Points = " + str(points))
+        lives = frame.add_label("lives = " + str(lives))
+        white_space(frame)
+
         frame.add_label("Game Options")
         white_space(frame)
 
@@ -84,10 +90,6 @@ class GameStart:
         white_space(frame)
         # We do not change the background colour
 
-        label = frame.add_label("Points = " + str(points))
-        white_space(frame)
-        lives = frame.add_label("lives = " + str(lives))
-
         white_space(frame)
         white_space(frame)
 
@@ -95,6 +97,13 @@ class GameStart:
         white_space(frame)
 
         frame.add_button("exit", snake._exit)
+        white_space(frame)
+        white_space(frame)
+        white_space(frame)
+        frame.add_label("Help:")
+        frame.add_label("Use the WASD keys to move the snake in any direction")
+        frame.add_label("Red apples are poisonous, it decreases your life count")
+        frame.add_label("Green apples are good, they increase your points")
 
         snake.label = label
         snake.lives = lives
