@@ -16,7 +16,7 @@ setup(
         "programming_language :: Python :: 3",
         "operating_system :: OS Independent",
     ],
-    install_requires=["SimpleGUICS2Pygame", "frosch"],
+    install_requires=["SimpleGUICS2Pygame"],
     include_package_data=True,
     pacakges=find_packages(),
 )

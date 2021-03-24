@@ -7,7 +7,6 @@
 import random
 
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui  # pyflakes.ignore
-from icecream import ic
 
 from json_controller import JsonData
 from main import Snake_Main
@@ -180,7 +179,7 @@ class Game_Control(Snake_Main):
         collisions must all be parsed via the timer , hence why its wise to do so this
         way wrapper has been included to adjust for errors {@ .... }
         """
-        ic(self.user_name)
+        # ic(self.user_name)
         self._control()
         self._self_collision()
         self._app_eaten()
