@@ -109,8 +109,13 @@ class Game_Control(Snake_Main):
         # Isue this doesnt update the timer , so the speed does not increase like i wanted to
 
     def __life_decrease(self):
+        """
+        Life decreaser
 
-        if self.life == 0:
+        decrease life
+        """
+
+        if self.life < 1:
             self.GAME_STATE = False
         else:
             self.life -= 1

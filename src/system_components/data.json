@@ -1,20 +1,12 @@
 {
     "scores": [
         {
-            "username": "ahmed",
-            "highscore": 1
-        },
-        {
             "username": null,
             "highscore": 1
         },
         {
             "username": "Bob",
             "highscore": 5
-        },
-        {
-            "username": "Vivian",
-            "highscore": 6
         }
     ]
 }

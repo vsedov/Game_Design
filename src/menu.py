@@ -86,15 +86,16 @@ class Menu:
 
             # You have two lists , you want to combine those two lists
 
+            if self.defined is False:
+                ControlData.username = "Bob"
+
             self.frame.stop()
 
     def input_handler(self, text):
 
         if text != "" or text is not None:
+            self.defined = True
             ControlData.username = text
-        else:
-
-            ControlData.username = "Bob"
 
     def click(self, pos):
         """
@@ -234,8 +235,6 @@ class Menu:
 
         canvas.draw_text("High Score: ", (100, 475), 23, "White", "monospace")
 
-        canvas.draw_text("Use WASD to move snake", (100, 500), 23, "White", "monospace")
-
         canvas.draw_text(self.runner(), (270, 475), 23, "White", "monospace")
 
 
@@ -258,5 +257,11 @@ class ToStart(ControlData):
         self.frame.set_draw_handler(menu.draw)
 
         self.frame.add_input("Name", menu.input_handler, 100)
+
+        self.frame.add_label("Help:")
+        self.frame.add_label("Rules : use WASD to move snake")
+        self.frame.add_label("ENTER NAME BEFORE STARTING GAME")
+        self.frame.add_label("After Name has been entered please press enter ")
+        self.frame.add_label("you can now start the game")
 
         self.frame.start()
