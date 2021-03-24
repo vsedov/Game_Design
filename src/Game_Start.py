@@ -29,7 +29,7 @@ class GameStart:
 
         # ic(snake.snake_amount)
 
-        snake.color.SNAKE_COLOR = kwargs.get("colours", "purple")
+        snake.color.SNAKE_COLOR = kwargs.get("colours", "#8052EC")
 
         def red_button_handler():
             snake.color.SNAKE_COLOR = "Red"
@@ -104,6 +104,7 @@ class GameStart:
         frame.add_label("Use the WASD keys to move the snake in any direction")
         frame.add_label("Red apples are poisonous, it decreases your life count")
         frame.add_label("Green apples are good, they increase your points")
+        frame.add_label("Please press enter after you have inserted your name")
 
         snake.label = label
         snake.lives = lives

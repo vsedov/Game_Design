@@ -84,8 +84,6 @@ class Menu:
             ControlData.speed = self.speed
             ControlData.length = self.length
 
-            print(self.top_player)
-
             # You have two lists , you want to combine those two lists
 
             self.frame.stop()
@@ -149,7 +147,7 @@ class Menu:
         try:
             if self.top_player is None:
 
-                with open("src/system_components/data.json", "r") as read_file:
+                with open("system_components/data.json", "r") as read_file:
                     main_file = json.load(read_file)["scores"]
 
                     container = Counter(dict([x.items() for x in main_file]))

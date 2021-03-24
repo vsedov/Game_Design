@@ -18,7 +18,7 @@ from system_components.Vector import Vector
 @dataclass
 class Colors:
     BACKGROUND_COLOR: str = "black"
-    SNAKE_COLOR: str = "purple"
+    SNAKE_COLOR: str = "#8052EC"
 
 
 class Snake_Main(Control, GameState):

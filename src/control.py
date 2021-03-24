@@ -75,7 +75,7 @@ class Game_Control(Snake_Main):
         """
         for k in self.segment_list:
             x = [i.get_p() for i in k]
-            canvas.draw_polygon(x, 1, self.color.SNAKE_COLOR, self.color.SNAKE_COLOR)
+            canvas.draw_polygon(x, 1, "purple", self.color.SNAKE_COLOR)
 
         self.update_self(canvas)
 
