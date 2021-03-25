@@ -2,8 +2,6 @@
 # -- coding: utf-8 --
 # vim:fenc=utf-8
 
-__author__ = ["Vivian"]
-__status__ = "Development"
 
 from dataclasses import dataclass
 
@@ -208,8 +206,3 @@ class Snake_Main(Control, GameState):
             if pointer.get_p() == self.position[-1].get_p():
                 self.__life_change()
                 self.__snake_reducer()
-
-
-if __name__ == "__main__":
-    print("Authors ", __author__)
-    print("Status ", __status__)
