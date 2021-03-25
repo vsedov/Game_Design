@@ -74,8 +74,8 @@ class Game_Control(Snake_Main):
         Args:
             canvas: canvas alows stuff to be draw onto the canvas , parser
         """
-        for k in self.segment_list:
-            x = [i.get_p() for i in k]
+        for block in self.segment_list:
+            x = [i.get_p() for i in block]
             canvas.draw_polygon(x, 1, "purple", self.color.SNAKE_COLOR)
 
         self.update_self(canvas)
