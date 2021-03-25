@@ -52,11 +52,13 @@ class Game_Control(Snake_Main):
 
         self.segment_list = []
         for pos in self.position:
+            x = pos.x
+            y = pos.y
             segment = [
-                Vector(pos.x * self.grid - self.grid, pos.y * self.grid),
-                Vector(pos.x * self.grid, pos.y * self.grid),
-                Vector(pos.x * self.grid, pos.y * self.grid - self.grid),
-                Vector(pos.x * self.grid - self.grid, pos.y * self.grid - self.grid),
+                Vector(x * self.grid - self.grid, y * self.grid),
+                Vector(x * self.grid, y * self.grid),
+                Vector(x * self.grid, pos.y * self.grid - self.grid),
+                Vector(x * self.grid - self.grid, y * self.grid - self.grid),
             ]
             self.segment_list.append(segment)
 
@@ -204,12 +206,14 @@ class Game_Control(Snake_Main):
 
         # This can be changed to what ever - so long as the cords are the same .
         # You can change those values.
+        x = app[0]
+        y = app[1]
 
         segements = [
-            (app[0] * self.grid - self.grid, app[1] * self.grid),
-            (app[0] * self.grid, app[1] * self.grid),
-            (app[0] * self.grid, app[1] * self.grid - self.grid),
-            (app[0] * self.grid - self.grid, app[1] * self.grid - self.grid),
+            (x * self.grid - self.grid, y * self.grid),
+            (x * self.grid, y * self.grid),
+            (x * self.grid, y * self.grid - self.grid),
+            (x * self.grid - self.grid, y * self.grid - self.grid),
         ]
 
         return app, segements
